@@ -1,6 +1,6 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-# toc
+# Character Creation
 
 - [Character Creation](#character-creation)
   - [Attributes](#attributes)
@@ -53,7 +53,6 @@
     - [Demihuman Templates](#demihuman-templates)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
-# Character Creation
 ## Attributes
 You may upgrade two different attributes by +1 three times (for a total of +6 with no attribute over +3). Then, you add +1 to your class attribute.
 - Physical: Might, Agility, Fitness
