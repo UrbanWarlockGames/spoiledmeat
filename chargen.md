@@ -65,62 +65,62 @@ It is not advised to mix random and point buy characters in the same game.
 
 ## List of Attributes
 ### Might
-Combat Actions: melee attack, throw (failure = d10 scatter table)
-Exploration Actions: feats of strength, intimidation
-Derived Attributes: Health Pool (HD + Might + Fitness)¹, Carry Weight (Might × 6 kg)
-Saving Throw: death, petrification, grappling
+- Combat Actions: melee attack, throw (failure = d10 scatter table)
+- Exploration Actions: feats of strength, intimidation
+- Derived Attributes: Health Pool (HD + Might + Fitness)¹, Carry Weight (Might × 6 kg)
+- Saving Throw: death, petrification, grappling
 
 ### Agility
-Combat Actions: Dodge (reaction) (active defence; roll higher than attack to negate damage as a Reaction².)
-Exploration Actions: balance
-Derived Attributes: Speed (in hexes or m/s)
-Saving Throw: reflexes (such as catching a ball or avoiding a trap), Area attacks, prone
+- Combat Actions: Dodge (reaction) (active defence; roll higher than attack to negate damage as a Reaction².)
+- Exploration Actions: balance
+- Derived Attributes: Speed (in hexes or m/s)
+- Saving Throw: reflexes (such as catching a ball or avoiding a trap), Area attacks, prone
 
 ### Fitness
-Combat Actions: athletics manoeuvres, wrestling
-Exploration Actions: athletics, chase, labour
-Derived Attributes: Health = (HD + Might + Fitness); Stamina³ = (Fitness)
-Saving Throw: poison, disease, and exhaustion
+- Combat Actions: athletics manoeuvres, wrestling
+- Exploration Actions: athletics, chase, labour
+- Derived Attributes: Health = (HD + Might + Fitness); Stamina³ = (Fitness)
+- Saving Throw: poison, disease, and exhaustion
 
 ### Knowledge
-Combat Actions: recall knowledge
-Exploration Actions: recall knowledge, identify item, appraise, investigate
-Map Actions: 
-Derived Attributes: maximum spell rank, magical power (might or perception still determines accuracy for melee and ranged spells), maximum skill growth6 attempts per night = Knowledge, number of lore skills at chargen
-Saving Throw: stupefaction
+- Combat Actions: recall knowledge
+- Exploration Actions: recall knowledge, identify item, appraise, investigate
+- Map Actions: 
+- Derived Attributes: maximum spell rank, magical power (might or perception still determines accuracy for melee and ranged spells), maximum skill growth6 attempts per night = Knowledge, number of lore skills at chargen
+- Saving Throw: stupefaction
 
 ### Perception
-Combat Actions: ranged attack, seek
-Exploration Actions: search area (10 minutes per hex)
-Map Actions: survey hex (1 hour)
-Saving Throw⁴: notice details and detect traps, creatures, and stealth
+- Combat Actions: ranged attack, seek
+- Exploration Actions: search area (10 minutes per hex)
+- Map Actions: survey hex (1 hour)
+- Saving Throw⁴: notice details and detect traps, creatures, and stealth
 
 ### Willpower
-Combat Actions: stabilise (restore dying ally to 0 health), heal (+1 health on success)
-Exploration Actions: -
-Map Actions: -
-Derived Attributes: Morale pool⁵ = 8 + Willpower
-Saving Throw: memory, mental effects such as fear, confusion, sleep
+- Combat Actions: stabilise (restore dying ally to 0 health), heal (+1 health on success)
+- Exploration Actions: -
+- Map Actions: -
+- Derived Attributes: Morale pool⁵ = 8 + Willpower
+- Saving Throw: memory, mental effects such as fear, confusion, sleep
 
 ### Charm
-Social Actions: use a String, Debt roll
-Exploration Actions: first impressions, twist the truth, lie, play a role, gather information
-Map Actions: -
-Saving Throw: charms (changing disposition), mind control, identity loss
+- Social Actions: use a String, Debt roll
+- Exploration Actions: first impressions, twist the truth, lie, play a role, gather information
+- Map Actions: -
+- Saving Throw: charms (changing disposition), mind control, identity loss
 
 ### Rhetoric
-Combat Actions: negotiate with enemy (such as to end the battle; target must have a Rhetoric score)
-Social Actions: deals and defends Stress (Belief damage) in debates (changing a character's Beliefs) and social conflicts (loss gives a String to winner)
-Exploration Actions: persuade (through logic and evidence), understand ideology
-Map Actions: spread propaganda
-Saving Throw: detecting lies, inconsistencies, fallacies, and biased language (points towards emotions or ideology)
+- Combat Actions: negotiate with enemy (such as to end the battle; target must have a Rhetoric score)
+- Social Actions: deals and defends Stress (Belief damage) in debates (changing a character's Beliefs) and social conflicts (loss gives a String to winner)
+- Exploration Actions: persuade (through logic and evidence), understand ideology
+- Map Actions: spread propaganda
+- Saving Throw: detecting lies, inconsistencies, fallacies, and biased language (points towards emotions or ideology)
 
 ### Leadership
-Combat Actions: assist, inspire, command an ally (ex. snap out of it)
-Exploration Actions: assist (give +1 to ally's next action), inspire (heal morale and belief)
-Map Actions: help the locals
-Derived Attributes: Belief pool in debates and social conflicts (when Belief = 0, lose 1 Morale per day until restored), maximum number of Henchmen = Leadership, number of minion actions = Leadership
-Saving Throw: doubt, stress, bonds, mutiny
+- Combat Actions: assist, inspire, command an ally (ex. snap out of it)
+- Exploration Actions: assist (give +1 to ally's next action), inspire (heal morale and belief)
+- Map Actions: help the locals
+- Derived Attributes: Belief pool in debates and social conflicts (when Belief = 0, lose 1 Morale per day until restored), maximum number of Henchmen = Leadership, number of minion actions = Leadership
+- Saving Throw: doubt, stress, bonds, mutiny
 
 1. Death rules: 0 = unconscious until restored above 0; below 0 = death’s door losing 1 health per turn; defeat at negative health equal to maximum
 2. You have 1 Reaction by default and regain your reaction, like other 3 actions, at the start of your turn
