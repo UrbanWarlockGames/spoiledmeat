@@ -1,5 +1,58 @@
-<!-- START doctoc -->
-<!-- END doctoc -->
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+# Character Creation
+
+- [Character Creation](#character-creation)
+  - [Attributes](#attributes)
+    - [Random Characters](#random-characters)
+  - [List of Attributes](#list-of-attributes)
+    - [Might](#might)
+    - [Agility](#agility)
+    - [Fitness](#fitness)
+    - [Knowledge](#knowledge)
+    - [Perception](#perception)
+    - [Willpower](#willpower)
+    - [Charm](#charm)
+    - [Rhetoric](#rhetoric)
+    - [Leadership](#leadership)
+  - [Skills](#skills)
+  - [Classes](#classes)
+    - [Class Templates](#class-templates)
+- [Combat](#combat)
+  - [Damage Types](#damage-types)
+    - [Physical](#physical)
+    - [Elemental](#elemental)
+    - [Demi-elemental](#demi-elemental)
+    - [Biological](#biological)
+    - [Magical](#magical)
+    - [Metaphysical](#metaphysical)
+  - [Damage Conditions](#damage-conditions)
+    - [Physical](#physical-1)
+      - [Crushing](#crushing)
+      - [Slashing](#slashing)
+      - [Piercing](#piercing)
+      - [Ballistic](#ballistic)
+      - [Incapacitating](#incapacitating)
+    - [Elemental](#elemental-1)
+      - [Flames](#flames)
+      - [Frost](#frost)
+      - [Electricity](#electricity)
+      - [Acid](#acid)
+    - [Demi-elemental](#demi-elemental-1)
+      - [Wet](#wet)
+      - [Poison](#poison)
+      - [Toxic](#toxic)
+      - [Psychic](#psychic)
+    - [Metaphysical](#metaphysical-1)
+      - [Holy](#holy)
+      - [Vile](#vile)
+      - [Aberrant](#aberrant)
+      - [Death](#death)
+  - [Attack Tags (in addition to damage type effects)](#attack-tags-in-addition-to-damage-type-effects)
+  - [Ancestry Creation Rules](#ancestry-creation-rules)
+    - [Demihuman Templates](#demihuman-templates)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
 # Character Creation
 ## Attributes
 You may upgrade two different attributes by +1 three times (for a total of +6 with no attribute over +3). Then, you add +1 to your class attribute.
