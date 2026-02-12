@@ -87,7 +87,7 @@ It is not advised to mix random and point buy characters in the same game.
 - Combat Actions: recall knowledge
 - Exploration Actions: recall knowledge, identify item, appraise, investigate
 - Map Actions: 
-- Derived Attributes: maximum spell rank, magical power (might or perception still determines accuracy for melee and ranged spells), maximum skill growth6 attempts per night = Knowledge, number of lore skills at chargen
+- Derived Attributes: maximum spell rank, magical power (might or perception still determines accuracy for melee and ranged spells), maximum skill growth⁶ attempts per night = Knowledge, number of lore skills at chargen
 - Saving Throw: stupefaction
 
 ### Perception
@@ -204,7 +204,6 @@ Each Skill has associated actions and a Pull. The Pull of a skill is equal to HD
  - Spirit (damages the soul) [req: soul]
  - Holy (pure positive energy; heals Holy, damages Vile)
  - Vile (pure negative energy; heals Vile, damages Holy, corruption)
-
 
 ## Damage Conditions
 Most damage types have a Vulnerability condition which is triggered when a critical hit is struck on a target with Vulnerability to that damage type.
