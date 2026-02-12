@@ -1,8 +1,7 @@
 <!-- START doctoc generated TOC please keep comment here to allow auto update -->
 <!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-# Character Creation
+**Table of Contents**
 
-- [Character Creation](#character-creation)
   - [Attributes](#attributes)
     - [Random Characters](#random-characters)
   - [List of Attributes](#list-of-attributes)
@@ -16,6 +15,7 @@
     - [Rhetoric](#rhetoric)
     - [Leadership](#leadership)
   - [Skills](#skills)
+    - [Woodsman](#woodsman)
   - [Classes](#classes)
     - [Class Templates](#class-templates)
 - [Combat](#combat)
