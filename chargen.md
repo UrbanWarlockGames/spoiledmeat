@@ -60,7 +60,8 @@ You may upgrade two different attributes by +1 three times (for a total of +6 wi
 - Social: Charm, Rhetoric, Leadership [any can be used to make a request]
 
 ### Random Characters
-For a random character: roll 9d6 and assign one result for each attribute (1: -1, 2: 0, 3: +1, 4: +2, 5: +3, 6: +4).
+For a random character: roll 9d6 and assign one result for each attribute (1: -1, 2-3: 0, 4: +1, 6: +2, 6: +3).
+For a slightly less random character you can roll 9d8 and assign one result for each attribute (1: -1, 2-4: 0, 5-6: +1, 7: +2, 8: +3).
 It is not advised to mix random and point buy characters in the same game.
 
 ## List of Attributes
