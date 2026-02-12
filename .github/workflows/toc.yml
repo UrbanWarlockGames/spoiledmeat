@@ -1,8 +1,18 @@
-on: push
 name: TOC Generator
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
 jobs:
   generateTOC:
-    name: TOC Generator
     runs-on: ubuntu-latest
+
     steps:
+      - uses: actions/checkout@v4
+
       - uses: technote-space/toc-generator@v4
