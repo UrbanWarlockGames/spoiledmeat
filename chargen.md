@@ -1,3 +1,5 @@
+<!-- START doctoc -->
+<!-- END doctoc -->
 # Character Creation
 ## Attributes
 You may upgrade two different attributes by +1 three times (for a total of +6 with no attribute over +3). Then, you add +1 to your class attribute.
