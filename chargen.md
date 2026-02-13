@@ -110,14 +110,14 @@ It is not advised to mix random and point buy characters in the same game.
 
 ### Charm
 - Social Actions: use a String, Debt roll
-- Exploration Actions: first impressions, twist the truth, lie, play a role, gather information
+- Exploration Actions: first impressions, lie, play a role, gather information
 - Map Actions: -
 - Saving Throw: charms (changing disposition), mind control, identity loss
 
 ### Rhetoric
 - Combat Actions: negotiate with enemy (such as to end the battle; target must have a Rhetoric score)
 - Social Actions: deals and defends Stress (Belief damage) in debates (changing a character's Beliefs) and social conflicts (loss gives a String to winner)
-- Exploration Actions: persuade (through logic and evidence), understand ideology
+- Exploration Actions: persuade (through logic and evidence), twist the truth, understand ideology
 - Map Actions: spread propaganda
 - Saving Throw: detecting lies, inconsistencies, fallacies, and biased language (points towards emotions or ideology)
 
@@ -243,6 +243,7 @@ Skill growth chance: Roll a skill growth check as soon as you are aware it is ni
 ### Biological
  - Bleed (bleeding, haemorrhaging; triggers Blood effects on first instance) [requires: blood]
  - Death (entropy; decay, time, ageing; 1% instant death on critical) [req: biological]
+ - Exposure [req flesh, living, or mechanical]
  - Hunger (food/water deprivation) [req: needs to eat]
  - Heat (heat, magma, melting) [req: melting point]
  - Pressure (compression) [req: guts]
