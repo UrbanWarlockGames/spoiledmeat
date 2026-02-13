@@ -17,7 +17,7 @@
   - [Skills](#skills)
     - [Lore Skills](#lore-skills)
       - [Example Lore Skills](#example-lore-skills)
-    - [Instincts](#instincts)
+    - [Archetypes](#instincts)
       - [Woodsman](#woodsman)
   - [Classes](#classes)
     - [Class Templates](#class-templates)
@@ -131,10 +131,10 @@ It is not advised to mix random and point buy characters in the same game.
 3. Stamina is targeted before Health. Once Stamina is depleted, you gain the Tired Condition which gives you a -1 to all saving throws. You may spend Stamina to upgrade a result by one tier at a cost equal to actions used.
 4. Some Referees may wish to leave out perception saving throws and leave it up to the players to search areas thoroughly.
 5. Roll Morale score when called for Morale checks. A failure results in gaining the Stressed condition, giving a -1 to attack rolls until the end of the encounter; 0 Morale gives the Panicked condition until Morale is restored >0: The only actions you can take are Hide, Move, Take Cover, and Defend. Panicked creatures also gain one level of Noisy (giving a bane on stealth checks)
-6. Skill growth chance: Roll a skill growth check as soon as you are aware it is nightfall (base 1 in 10 per used skill, 2 in 5 after a Critical Success; failed growth blocks further attempts that day). On a success, your skill increases by +1. On a failure, nothing happens.
+6. see: Skills
 
 ## Skills
-You may only add the bonus of a Background Skill or Instinct
+You may only make a skill check with your bonus from a Background Skill, or a Archetype Skill. You may choose to use or not use a skill at your discretion, but only Archetype Skills benefit from skill growth moments.
 ### Lore Skills
 You have one Background skill for each point you have in Knowledge at character creation. The rating of your Background Skills increases by +1 for every five hit dice you have. Background Skills are specific fields of study or professions your character has personal experience in. Background Skills containing the word 'Lore' can only be used for recall knowledge and earning income.
 #### Example Lore Skills
@@ -177,13 +177,16 @@ You have one Background skill for each point you have in Knowledge at character 
 - Writing
 - Zoology
 
-### Instincts
-Each Instinct has associated actions and a Pull. The Pull of a skill is equal to [HD/2 + 8 - Instinct]. You make a Pull check when you perform one of its described actions. When you fail the Pull check for a Skill, you are prompted to perform its Associated Action. Doing so will give you 1 Luck and after performing the action, you will regain a [skill roll] amount of Belief. Refusing will cause a Morale check. Take psychic damage equal to your level in the skill. On a success, take 1/2 damage. On a critical, take no Morale damage.
+### Archetype Skills
+Each Archetype has associated actions and a Pull. The Pull of a skill is equal to [HD/2 + 8 - Archetype level]. You make a Pull check when you perform one of its described actions. When you fail the Pull check for a Skill, you are prompted to perform its Associated Action. Doing so will give you 1 Luck and after performing the action, you will regain a [skill roll] amount of Belief. Refusing will cause a Morale check. Take psychic damage equal to your level in the skill. On a success, take 1/2 damage. On a critical, take no Morale damage.
 #### Woodsman
 *The Woodsman ...*
 - Skill Associations: survivalism, harvesting resources, identifying plants and animals
 - Pull: You attempt to use or understand a Mechanical device, you enter a crowded area
 - Associated Action: Withdraw from society
+
+### Skill Growth
+Skill growth chance: Roll a skill growth check as soon as you are aware it is nightfall (base 1 in 10 per used skill, 2 in 5 after a Critical Success; failed growth blocks further attempts that day). On a success, your skill increases by +1. On a failure, nothing happens.
 
 ## Classes
 ### Class Templates
