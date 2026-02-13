@@ -178,7 +178,7 @@ You have one Background skill for each point you have in Knowledge at character 
 - Zoology
 
 ### Instincts
-Each Skill has associated actions and a Pull. The Pull of a skill is equal to HD + 8 - level of Skill. You make a Pull check when you perform one of its described actions. When you fail the Pull check for a Skill, you are prompted to perform its Associated Action. Doing so will give you 1 Luck and after performing the action, you will regain a [skill roll] amount of Belief. Refusing will cause a Morale check. Take psychic damage equal to your level in the skill. On a success, take 1/2 damage. On a critical, take no Morale damage.
+Each Instinct has associated actions and a Pull. The Pull of a skill is equal to [HD/2 + 8 - Instinct]. You make a Pull check when you perform one of its described actions. When you fail the Pull check for a Skill, you are prompted to perform its Associated Action. Doing so will give you 1 Luck and after performing the action, you will regain a [skill roll] amount of Belief. Refusing will cause a Morale check. Take psychic damage equal to your level in the skill. On a success, take 1/2 damage. On a critical, take no Morale damage.
 #### Woodsman
 *The Woodsman ...*
 - Skill Associations: survivalism, harvesting resources, identifying plants and animals
