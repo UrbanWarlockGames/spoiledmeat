@@ -216,6 +216,7 @@ Skill growth chance: Roll a skill growth check as soon as you are aware it is ni
  - Alchemist [KNO]: ¯\_(ツ)_/¯
  - Assassin [AGI]: gain HD Backstab, coup de grâce (x2 damage against incapacitated targets)
  - Duellist: [AGI]: can use AGI instead of MIG for melee attack
+ - Exorcist [RHE]: choose one: fiends, angels, aberrations, undead; +1 after recall knowledge and +1 damage against creatures of that type
 
 # Combat
 ## Damage Types
@@ -240,7 +241,7 @@ Skill growth chance: Roll a skill growth check as soon as you are aware it is ni
  - True (hits vulnerable area; cannot be resisted) [req: not immune to critical damage]
 
 ### Biological
- - Bleed (bleeding, haemorrhaging) [requires: blood]
+ - Bleed (bleeding, haemorrhaging; triggers Blood effects on first instance) [requires: blood]
  - Death (entropy; decay, time, ageing; 1% instant death on critical) [req: biological]
  - Hunger (food/water deprivation) [req: needs to eat]
  - Heat (heat, magma, melting) [req: melting point]
