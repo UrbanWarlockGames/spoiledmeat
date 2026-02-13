@@ -181,10 +181,10 @@ You have one Background skill for each point you have in Knowledge at character 
 ### Archetype Skills
 Each Archetype has associated actions and a Pull. The Pull of a skill is equal to [HD/2 + 8 - Archetype level]. You make a Pull check when you perform one of its described actions. When you fail the Pull check for a Skill, you are prompted to perform its Associated Action. Doing so will give you 1 Luck and after performing the action, you will regain a [skill roll] amount of Belief. Refusing will cause a Morale check. Take psychic damage equal to your level in the skill. On a success, take 1/2 damage. On a critical, take no Morale damage.
 #### Woodsman
-*The Woodsman ...*
+*The Woodsman is a druid old in his year and stuck in his ways. He wants to be out in the woods, away from the city. He doesn't like being brought to the city and having to deal with things like NOISE, POLLUTION, and POLITICS. He believes things would be better if we RETURNED TO THE OLD WAYS. Before newfangled inventions like WATERMILLS and STEAM ENGINES exsited.*
 - Skill Associations: survivalism, harvesting resources, identifying plants and animals
-- Pull: You attempt to use or understand a Mechanical device, you enter a crowded area
-- Associated Action: Withdraw from society
+- Pull: You attempt to use or understand a Mechanical device, you enter a crowded area, you witness societal or technological corruption
+- Associated Action (choose one): Withdraw from society, rebuke technology
 
 ### Skill Growth
 Skill growth chance: Roll a skill growth check as soon as you are aware it is nightfall (base 1 in 10 per used skill, 2 in 5 after a Critical Success; failed growth blocks further attempts that day). On a success, your skill increases by +1. On a failure, nothing happens.
