@@ -53,7 +53,7 @@
       - [Vile](#vile)
       - [Aberrant](#aberrant)
       - [Death](#death)
-  - [Attack Tags (in addition to damage type effects)](#attack-tags-in-addition-to-damage-type-effects)
+  - [Elemental Tags](#elemental-tags)
   - [Ancestry Creation Rules](#ancestry-creation-rules)
     - [Demihuman Templates](#demihuman-templates)
 
