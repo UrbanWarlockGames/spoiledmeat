@@ -284,30 +284,31 @@ Most damage types have a Vulnerability condition which is triggered when a criti
 
 #### Incapacitating
  - Vulnerability Condition: Unconscious
+ - Nullified by: Conscious, Dead
 
 ### Elemental
 #### Flames
  - Gain Vulnerability to Fire damage
  - Vulnerability Condition: Ignite (d4 Fire damage each turn until extinguished [1 AP])
- - Amplified by: Flammable (+d4 persistent Flames damage each turn until extinguished)
+ - Amplified by: Flammable (+d4 persistent Flames damage each turn until extinguished), Fiery terrain
  - Nullified by: Wet
 
 #### Frost
  - Gain Vulnerability to Flames, Frost, Ballistic, and Sonic damage
  - Vulnerability Condition: Frozen (Paralysed [cannot take physical actions], Suffocating, Vulnerability to Cold, Ballistic, Sonic, and Crushing damage, Resistance to Flames damage, Immune to else), gain Armour and Flames resistance equal to ability rank
  - Vulnerability Condition (Move): Prone (when moving on Frozen hex)
- - Amplified by: Freezing, Wet (gains +2 Armour)
+ - Amplified by: Freezing, Frost terrain, Wet (gains Armour = Wet value x 2)
  - Area Nullified by: Fire
  - Condition Nullified by: Crushing, Fire (resisted)
 
 #### Electricity
  - Vulnerability Condition: Charged (d4 Electricity damage to touching same source of water)
- - Amplified by: Charged = no higher than Wet value
- - Nullified by: -
+ - Amplified by: Charged = no higher than Wet value, Charged terrain
+ - Nullified by: leaving affected hexes
 
 #### Acid
- - Vulnerability Condition: Chance to become Corroded (-1 Parry, d4 Acid damage and -1 Parry each turn until washed away)
- - Amplified by: Corroded
+ - Vulnerability Condition: Chance to become Corroded (-1 Defence, d4 Acid damage and -1 Defence, increases by 1 at the start of each turn until washed away) damage to equipment equal to health damage using material durability + size
+ - Amplified by: Corroded, Acid terrain
  - Nullified by: Wet
 
 ### Demi-elemental
@@ -316,7 +317,7 @@ Most damage types have a Vulnerability condition which is triggered when a criti
  - Gain Resistance: Flames damage
  - Gain Vulnerability: Electricity and Frost damage
  - Vulnerability Condition: Wet; applies Prone when movement on Wet terrain
- - Amplified by: Wet
+ - Amplified by: Wet, Wet terrain
  - Nullified by: Freezing (Wet area on floor becomes Frozen), Flames (Wet area is removed)
 
 #### Poison
