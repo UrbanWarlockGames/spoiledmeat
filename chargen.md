@@ -157,6 +157,7 @@ You have one Background skill for each point you have in Knowledge at character 
 - Farming
 - Fiend Lore
 - Fishing
+- Gambling
 - Gunsmithing
 - History
 - Jeweller
@@ -352,7 +353,7 @@ Most damage types have a Vulnerability condition which is triggered when a criti
 #### Death
  - Vulnerability Condition: Doomed (make a death save if Doomed > HD)
 
-## Attack Tags (in addition to damage type effects)
+## Elemental Tags
  - Water; applies Wet condition on hit
  - Earth; 
  - Void (gravity); you can force a save vs forced movement (might) and shift the target [rank]m; throw on a critical success
