@@ -1,0 +1,306 @@
+/*
+Shared Action Card presentation.
+
+The card component intentionally retains the compact typography and square
+construction of the original builder mockup.
+*/
+
+:root {
+    --actioncard-usage-atwill: #3f744b;
+    --actioncard-usage-scene: #a20f38;
+    --actioncard-usage-episode: #686868;
+    --actioncard-usage-passive: #674d88;
+    --actioncard-paper: #fffef8;
+    --actioncard-flavour: #f2f0e7;
+    --actioncard-text: #111;
+    --actioncard-muted: #333;
+    --actioncard-border: #d8d4c8;
+}
+
+:root[data-theme="dark"] {
+    --actioncard-paper: #171a1f;
+    --actioncard-flavour: #22262c;
+    --actioncard-text: #f2f3f1;
+    --actioncard-muted: #c9cdd2;
+    --actioncard-border: #3c424a;
+}
+
+:root[data-theme="dark"][data-contrast="high"] {
+    --actioncard-text: #fff;
+    --actioncard-muted: #fff;
+}
+
+:root[data-theme="light"][data-contrast="high"] {
+    --actioncard-text: #000;
+    --actioncard-muted: #000;
+}
+
+.actioncard {
+    --actioncard-usage-colour: var(--actioncard-usage-atwill);
+
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 0.75rem;
+    line-height: 1.08;
+    color: var(--actioncard-text);
+    background-color: var(--actioncard-paper);
+    border: 1px solid var(--actioncard-border);
+    border-radius: 0;
+}
+
+.actioncard.usage-atwill {
+    --actioncard-usage-colour: var(--actioncard-usage-atwill);
+}
+
+.actioncard.usage-scene {
+    --actioncard-usage-colour: var(--actioncard-usage-scene);
+}
+
+.actioncard.usage-episode {
+    --actioncard-usage-colour: var(--actioncard-usage-episode);
+}
+
+.actioncard.usage-passive {
+    --actioncard-usage-colour: var(--actioncard-usage-passive);
+}
+
+.actioncard .actioncard-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: baseline;
+    min-height: 22px;
+    padding: 3px 8px;
+    color: #fff;
+    background-color: var(--actioncard-usage-colour);
+}
+
+.actioncard .actioncard-title {
+    margin: 0;
+    min-width: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.875rem;
+    font-weight: 700;
+    line-height: 1.05;
+    color: inherit;
+    overflow-wrap: anywhere;
+}
+
+.actioncard .actioncard-meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 4px;
+    max-width: 320px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.625rem;
+    font-weight: 700;
+    line-height: 1.05;
+    text-align: right;
+}
+
+.actioncard .actioncard-meta > span + span::before {
+    content: " ";
+}
+
+.actioncard .actioncard-body {
+    display: block;
+}
+
+.actioncard .actioncard-flavour {
+    margin: 0;
+    padding: 2px 8px;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: 0.6875rem;
+    font-style: italic;
+    line-height: 1.05;
+    color: var(--actioncard-muted);
+    background-color: var(--actioncard-flavour);
+}
+
+.actioncard .actioncard-usage,
+.actioncard .actioncard-property,
+.actioncard .actioncard-stats,
+.actioncard .actioncard-rollrow,
+.actioncard .actioncard-resolution {
+    margin: 0;
+    padding-right: 8px;
+    padding-left: 12px;
+}
+
+.actioncard .actioncard-usage {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px;
+    padding-top: 1px;
+    padding-bottom: 0;
+    font-size: 0.75rem;
+    font-weight: 700;
+}
+
+.actioncard .actioncard-glyph,
+.actioncard .actioncard-rollicon {
+    font-family:
+        "DejaVu Sans",
+        "Arial Unicode MS",
+        Arial,
+        sans-serif;
+    font-size: 0.75rem;
+    font-variant-emoji: text;
+    line-height: 1;
+}
+
+.actioncard .actioncard-property {
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: calc(12px + 0.75em);
+    font-size: inherit;
+    line-height: 1.04;
+    color: inherit;
+    text-indent: -0.75em;
+    white-space: pre-line;
+}
+
+.actioncard .actioncard-property-label,
+.actioncard .actioncard-stat-label,
+.actioncard .actioncard-rolllabel,
+.actioncard .actioncard-resolution-label {
+    font-weight: 700;
+}
+
+.actioncard .actioncard-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5ch;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.actioncard .actioncard-stat {
+    display: inline-flex;
+    gap: 2px;
+    align-items: baseline;
+    min-width: 0;
+}
+
+.actioncard .actioncard-stat-value {
+    order: 2;
+}
+
+.actioncard .actioncard-stat-label {
+    order: 1;
+}
+
+.actioncard .actioncard-stat-label::after {
+    content: ":";
+}
+
+.actioncard .actioncard-rollrow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 5ch;
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.actioncard .actioncard-rollitem {
+    display: flex;
+    align-items: baseline;
+    gap: 2px;
+    min-width: 0;
+}
+
+.actioncard .actioncard-rollitem:last-child {
+    justify-content: flex-start;
+    text-align: left;
+}
+
+.actioncard .actioncard-rolllabel::after {
+    content: ":";
+}
+
+.actioncard .actioncard-rollvalue {
+    min-width: 0;
+    font-weight: 400;
+}
+
+.actioncard .actioncard-rollcontent {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    min-width: 0;
+}
+
+.actioncard .actioncard-rollicon {
+    flex: 0 0 auto;
+    vertical-align: baseline;
+    color: currentcolor;
+}
+
+.actioncard .actioncard-resolution {
+    display: block;
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: calc(12px + 0.75em);
+    text-indent: -0.75em;
+}
+
+.actioncard .actioncard-resolution-label {
+    display: inline;
+    margin: 0;
+    font-family: inherit;
+    font-size: inherit;
+    line-height: 1.04;
+    letter-spacing: normal;
+    color: inherit;
+    text-transform: none;
+}
+
+.actioncard .actioncard-resolution-copy {
+    display: inline;
+    margin: 0;
+    font-size: inherit;
+    line-height: 1.04;
+    color: inherit;
+    white-space: pre-line;
+}
+
+.actioncard .actioncard-resolution-copy::before {
+    content: " ";
+}
+
+.actioncard .actioncard-empty-note {
+    margin: 0;
+    padding: 8px;
+    font-size: 0.6875rem;
+    color: var(--text-subtle, #686e67);
+    background-color: var(--surface-low, #f3f3ee);
+}
+
+.actioncard-error {
+    margin: 0;
+    padding: 16px;
+    color: var(--danger, #ba1a1a);
+    background-color: var(--surface-low, #f3f3ee);
+    border: 1px solid var(--border, #d6dad3);
+}
+
+.definitiongrid > .actioncard {
+    align-self: start;
+}
+
+@media (max-width: 560px) {
+    .actioncard .actioncard-header {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .actioncard .actioncard-meta {
+        justify-content: flex-start;
+        max-width: none;
+        text-align: left;
+    }
+}

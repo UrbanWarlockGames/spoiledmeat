@@ -1,0 +1,582 @@
+<section
+    class="actioncard-builder js-actioncard-builder"
+    id="action-card-builder"
+    aria-labelledby="builder-title"
+>
+    <div class="actioncard-builder-workspace">
+
+                <section class="builder" aria-labelledby="builder-title">
+                    <header class="document-header">
+                        <p class="document-kicker">
+                            Builder
+                        </p>
+
+                        <h1 class="document-title" id="builder-title">
+                            Action Card Builder
+                        </h1>
+
+                        <p class="document-summary">
+                            Create, preview, and export Action Cards for the rules
+                            reference. Empty fields are hidden automatically.
+                        </p>
+                    </header>
+                    <section
+                        class="actioncard-builder-tools"
+                        aria-label="Action Card tools"
+                    >
+                        <select
+                            class="field-control actioncard-builder-library js-card-library"
+                            name="card-library"
+                            aria-label="Card library"
+                        >
+                            <option value="blank">Blank card</option>
+                            <option value="custom" hidden>Custom card</option>
+                        </select>
+
+                        <div class="actioncard-builder-actions">
+                            <button
+                                class="btn btn-outline js-new-card"
+                                type="button"
+                            >
+                                New
+                            </button>
+                            <button
+                                class="btn btn-outline js-import-card"
+                                type="button"
+                            >
+                                Import
+                            </button>
+                            <button
+                                class="btn btn-outline js-export-card"
+                                type="button"
+                            >
+                                Export
+                            </button>
+                            <button
+                                class="btn btn-outline js-export-image"
+                                type="button"
+                            >
+                                PNG
+                            </button>
+                            <button
+                                class="btn btn-primary js-share-card"
+                                type="button"
+                            >
+                                Share
+                            </button>
+                        </div>
+
+                        <input
+                            class="js-import-input"
+                            type="file"
+                            accept="application/json,.json"
+                            hidden
+                        >
+                    </section>
+
+                    <dialog
+                        class="actioncard-share-dialog js-share-dialog"
+                        aria-labelledby="actioncard-share-title"
+                    >
+                        <div class="actioncard-share-shell">
+                            <header class="actioncard-share-header">
+                                <h2
+                                    class="actioncard-share-title"
+                                    id="actioncard-share-title"
+                                >
+                                    Share card
+                                </h2>
+                                <button
+                                    class="btn btn-icon btn-outline js-close-share"
+                                    type="button"
+                                    aria-label="Close"
+                                >
+                                    ×
+                                </button>
+                            </header>
+
+                            <div class="actioncard-share-body">
+                                <label
+                                    class="field"
+                                    for="actioncard-code"
+                                >
+                                    <span class="field-label">Code</span>
+                                    <input
+                                        class="field-control js-compact-code"
+                                        id="actioncard-code"
+                                        type="text"
+                                        spellcheck="false"
+                                        autocomplete="off"
+                                    >
+                                </label>
+
+                                <div class="actioncard-share-actions">
+                                    <button
+                                        class="btn btn-outline js-load-code"
+                                        type="button"
+                                    >
+                                        Open
+                                    </button>
+                                    <button
+                                        class="btn btn-primary js-copy-code"
+                                        type="button"
+                                    >
+                                        Copy
+                                    </button>
+                                    <button
+                                        class="btn btn-outline js-copy-markdown"
+                                        type="button"
+                                    >
+                                        Markdown
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </dialog>
+
+
+                    <script
+                        class="js-builder-help-data"
+                        type="application/json"
+                    >
+                        {
+                            "powerName": {
+                                "title": "Power name",
+                                "copy": "For example: Hurl."
+                            },
+                            "keywords": {
+                                "title": "Keywords",
+                                "copy": "Separate multiple keywords with commas. For example: Movement, Forced Movement."
+                            },
+                            "skill": {
+                                "title": "Skill used",
+                                "copy": "For example: Perception + Awareness."
+                            },
+                            "target": {
+                                "title": "Target",
+                                "copy": "For example: Small Creature."
+                            }
+                        }
+                    </script>
+
+                    <div
+                        class="keyword-popover actioncard-help-popover js-builder-help-popover"
+                        id="actioncard-field-help"
+                        role="tooltip"
+                        hidden
+                    >
+                        <p
+                            class="keyword-popover-title js-builder-help-title"
+                        ></p>
+                        <p
+                            class="keyword-popover-copy js-builder-help-copy"
+                        ></p>
+                    </div>
+
+                    <form
+                        class="builder-form js-card-form"
+                        autocomplete="off"
+                    >
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Title bar
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label class="field field-span-2">
+                                    <span class="field-label">Title</span>
+                                    <input
+                                        class="field-control js-field"
+                                        name="title"
+                                        type="text"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">
+                                        Action phase
+                                    </span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="phase"
+                                    >
+                                        <option value="">Not shown</option>
+                                        <option value="narrative">
+                                            Narrative
+                                        </option>
+                                        <option value="tactical">
+                                            Tactical
+                                        </option>
+                                        <option value="downtime">
+                                            Downtime
+                                        </option>
+                                    </select>
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">
+                                        Category
+                                    </span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="category"
+                                    >
+                                        <option value="">Not shown</option>
+                                        <option value="attack">Attack</option>
+                                        <option value="control">Control</option>
+                                        <option value="protect">Protect</option>
+                                        <option value="utility">Utility</option>
+                                        <option value="alteration">
+                                            Alteration
+                                        </option>
+                                        <option value="interaction">
+                                            Power Interaction
+                                        </option>
+                                    </select>
+                                </label>
+
+                                <div
+                                    class="field js-interaction-field"
+                                    hidden
+                                >
+                                    <button
+                                        class="field-label field-help-trigger js-builder-help"
+                                        id="actioncard-interaction-label"
+                                        type="button"
+                                        data-builder-help="powerName"
+                                        aria-controls="actioncard-field-help"
+                                    >
+                                        Power name
+                                    </button>
+                                    <input
+                                        class="field-control js-field"
+                                        name="interactionName"
+                                        type="text"
+                                        aria-labelledby="actioncard-interaction-label"
+                                    >
+                                </div>
+
+                                <label class="field">
+                                    <span class="field-label">Cost</span>
+                                    <input
+                                        class="field-control js-field"
+                                        name="cost"
+                                        type="number"
+                                        min="0"
+                                        step="1"
+                                        inputmode="numeric"
+                                    >
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Description
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label class="field field-span-2">
+                                    <span class="field-label">
+                                        Flavour text
+                                    </span>
+                                    <textarea
+                                        class="field-control js-field"
+                                        name="flavour"
+                                        rows="3"
+                                    ></textarea>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Usage
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label class="field">
+                                    <span class="field-label">Usage</span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="usage"
+                                    >
+                                        <option value="">Not shown</option>
+                                        <option value="atwill">At-Will</option>
+                                        <option value="scene">Scene</option>
+                                        <option value="episode">Episode</option>
+                                        <option value="passive">Passive</option>
+                                    </select>
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">
+                                        Action cost
+                                    </span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="actionCost"
+                                    >
+                                        <option value="">Not shown</option>
+                                        <option value="minor">Minor</option>
+                                        <option value="standard">
+                                            Standard
+                                        </option>
+                                        <option value="reaction">
+                                            Reaction
+                                        </option>
+                                        <option value="free">Free</option>
+                                    </select>
+                                </label>
+
+                                <div class="field field-span-2">
+                                    <button
+                                        class="field-label field-help-trigger js-builder-help"
+                                        id="actioncard-keywords-label"
+                                        type="button"
+                                        data-builder-help="keywords"
+                                        aria-controls="actioncard-field-help"
+                                    >
+                                        Keywords
+                                    </button>
+                                    <input
+                                        class="field-control js-field"
+                                        name="keywords"
+                                        type="text"
+                                        aria-labelledby="actioncard-keywords-label"
+                                    >
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Timing and measurements
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label class="field field-span-2">
+                                    <span class="field-label">Trigger</span>
+                                    <textarea
+                                        class="field-control js-field"
+                                        name="trigger"
+                                        rows="2"
+                                    ></textarea>
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">Duration</span>
+                                    <input
+                                        class="field-control js-field"
+                                        name="duration"
+                                        type="text"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">Area</span>
+                                    <input
+                                        class="field-control js-field"
+                                        name="area"
+                                        type="text"
+                                    >
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">Range</span>
+                                    <input
+                                        class="field-control js-field"
+                                        name="range"
+                                        type="text"
+                                    >
+                                </label>
+
+                                <label class="field field-span-2">
+                                    <span class="field-label">
+                                        Requirement
+                                    </span>
+                                    <textarea
+                                        class="field-control js-field"
+                                        name="requirement"
+                                        rows="2"
+                                    ></textarea>
+                                </label>
+                            </div>
+                        </section>
+
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Roll and target
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label class="field">
+                                    <span class="field-label">Roll</span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="roll"
+                                    >
+                                        <option value="">Not shown</option>
+                                        <option value="power">
+                                            Power Roll
+                                        </option>
+                                        <option value="attack">
+                                            Attack Roll
+                                        </option>
+                                        <option value="skill">
+                                            Skill Roll
+                                        </option>
+                                    </select>
+                                </label>
+
+                                <label class="field">
+                                    <span class="field-label">
+                                        Roll icon
+                                    </span>
+                                    <select
+                                        class="field-control js-field"
+                                        name="rollIcon"
+                                    >
+                                        <option value="">None</option>
+                                        <option value="melee">Melee</option>
+                                        <option value="ranged">Ranged</option>
+                                    </select>
+                                </label>
+
+                                <div
+                                    class="field js-skill-field"
+                                    hidden
+                                >
+                                    <button
+                                        class="field-label field-help-trigger js-builder-help"
+                                        id="actioncard-skill-label"
+                                        type="button"
+                                        data-builder-help="skill"
+                                        aria-controls="actioncard-field-help"
+                                    >
+                                        Skill used
+                                    </button>
+                                    <input
+                                        class="field-control js-field"
+                                        name="skill"
+                                        type="text"
+                                        aria-labelledby="actioncard-skill-label"
+                                    >
+                                </div>
+
+                                <div class="field">
+                                    <button
+                                        class="field-label field-help-trigger js-builder-help"
+                                        id="actioncard-target-label"
+                                        type="button"
+                                        data-builder-help="target"
+                                        aria-controls="actioncard-field-help"
+                                    >
+                                        Target
+                                    </button>
+                                    <input
+                                        class="field-control js-field"
+                                        name="target"
+                                        type="text"
+                                        aria-labelledby="actioncard-target-label"
+                                    >
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="editor-section">
+                            <h2 class="sectionbar">
+                                Resolution
+                            </h2>
+
+                            <div class="editor-grid">
+                                <label
+                                    class="field field-span-2 js-effect-field"
+                                    hidden
+                                >
+                                    <span class="field-label">Effect</span>
+                                    <textarea
+                                        class="field-control js-field"
+                                        name="effect"
+                                        rows="5"
+                                    ></textarea>
+                                </label>
+
+                                <div
+                                    class="field-span-2 js-tier-fields"
+                                >
+                                    <div class="editor-grid">
+                                        <label class="field field-span-2">
+                                            <span class="field-label">
+                                                Weak Hit
+                                            </span>
+                                            <textarea
+                                                class="field-control js-field"
+                                                name="weak"
+                                                rows="4"
+                                            ></textarea>
+                                        </label>
+
+                                        <label class="field field-span-2">
+                                            <span class="field-label">
+                                                Hit
+                                            </span>
+                                            <textarea
+                                                class="field-control js-field"
+                                                name="hit"
+                                                rows="4"
+                                            ></textarea>
+                                        </label>
+
+                                        <label class="field field-span-2">
+                                            <span class="field-label">
+                                                Strong Hit
+                                            </span>
+                                            <textarea
+                                                class="field-control js-field"
+                                                name="strong"
+                                                rows="4"
+                                            ></textarea>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </form>
+                </section>
+
+                <section
+                    class="actioncard-region"
+                    aria-labelledby="actioncard-heading"
+                >
+                    <header class="document-header">
+                        <p class="document-kicker">
+                            Preview
+                        </p>
+
+                        <h2
+                            class="document-title"
+                            id="actioncard-heading"
+                        >
+                            Card preview
+                        </h2>
+
+                        <p class="document-summary">
+                            Matches the card shown in the rules reference and
+                            definition grids.
+                        </p>
+                    </header>
+
+                    <div
+                        class="actioncard-preview js-actioncard-preview"
+                        aria-live="polite"
+                    ></div>
+
+                    <p
+                        class="actioncard-status js-status"
+                        role="status"
+                    ></p>
+                </section>
+            
+    </div>
+</section>

@@ -1,0 +1,93 @@
+{
+    "version": 1,
+    "type": "action-card-library",
+    "cards": [
+        {
+            "id": "hurl",
+            "group": "Power",
+            "title": "Hurl",
+            "action": {
+                "title": "Hurl",
+                "phase": "tactical",
+                "category": "control",
+                "interactionName": "",
+                "cost": "",
+                "flavour": "Move the Target forcefully in an orthogonal line from their initial position to another position within 1 metre. A Physical Target deals damage through Collision; an Elemental Target deals damage using PV.",
+                "usage": "atwill",
+                "actionCost": "standard",
+                "keywords": "Forced Movement",
+                "trigger": "",
+                "duration": "",
+                "area": "",
+                "range": "1 metre",
+                "requirement": "",
+                "roll": "power",
+                "rollIcon": "",
+                "skill": "",
+                "target": "Small Physical or Elemental Target",
+                "effect": "",
+                "weak": "Move the Target up to 1 + PV metres.",
+                "hit": "Move the Target up to 4 + PV metres.",
+                "strong": "Move the Target up to 6 + PV metres."
+            }
+        },
+        {
+            "id": "exploit-weakness",
+            "group": "Combat",
+            "title": "Exploit Weakness",
+            "action": {
+                "title": "Exploit Weakness",
+                "phase": "tactical",
+                "category": "utility",
+                "interactionName": "",
+                "cost": "",
+                "flavour": "Roll a relevant skill, such as Perception + Awareness (general) or Smarts + an appropriate skill based on the Entity type, to determine a Target's weak point. You may downgrade the Hit Tier if it is beneficial to you.",
+                "usage": "atwill",
+                "actionCost": "standard",
+                "keywords": "",
+                "trigger": "",
+                "duration": "",
+                "area": "",
+                "range": "",
+                "requirement": "",
+                "roll": "skill",
+                "rollIcon": "",
+                "skill": "Relevant skill",
+                "target": "any",
+                "effect": "",
+                "weak": "Learn if the Target has a Vulnerability or Resistance (your choice).",
+                "hit": "Determine one Vulnerability and one Resistance of the Target.",
+                "strong": "Determine all Vulnerabilities or all Resistances of the Target."
+            }
+        },
+        {
+            "id": "reach-out",
+            "group": "Downtime",
+            "title": "Reach Out / Call Out",
+            "action": {
+                "title": "Reach Out / Call Out",
+                "phase": "downtime",
+                "category": "utility",
+                "interactionName": "",
+                "cost": "",
+                "flavour": "Notice something about another Nakama or confront an issue between you.",
+                "usage": "episode",
+                "actionCost": "",
+                "keywords": "Trust, Antagonism",
+                "trigger": "",
+                "duration": "",
+                "area": "",
+                "range": "",
+                "requirement": "The Initiator must make themself vulnerable first by revealing a related Fear, Desire, or Need; admitting failure, envy, fear, shame, or resentment; asking for help; revealing a Vice; or revealing a Secret.",
+                "roll": "",
+                "rollIcon": "",
+                "skill": "",
+                "target": "Another Nakama",
+                "effect": "One Player becomes the Initiator.\n\nDescribe how your character notices something about another Nakama or decides to confront an issue between you.\n\nUse Reach Out (Trust) when you offer comfort, patience, honesty, forgiveness, support, or protection.\n\nUse Call Out (Antagonism) when you challenge, provoke, confront, compete with, or refuse to let another Nakama avoid something important.\n\nState something specific your character wants from them, such as understanding, forgiveness, respect, trust, honesty, support, encouragement, an explanation, a promise, or recognition.\n\nThen, the Target chooses their response.\n\nLET THEM IN\nThe Target accepts the emotional connection. They must also make themself vulnerable by explaining what Drive or Vice is causing their behaviour. If both participants genuinely and meaningfully engage, choose two together:\n• Both recover 1 Stress.\n• Both recover Belief equal to the other participant's Leadership.\n• Gain +1 Trust / +1 Antagonism.\n• Clear a Courtesy Owed / Triumph between the participants.\nThe Scene should leave both characters changed.\n\nREBUKE\nThe Target refuses the connection. Examples include deflecting with humour, denying the problem or that they need help, changing the subject, walking away, shutting down emotionally, lying about their feelings, mocking the Initiator for caring, or insisting they can handle it alone.\n\nThe Target retreats into their Vice and marks Ego. The Initiator gains 1 Influence on them. Choose one consequence that fits the Scene:\n• Antagonism between you increases by 1.\n• Both suffer 1 Belief damage.\n• The Target gains 1 Stress.\n• The Target owes the Initiator a Courtesy.\n• The Initiator gains 1 Stress.\nThe Scene should reveal why the connection failed.",
+                "weak": "",
+                "hit": "",
+                "strong": ""
+            }
+        }
+    ]
+}

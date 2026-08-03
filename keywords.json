@@ -1,0 +1,20 @@
+{
+    "__comment": "Example entries are disabled. Replace the placeholder rules and set enabled to true.",
+    "keywords": [
+        {
+            "enabled": false,
+            "keyword": "Clash",
+            "rules": "Placeholder: describe how a Clash is initiated, resolved, and concluded."
+        },
+        {
+            "enabled": false,
+            "keyword": "Weak Hit",
+            "rules": "Placeholder: describe the result and any cost associated with a Weak Hit."
+        },
+        {
+            "enabled": false,
+            "keyword": "Drive",
+            "rules": "Placeholder: define this keyword and explain when its rule applies."
+        }
+    ]
+}

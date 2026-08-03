@@ -19,7 +19,10 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@700;800&family=Roboto+Condensed:wght@400;500;600;700;800&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&display=swap"
+        rel="stylesheet"
+    >
 	<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
     <style>
         :root {
@@ -39,9 +42,10 @@
             --radius-md: 8px;
             --radius-lg: 12px;
 
-            --content-max: 1200px;
-            --measure: 760px;
-            --sidebar: 256px;
+			--content-max: 1200px;
+			--measure: 760px;
+			--measure-wide: 960px;
+			--sidebar: 256px;
             --toc: 256px;
             --header-height: 72px;
             --navigation-width: var(--sidebar);
@@ -69,44 +73,70 @@
                 0 16px 32px rgba(0, 0, 0, 0.15);
         }
 
-        :root[data-theme="dark"] {
-            color-scheme: dark;
+		:root[data-theme="dark"] {
+			color-scheme: dark;
 
-            --background: #10131a;
-            --surface: #141820;
-            --surface-low: #191c22;
-            --surface-mid: #1f242d;
-            --surface-high: #2a303b;
-            --border: #3a3f49;
-            --border-strong: #515865;
-            --text: #f3f4f6;
-            --text-muted: #c4c8d0;
-            --text-subtle: #8f96a3;
-            --secondary: #cbd5e1;
-            --secondary-bg: #232a35;
-            --warning: #f59e0b;
-            --danger: #ffb4ab;
-            --inset: #0b0e14;
+			--background: #10131a;
+			--surface: #141820;
+			--surface-low: #191c22;
+			--surface-mid: #1f242d;
+			--surface-high: #2a303b;
+			--border: #3a3f49;
+			--border-strong: #515865;
+			--text: #f3f4f6;
+			--text-muted: #c4c8d0;
+			--text-subtle: #8f96a3;
+			--secondary: #cbd5e1;
+			--secondary-bg: #232a35;
+			--warning: #f59e0b;
+			--danger: #ffb4ab;
+			--inset: #0b0e14;
+			--mark-background: #554618;
+			--mark-text: #fff4c2;
+			--note-background: #1b222c;
+			--note-border: #64748b;
+			--keyword-background: #242a34;
+			--keyword-popover: #161a22;
+		}
+
+		:root[data-theme="light"] {
+			color-scheme: light;
+
+			--background: #f8fafc;
+			--surface: #fff;
+			--surface-low: #f2f4f6;
+			--surface-mid: #eceef0;
+			--surface-high: #e6e8ea;
+			--border: #e2e8f0;
+			--border-strong: #cbd5e1;
+			--text: #191c1e;
+			--text-muted: #475569;
+			--text-subtle: #64748b;
+			--secondary: #1a1a1a;
+			--secondary-bg: #e2e8f0;
+			--warning: #b45309;
+			--danger: #ba1a1a;
+			--inset: #fff;
+			--mark-background: #fff0ad;
+			--mark-text: #453500;
+			--note-background: #f1f5f9;
+			--note-border: #64748b;
+			--keyword-background: #eef2f6;
+			--keyword-popover: #fff;
+		}
+
+        :root[data-theme="dark"][data-contrast="high"] {
+            --text: #fff;
+            --text-muted: #fff;
+            --text-subtle: #fff;
+            --secondary: #fff;
         }
 
-        :root[data-theme="light"] {
-            color-scheme: light;
-
-            --background: #f8fafc;
-            --surface: #fff;
-            --surface-low: #f2f4f6;
-            --surface-mid: #eceef0;
-            --surface-high: #e6e8ea;
-            --border: #e2e8f0;
-            --border-strong: #cbd5e1;
-            --text: #191c1e;
-            --text-muted: #475569;
-            --text-subtle: #64748b;
-            --secondary: #1a1a1a;
-            --secondary-bg: #e2e8f0;
-            --warning: #b45309;
-            --danger: #ba1a1a;
-            --inset: #fff;
+        :root[data-theme="light"][data-contrast="high"] {
+            --text: #000;
+            --text-muted: #000;
+            --text-subtle: #000;
+            --secondary: #000;
         }
 
         *,
@@ -599,18 +629,30 @@
             min-width: 0;
         }
 
-        .workspace {
-            display: grid;
-            grid-template-columns: minmax(0, var(--measure)) var(--toc);
-            gap: var(--space-5);
-            width: min(100%, var(--content-max));
-            margin: 0 auto;
-            padding: var(--space-5);
-        }
+		.workspace {
+			position: relative;
+			display: grid;
+			grid-template-columns: minmax(0, var(--measure)) var(--toc);
+			gap: var(--space-5);
+			width: min(100%, var(--content-max));
+			margin: 0 auto;
+			padding: var(--space-5);
+			transition:
+				grid-template-columns var(--duration-panel) var(--ease-standard);
+		}
 
-        .doc {
-            min-width: 0;
-        }
+		.workspace.is-toc-hidden {
+			grid-template-columns: minmax(0, 1fr);
+		}
+
+		.workspace.is-toc-hidden .doc {
+			width: min(100%, var(--measure-wide));
+			justify-self: center;
+		}
+
+		.doc {
+			min-width: 0;
+		}
 
 		.doc a {
 			color: #2563eb;
@@ -665,7 +707,9 @@
 		.doc-body h1,
 		.doc-body h2,
 		.doc-body h3,
-		.doc-body h4 {
+		.doc-body h4,
+		.doc-body h5,
+		.doc-body h6 {
 			margin: 0;
 			font-family: var(--font-heading);
 			color: var(--text);
@@ -675,20 +719,21 @@
             display: none;
         }
 
-        .doc-body h2 {
-            padding: var(--space-4) 0 var(--space-1);
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.3333;
-            border-bottom: 1px solid var(--border-strong);
-        }
+		.doc-body h2 {
+			padding-bottom: var(--space-1);
+			font-size: 24px;
+			font-weight: 800;
+			line-height: 1.3333;
+			letter-spacing: -0.01em;
+			border-bottom: 1px solid var(--border-strong);
+		}
 
         .doc-body h3 {
             font-size: 20px;
             font-weight: 800;
             line-height: 1.4;
         }
-		
+
 		.doc-body h4 {
 			font-size: 16px;
 			font-weight: 800;
@@ -728,6 +773,291 @@
             font-weight: 700;
             color: var(--text);
         }
+
+		.doc-body h1,
+		.doc-body h2,
+		.doc-body h3,
+		.doc-body h4,
+		.doc-body h5,
+		.doc-body h6 {
+			scroll-margin-top: calc(var(--header-height) + var(--space-3));
+		}
+
+		.doc-body h5,
+		.doc-body h6 {
+			margin: 0;
+			font-family: var(--font-heading);
+			color: var(--text);
+		}
+
+		.doc-body h5 {
+			font-size: 14px;
+			font-weight: 800;
+			line-height: 1.4286;
+			letter-spacing: 0.04em;
+			text-transform: uppercase;
+		}
+
+		.doc-body h6 {
+			font-size: 12px;
+			font-weight: 800;
+			line-height: 1.3333;
+			letter-spacing: 0.08em;
+			color: var(--text-muted);
+			text-transform: uppercase;
+		}
+
+		.doc-body h1 strong,
+		.doc-body h2 strong,
+		.doc-body h3 strong,
+		.doc-body h4 strong,
+		.doc-body h5 strong,
+		.doc-body h6 strong {
+			font-weight: inherit;
+		}
+
+		.doc-body h1 em,
+		.doc-body h2 em,
+		.doc-body h3 em,
+		.doc-body h4 em,
+		.doc-body h5 em,
+		.doc-body h6 em {
+			font-style: italic;
+		}
+
+		.doc-body mark {
+			padding: 0 4px;
+			color: var(--mark-text);
+			background-color: var(--mark-background);
+			border-radius: var(--radius-sm);
+			box-decoration-break: clone;
+			-webkit-box-decoration-break: clone;
+		}
+
+		.doc-body del {
+			color: var(--text-subtle);
+			text-decoration-thickness: 1px;
+		}
+
+		.doc-body li > p {
+			margin: 0;
+		}
+
+		.doc-body li > p + p,
+		.doc-body li > ul,
+		.doc-body li > ol {
+			margin-top: var(--space-1);
+		}
+
+		.doc-body ul ul,
+		.doc-body ul ol,
+		.doc-body ol ul,
+		.doc-body ol ol {
+			margin-top: var(--space-1);
+		}
+
+		.doc-body pre {
+			position: relative;
+			margin: 0;
+			overflow-x: auto;
+			color: var(--text);
+			background-color: var(--inset);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-md);
+		}
+
+		.doc-body pre code {
+			display: block;
+			min-width: max-content;
+			padding: var(--space-3);
+			font-size: 14px;
+			line-height: 1.5714;
+			background-color: transparent;
+			border: 0;
+			border-radius: 0;
+		}
+
+		.codeblock {
+			display: grid;
+			overflow: hidden;
+			background-color: var(--inset);
+			border: 1px solid var(--border);
+			border-radius: var(--radius-md);
+		}
+
+		.codeblock-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: var(--space-2);
+			min-height: 40px;
+			padding: var(--space-1) var(--space-2);
+			background-color: var(--surface-mid);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.codeblock-title {
+			margin: 0;
+			overflow: hidden;
+			font-size: 12px;
+			font-weight: 800;
+			line-height: 1.3333;
+			letter-spacing: 0.04em;
+			color: var(--text-muted);
+			text-overflow: ellipsis;
+			text-transform: uppercase;
+			white-space: nowrap;
+		}
+
+		.codeblock-language {
+			font-size: 12px;
+			line-height: 1.3333;
+			color: var(--text-subtle);
+		}
+
+		.codeblock pre {
+			border: 0;
+			border-radius: 0;
+		}
+
+		.markdown-note {
+			display: grid;
+			gap: var(--space-2);
+			padding: var(--space-3);
+			background-color: var(--note-background);
+			border: 1px solid var(--border);
+			border-left: var(--space-1) solid var(--note-border);
+			border-radius: var(--radius-md);
+		}
+
+		.markdown-note-header {
+			display: flex;
+			align-items: center;
+			gap: var(--space-1);
+		}
+
+		.markdown-note-title {
+			margin: 0;
+			font-family: var(--font-heading);
+			font-size: 16px;
+			font-weight: 800;
+			line-height: 1.5;
+			color: var(--text);
+		}
+
+		.markdown-note-body {
+			display: grid;
+			gap: var(--space-2);
+		}
+
+		.markdown-note-body > :first-child {
+			margin-top: 0;
+		}
+
+		.markdown-note-body > :last-child {
+			margin-bottom: 0;
+		}
+
+		.markdown-note-note {
+			--note-border: var(--text-subtle);
+		}
+
+		.markdown-note-warning {
+			--note-border: var(--warning);
+		}
+
+		.markdown-note-danger {
+			--note-border: var(--danger);
+		}
+
+		.markdown-note-rule {
+			--note-border: var(--accent);
+		}
+
+		.markdown-table-caption {
+			padding: var(--space-2);
+			font-size: 14px;
+			font-weight: 700;
+			line-height: 1.4286;
+			color: var(--text);
+			text-align: left;
+			background-color: var(--surface-low);
+			border-bottom: 1px solid var(--border);
+		}
+
+		.footnotes {
+			display: grid;
+			gap: var(--space-2);
+			padding-top: var(--space-4);
+			border-top: 1px solid var(--border-strong);
+		}
+
+		.footnotes-title {
+			margin: 0;
+			font-family: var(--font-heading);
+			font-size: 18px;
+			font-weight: 800;
+			line-height: 1.3333;
+			color: var(--text);
+		}
+
+		.footnotes-list {
+			display: grid;
+			gap: var(--space-2);
+			margin: 0;
+			padding-left: var(--space-3);
+		}
+
+		.footnote-reference,
+		.footnote-backlink {
+			font-size: 0.75em;
+			font-weight: 700;
+			vertical-align: super;
+		}
+
+		.keyword {
+			position: relative;
+			display: inline;
+			padding: 0 2px;
+			font: inherit;
+			color: inherit;
+			background-color: var(--keyword-background);
+			border: 0;
+			border-bottom: 1px dotted var(--text-subtle);
+			border-radius: 2px;
+			cursor: help;
+		}
+
+		.keyword-popover {
+			position: fixed;
+			z-index: 100;
+			width: min(320px, calc(100vw - var(--space-4)));
+			padding: var(--space-2);
+			color: var(--text);
+			background-color: var(--keyword-popover);
+			border: 1px solid var(--border-strong);
+			border-radius: var(--radius-md);
+			box-shadow: var(--shadow-level-3);
+		}
+
+		.keyword-popover[hidden] {
+			display: none;
+		}
+
+		.keyword-popover-title {
+			margin: 0 0 var(--space-1);
+			font-family: var(--font-heading);
+			font-size: 14px;
+			font-weight: 800;
+			line-height: 1.4286;
+		}
+
+		.keyword-popover-copy {
+			margin: 0;
+			font-size: 14px;
+			line-height: 1.4286;
+			color: var(--text-muted);
+		}
 
         .markdown-table-wrap {
             width: 100%;
@@ -835,115 +1165,6 @@
             color: var(--text-muted);
         }
 
-        .power {
-            overflow: hidden;
-            background-color: var(--surface-low);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-md);
-            transition:
-                border-color var(--duration-fast) var(--ease-standard),
-                box-shadow var(--duration-fast) var(--ease-standard);
-        }
-
-        .power:hover {
-            border-color: var(--border-strong);
-            box-shadow: var(--shadow-level-2);
-        }
-
-        .power-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: var(--space-3);
-            padding: var(--space-3);
-            background-color: var(--surface-mid);
-            border-top: 4px solid var(--secondary);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .power-meta {
-            margin: 0 0 var(--space-1);
-            font-size: 12px;
-            font-weight: 800;
-            line-height: 1.3333;
-            letter-spacing: 0.08em;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .power-title {
-            margin: 0;
-            font-family: var(--font-heading);
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.3333;
-            letter-spacing: -0.01em;
-            color: var(--text);
-            text-transform: uppercase;
-        }
-
-        .power-cost {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 96px;
-            min-height: 64px;
-            padding: var(--space-1) var(--space-2);
-            font-family: var(--font-heading);
-            font-size: 40px;
-            font-weight: 800;
-            line-height: 1;
-            color: var(--text);
-            background-color: var(--inset);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-        }
-
-        .power-body {
-            display: grid;
-            gap: var(--space-3);
-            padding: var(--space-3);
-        }
-
-        .power-tiers {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: var(--space-1);
-        }
-
-        .power-tiers-basic {
-            grid-template-columns: minmax(0, 240px);
-            justify-content: center;
-        }
-
-        .tier {
-            display: grid;
-            gap: var(--space-1);
-            min-height: 72px;
-            padding: var(--space-2);
-            text-align: center;
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius-sm);
-        }
-
-        .tier-value {
-            font-family: var(--font-heading);
-            font-size: 24px;
-            font-weight: 800;
-            line-height: 1.3333;
-            color: var(--accent);
-        }
-
-        .tier-label {
-            font-size: 12px;
-            font-weight: 700;
-            line-height: 1.3333;
-            letter-spacing: 0.08em;
-            color: var(--text-subtle);
-            text-transform: uppercase;
-        }
-
         .panel {
             display: grid;
             gap: var(--space-3);
@@ -952,6 +1173,54 @@
             border: 1px solid var(--border);
             border-radius: var(--radius-md);
         }
+
+		.toc-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: var(--space-2);
+		}
+
+		.toc-toggle {
+			min-height: 32px;
+			padding: 4px var(--space-1);
+			font-size: 12px;
+			line-height: 1.3333;
+		}
+
+		.toc-show {
+			position: fixed;
+			top: calc(var(--header-height) + var(--space-3));
+			right: var(--space-3);
+			z-index: 30;
+			width: 40px;
+			min-height: 40px;
+			padding: var(--space-1);
+			color: var(--text-muted);
+			background-color: var(--surface);
+			border: 1px solid var(--border-strong);
+			border-radius: var(--radius-sm);
+			box-shadow: var(--shadow-level-2);
+			transition:
+				color var(--duration-fast) var(--ease-standard),
+				background-color var(--duration-fast) var(--ease-standard),
+				border-color var(--duration-fast) var(--ease-standard);
+		}
+
+		.toc-show:hover {
+			color: var(--text);
+			background-color: var(--surface-mid);
+			border-color: var(--accent);
+		}
+
+		.toc-show:focus-visible {
+			outline: 2px solid var(--accent);
+			outline-offset: 2px;
+		}
+
+		.toc-show[hidden] {
+			display: none;
+		}
 
         .toc {
             position: sticky;
@@ -1048,35 +1317,48 @@
 			color: var(--text-subtle);
 		}
 
-        .toc {
-            max-height: calc(100vh - var(--header-height) - var(--space-5));
-        }
+		.toc {
+			height: calc(
+				100vh -
+				var(--header-height) -
+				var(--space-3) -
+				var(--space-5)
+			);
+			min-height: 0;
+			overflow: hidden;
+		}
 
-        .toc .panel {
-            min-height: 0;
-            overflow: hidden;
-        }
+		.toc .panel {
+			display: grid;
+			grid-template-rows: auto minmax(0, 1fr);
+			gap: var(--space-3);
+			height: 100%;
+			min-height: 0;
+			overflow: hidden;
+		}
 
-        .toc-list {
-            max-height: calc(100vh - var(--header-height) - var(--space-8) - var(--space-5));
-            overflow-y: auto;
-            padding-right: var(--space-1);
-            scrollbar-color: var(--border-strong) transparent;
-            scrollbar-width: thin;
-        }
+		.toc-list {
+			min-height: 0;
+			overflow-y: auto;
+			overscroll-behavior: contain;
+			padding-right: var(--space-1);
+			scrollbar-color: var(--border-strong) transparent;
+			scrollbar-gutter: stable;
+			scrollbar-width: thin;
+		}
 
-        .toc-list::-webkit-scrollbar {
-            width: var(--space-1);
-        }
+		.toc-list::-webkit-scrollbar {
+			width: var(--space-1);
+		}
 
-        .toc-list::-webkit-scrollbar-track {
-            background-color: transparent;
-        }
+		.toc-list::-webkit-scrollbar-track {
+			background-color: transparent;
+		}
 
-        .toc-list::-webkit-scrollbar-thumb {
-            background-color: var(--border-strong);
-            border-radius: var(--radius-sm);
-        }
+		.toc-list::-webkit-scrollbar-thumb {
+			background-color: var(--border-strong);
+			border-radius: var(--radius-sm);
+		}
 
         .tools-title {
             margin: 0;
@@ -1125,6 +1407,41 @@
             border-color: var(--accent);
             outline: 0;
             box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 24%, transparent);
+        }
+
+        .checkfield {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-1);
+            min-height: 40px;
+            padding: var(--space-1) 0;
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .checkfield-input {
+            flex: 0 0 auto;
+            width: 20px;
+            height: 20px;
+            margin: 2px 0 0;
+            accent-color: var(--accent);
+        }
+
+        .checkfield-copy {
+            display: grid;
+            gap: 0;
+        }
+
+        .checkfield-label {
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.4286;
+        }
+
+        .checkfield-help {
+            font-size: 12px;
+            line-height: 1.3333;
+            color: var(--text-muted);
         }
 
         .colorinput {
@@ -1424,13 +1741,22 @@
             }
         }
 
-        @media (max-width: 1199px) {
-            .workspace {
-                grid-template-columns: minmax(0, var(--measure));
-                justify-content: center;
-            }
+		@media (max-width: 1199px) {
+			.workspace,
+			.workspace.is-toc-hidden {
+				grid-template-columns: minmax(0, var(--measure));
+				justify-content: center;
+			}
 
-            .siteheader {
+			.workspace.is-toc-hidden .doc {
+				width: 100%;
+			}
+
+			.toc-show {
+				display: none;
+			}
+
+			.siteheader {
                 grid-template-areas: "brand search actions";
                 grid-template-columns:
                     var(--navigation-width)
@@ -1514,25 +1840,1174 @@
                 line-height: 1.5;
             }
 
-            .power-header {
-                display: grid;
-            }
-
-            .power-cost {
-                width: 100%;
-            }
-
-            .power-tiers {
-                grid-template-columns: 1fr;
-            }
-
             .sitefooter {
                 align-items: flex-start;
                 flex-direction: column;
                 padding: var(--space-3) var(--space-2);
             }
         }
+
+        /*
+        Editorial Markdown extensions
+
+        These styles are scoped to the document viewer so the original
+        application shell and interaction layout remain stable.
+        */
+        .doc {
+            --doc-space-1: 4px;
+            --doc-space-2: 8px;
+            --doc-space-4: 16px;
+            --doc-space-6: 24px;
+            --doc-space-8: 32px;
+            --doc-radius: 2px;
+            --doc-rule: 2px;
+            --doc-rule-strong: 3px;
+        }
+
+        :root[data-theme="light"] .doc {
+            --doc-text: #1c1f1c;
+            --doc-text-muted: #4b504b;
+            --doc-text-subtle: #686e67;
+            --doc-border: #d9ddd6;
+            --doc-border-strong: #a7aea4;
+            --doc-surface: #fffefa;
+            --doc-surface-muted: #f5f5f1;
+            --doc-note: #f1f2ee;
+            --doc-rule-note: #dfeadd;
+            --doc-warning-note: #fff2d6;
+            --doc-danger-note: #f9e3e1;
+            --doc-archive-note: #eceee9;
+            --doc-mark: #d8e8d3;
+            --doc-mark-text: #171a17;
+            --doc-table-title: #1a1d1a;
+            --doc-table-title-text: #fffefa;
+            --doc-table-heading: #fffefa;
+            --doc-table-heading-text: #1c1f1c;
+            --doc-table-row: #fffefa;
+            --doc-table-stripe: #e7efe4;
+            --doc-table-split: #a7aea4;
+        }
+
+        :root[data-theme="dark"] .doc {
+            --doc-text: #f3f4f6;
+            --doc-text-muted: #c4c8d0;
+            --doc-text-subtle: #8f96a3;
+            --doc-border: #3a3f49;
+            --doc-border-strong: #515865;
+            --doc-surface: #141820;
+            --doc-surface-muted: #191c22;
+            --doc-note: #1b222c;
+            --doc-rule-note: #252f28;
+            --doc-warning-note: #332a18;
+            --doc-danger-note: #382122;
+            --doc-archive-note: #1f242d;
+            --doc-mark: #554618;
+            --doc-mark-text: #fff4c2;
+            --doc-table-title: #000;
+            --doc-table-title-text: #f3f4f6;
+            --doc-table-heading: #10131a;
+            --doc-table-heading-text: #f3f4f6;
+            --doc-table-row: #10131a;
+            --doc-table-stripe: var(--surface-mid);
+            --doc-table-split: #515865;
+        }
+
+        :root[data-theme="dark"][data-contrast="high"] .doc {
+            --doc-text: #fff;
+            --doc-text-muted: #fff;
+            --doc-text-subtle: #fff;
+            --doc-table-title-text: #fff;
+            --doc-table-heading-text: #fff;
+        }
+
+        :root[data-theme="light"][data-contrast="high"] .doc {
+            --doc-text: #000;
+            --doc-text-muted: #000;
+            --doc-text-subtle: #000;
+            --doc-table-title-text: #fff;
+            --doc-table-heading-text: #000;
+        }
+
+        .doc-header {
+            margin: 0 0 var(--doc-space-8);
+            border-top: var(--doc-rule-strong) solid var(--accent);
+            border-bottom: 0;
+            padding: var(--doc-space-6) 0 0;
+        }
+
+        .doc-title {
+            font-size: clamp(32px, 5vw, 48px);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            color: var(--doc-text);
+        }
+
+        .doc-description {
+            margin-top: var(--doc-space-4);
+            max-width: 60ch;
+            font-size: 18px;
+            line-height: 1.45;
+            color: var(--doc-text-muted);
+        }
+
+        .doc-body {
+            gap: var(--doc-space-8);
+        }
+
+        .doc-body h2 {
+            border-bottom: 0;
+            padding-bottom: 0;
+            font-size: 24px;
+            line-height: 1.2;
+            color: var(--doc-text);
+        }
+
+        .doc-body h3 {
+            font-size: 18px;
+            line-height: 1.25;
+            color: var(--doc-text);
+        }
+
+        .doc-body p,
+        .doc-body li {
+            color: var(--doc-text);
+        }
+
+        .doc-body mark {
+            padding: 0 var(--doc-space-1);
+            color: var(--doc-mark-text);
+            background-color: var(--doc-mark);
+            border-radius: var(--doc-radius);
+            box-decoration-break: clone;
+            -webkit-box-decoration-break: clone;
+        }
+
+        .definitiongrid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: var(--doc-space-6);
+            width: 100%;
+            min-width: 0;
+        }
+
+        .definitiongrid-columns-1 {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .definitiongrid-columns-3 {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .definition {
+            display: grid;
+            align-content: start;
+            gap: var(--doc-space-2);
+            min-width: 0;
+        }
+
+        .definition-title {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--doc-text);
+        }
+
+        .definition-body {
+            display: grid;
+            gap: var(--doc-space-2);
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .definition-body > .tableblock,
+        .definition-body > .markdown-table-wrap {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+        }
+
+        .definition-body .tableviewport {
+            max-width: 100%;
+        }
+
+        .definition-body > :first-child {
+            margin-top: 0;
+        }
+
+        .definition-body > :last-child {
+            margin-bottom: 0;
+        }
+
+        .markdown-note.notefield {
+            display: grid;
+            gap: var(--doc-space-2);
+            width: 100%;
+            min-width: 0;
+            border: 0;
+            border-radius: var(--doc-radius);
+            padding: var(--doc-space-4);
+            color: var(--doc-text);
+            background-color: var(--doc-note);
+        }
+
+        .markdown-note.notefield-rule {
+            background-color: var(--doc-rule-note);
+        }
+
+        .markdown-note.notefield-warning {
+            background-color: var(--doc-warning-note);
+        }
+
+        .markdown-note.notefield-danger {
+            background-color: var(--doc-danger-note);
+        }
+
+        .markdown-note.notefield-archive {
+            background-color: var(--doc-archive-note);
+        }
+
+        .notefield .notefield-title {
+            margin: 0;
+            font-family: var(--font-heading);
+            font-size: 18px;
+            font-weight: 700;
+            line-height: 1.25;
+            color: var(--doc-text);
+        }
+
+        .tableblock {
+            display: grid;
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow: visible;
+            background-color: transparent;
+            border: 0;
+            border-radius: 0;
+        }
+
+        .tableblock-vertical {
+            width: 100%;
+        }
+
+        .tableviewport {
+            width: 100%;
+            max-width: 100%;
+            min-width: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            background-color: var(--doc-table-row);
+            overscroll-behavior-inline: contain;
+            scrollbar-gutter: stable;
+        }
+
+        .reference-table {
+            width: 100%;
+            min-width: 100%;
+            border-collapse: collapse;
+            table-layout: auto;
+            font-size: 14px;
+            line-height: 1.35;
+            font-variant-numeric: tabular-nums;
+            color: var(--doc-text);
+            background-color: var(--doc-table-row);
+        }
+
+        .reference-table-title {
+            padding: var(--doc-space-1) var(--doc-space-2);
+            font-family: var(--font-heading);
+            font-size: 14px;
+            font-weight: 700;
+            line-height: 1.35;
+            text-align: left;
+            color: var(--doc-table-title-text);
+            background-color: var(--doc-table-title);
+            border-bottom: 0;
+        }
+
+        .reference-table-title-align-center {
+            text-align: center;
+        }
+
+        .reference-table-title-align-right {
+            text-align: right;
+        }
+
+        .reference-table th,
+        .reference-table td {
+            min-width: 0;
+            max-width: 100%;
+            border-bottom: 0;
+            padding: var(--doc-space-1) var(--doc-space-2);
+            text-align: center;
+            vertical-align: middle;
+            overflow-wrap: break-word;
+            word-break: normal;
+            hyphens: auto;
+        }
+
+        .reference-table th {
+            font-family: var(--font-heading);
+            font-weight: 700;
+            color: var(--doc-table-heading-text);
+            background-color: var(--doc-table-heading);
+            text-wrap: balance;
+        }
+
+        .reference-table tbody tr:nth-child(odd) {
+            background-color: var(--doc-table-stripe);
+        }
+
+        .reference-table tbody tr:nth-child(even) {
+            background-color: var(--doc-table-row);
+        }
+
+        .reference-table tbody th {
+            background-color: inherit;
+        }
+
+        .reference-table-vertical tbody th {
+            width: 38%;
+        }
+
+        .reference-table th.reference-table-align-left,
+        .reference-table td.reference-table-align-left {
+            text-align: left;
+        }
+
+        .reference-table th.reference-table-number,
+        .reference-table td.reference-table-number {
+            text-align: right;
+        }
+
+        .reference-table-cell-split {
+            border-left:
+                var(--doc-rule)
+                solid
+                var(--doc-table-split);
+        }
+
+        .tablefooter {
+            width: 100%;
+            min-width: 0;
+            padding: var(--doc-space-1) 0 0;
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--doc-text);
+            overflow-wrap: anywhere;
+        }
+
+        .tablefooter-list,
+        .tablefooter-column {
+            display: grid;
+            align-content: start;
+            gap: var(--doc-space-1);
+            margin: 0;
+            min-width: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .tablefooter-split {
+            display: grid;
+            grid-template-columns:
+                minmax(0, var(--table-footer-start, 40%))
+                minmax(0, 1fr);
+            gap: 0;
+        }
+
+        .tablefooter-column-start {
+            padding-right: var(--doc-space-4);
+        }
+
+        .tablefooter-column-end {
+            padding-left: var(--doc-space-4);
+        }
+
+        .tablefooter p {
+            margin: 0;
+        }
+
+        .reference-table-footer td {
+            padding: var(--doc-space-2);
+            font-size: 12px;
+            line-height: 1.4;
+            color: var(--doc-text);
+            vertical-align: top;
+            background-color: var(--doc-table-row);
+            border-top:
+                var(--doc-rule)
+                solid
+                var(--doc-table-split);
+            overflow-wrap: anywhere;
+        }
+
+        .reference-table-footer td + td {
+            border-left: 1px solid var(--doc-border);
+        }
+
+        .reference-table-footer-list {
+            display: grid;
+            gap: var(--doc-space-1);
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .reference-table-footer-empty {
+            padding: 0;
+        }
+
+        .reference-table-header-group {
+            text-align: center;
+        }
+
+        @media (max-width: 760px) {
+            .definitiongrid,
+            .definitiongrid-columns-3 {
+                grid-template-columns: minmax(0, 1fr);
+            }
+
+            .tablefooter-split {
+                grid-template-columns: minmax(0, 1fr);
+                gap: var(--doc-space-2);
+            }
+
+            .tablefooter-column-start,
+            .tablefooter-column-end {
+                padding: 0;
+            }
+
+        }
+
+        @media (max-width: 560px) {
+            .reference-table {
+                font-size: 12px;
+            }
+
+            .reference-table-title {
+                font-size: 12px;
+            }
+
+            .reference-table th,
+            .reference-table td {
+                padding: var(--doc-space-1);
+            }
+        }
+
+    
+        /*
+        Mock-up visual system compatibility layer
+
+        The application keeps the original classes and JavaScript hooks.
+        This final layer maps those components to the mock-up's exact
+        dimensions, neutral colours, table colours, and page contents.
+        */
+        :root {
+            --header-height: 64px;
+            --sidebar: 216px;
+            --toc: 224px;
+            --content-max: 1120px;
+            --measure: 720px;
+            --measure-wide: 960px;
+            --navigation-width: var(--sidebar);
+            --header-gutter: 16px;
+            --header-gap: 16px;
+            --header-compact-gutter: 16px;
+            --header-mobile-gutter: 8px;
+            --radius-sm: 2px;
+            --radius-md: 2px;
+            --radius-lg: 2px;
+            --duration-fast: 160ms;
+            --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+            --header-background: #171a1f;
+            --header-control-background: #22262c;
+            --header-control-hover: #2a3038;
+            --header-control-border: #59616c;
+            --header-border: #3c424a;
+            --header-placeholder: #9da3ab;
+            --header-text: #f2f3f1;
+            --header-text-muted: #c9cdd2;
+            --accent-soft: #9db493;
+            --accent-faint: #252d27;
+            --rule-control: 1px;
+            --rule-content: 2px;
+            --rule-content-strong: 3px;
+        }
+
+        :root[data-theme="light"] {
+            --header-background: #f5f5f1;
+            --header-control-background: #fffefa;
+            --header-control-hover: #eceee9;
+            --header-control-border: #a7aea4;
+            --header-border: #d9ddd6;
+            --header-placeholder: #686e67;
+            --header-text: #1c1f1c;
+            --header-text-muted: #4b504b;
+            --background: #efefeb;
+            --surface: #fffefa;
+            --surface-low: #f5f5f1;
+            --surface-mid: #eceee9;
+            --surface-high: #eceee9;
+            --border: #d9ddd6;
+            --border-strong: #a7aea4;
+            --text: #1c1f1c;
+            --text-muted: #4b504b;
+            --text-subtle: #686e67;
+            --secondary: #1c1f1c;
+            --secondary-bg: #f5f5f1;
+            --inset: #fffefa;
+            --keyword-background: #f5f5f1;
+            --keyword-popover: #fffefa;
+            --mark-background: #d8e8d3;
+            --mark-text: #171a17;
+            --note-background: #f1f2ee;
+            --note-border: #a7aea4;
+            --accent-soft: #b8cbb2;
+            --accent-faint: #eff5ee;
+            --toc-rule: #17191d;
+        }
+
+        :root[data-theme="dark"] {
+            --header-background: #171a1f;
+            --header-control-background: #22262c;
+            --header-control-hover: #2a3038;
+            --header-control-border: #59616c;
+            --header-placeholder: #9da3ab;
+            --header-text: #f2f3f1;
+            --header-text-muted: #c9cdd2;
+            --background: #0f1115;
+            --surface: #171a1f;
+            --surface-low: #22262c;
+            --surface-mid: #2a3038;
+            --surface-high: #2a3038;
+            --border: #3c424a;
+            --border-strong: #59616c;
+            --text: #f2f3f1;
+            --text-muted: #c9cdd2;
+            --text-subtle: #9da3ab;
+            --secondary: #f2f3f1;
+            --secondary-bg: #22262c;
+            --inset: #121419;
+            --keyword-background: #22262c;
+            --keyword-popover: #25292f;
+            --mark-background: #405441;
+            --mark-text: #f5f6f2;
+            --note-background: #25292f;
+            --note-border: #59616c;
+            --accent-soft: #9db493;
+            --accent-faint: #252d27;
+            --toc-rule: #f2f3f1;
+        }
+
+        body {
+            max-width: 100%;
+            overflow-x: clip;
+        }
+
+        .siteheader {
+            grid-template-areas: "brand search actions";
+            grid-template-columns:
+                var(--navigation-width)
+                minmax(0, 1fr)
+                auto;
+            min-height: var(--header-height);
+            padding: 0;
+            color: var(--header-text);
+            background-color: var(--header-background);
+            border-bottom:
+                var(--rule-control)
+                solid
+                var(--header-border);
+        }
+
+        .siteheader-main {
+            min-height: var(--header-height);
+            padding: 8px;
+            gap: 8px;
+        }
+
+        .siteheader-brand {
+            gap: 8px;
+        }
+
+        .siteheader-mark {
+            font-family: "Montserrat", arial, sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            line-height: 1;
+            color: #ff3e00;
+        }
+
+        .siteheader-menu {
+            min-width: 40px;
+            min-height: 40px;
+            border:
+                var(--rule-control)
+                solid
+                var(--header-control-border);
+            padding: 8px;
+            color: var(--header-text);
+            background-color: transparent;
+            border-radius: 2px;
+        }
+
+        .siteheader-menu:hover {
+            color: var(--header-text);
+            background-color: var(--header-control-hover);
+            border-color: var(--accent);
+        }
+
+        .sitesearch {
+            width: min(100%, 520px);
+            justify-self: center;
+            padding: 0 16px;
+        }
+
+        .sitesearch-input {
+            min-height: 40px;
+            border:
+                var(--rule-control)
+                solid
+                var(--header-control-border);
+            padding: 8px 16px;
+            font-family: var(--font-heading);
+            font-size: 14px;
+            line-height: 1.4;
+            color: var(--header-text);
+            background-color: var(--header-control-background);
+            border-radius: 2px;
+        }
+
+        .sitesearch-input::placeholder {
+            color: var(--header-placeholder);
+        }
+
+        .sitesearch-input:focus {
+            border-color: var(--accent);
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+            background-color: var(--header-control-hover);
+            box-shadow: none;
+        }
+
+        .siteheader-actions {
+            min-height: var(--header-height);
+            margin-right: 16px;
+            padding: 0;
+            gap: 8px;
+        }
+
+        .themebutton {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            min-height: 40px;
+            border: 0;
+            padding: 8px;
+            color: var(--header-text);
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .themebutton::after {
+            position: absolute;
+            right: 8px;
+            bottom: 4px;
+            left: 8px;
+            height: 1px;
+            content: "";
+            background-color: currentcolor;
+            opacity: 0;
+            transition: opacity 160ms var(--ease-standard);
+        }
+
+        .themebutton:hover::after,
+        .themebutton:focus-visible::after {
+            opacity: 1;
+        }
+
+        .themebutton:focus-visible {
+            outline: 0;
+        }
+
+        .themebutton-label {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            clip-path: inset(50%);
+            white-space: nowrap;
+        }
+
+        .themebutton-icon {
+            width: 18px;
+            height: 18px;
+        }
+
+        .searchresults {
+            top: calc(100% + 8px);
+            gap: 8px;
+            padding: 8px;
+            color: var(--text);
+            background-color: var(--surface);
+            border: 1px solid var(--border-strong);
+            border-radius: 2px;
+        }
+
+        .appbody {
+            grid-template-columns:
+                var(--navigation-width)
+                minmax(0, 1fr);
+            min-width: 0;
+            max-width: 100%;
+            background-color: var(--surface);
+        }
+
+        .main {
+            min-width: 0;
+            background-color: var(--surface);
+        }
+
+        :root[data-theme="dark"] .main {
+            background-color: #10131a;
+        }
+
+        .sidenav {
+            top: var(--header-height);
+            height: calc(100vh - var(--header-height));
+            padding: 24px 16px;
+            font-family: var(--font-heading);
+            background-color: var(--surface-low);
+            border-right: 1px solid var(--border);
+        }
+
+        .sidenav-header {
+            margin: 0 0 16px;
+            padding: 0 8px;
+        }
+
+        .sidenav-kicker {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+        }
+
+        .sidenav-title {
+            margin-top: 8px;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+
+        .sidenav-sections {
+            gap: 24px;
+        }
+
+        .sidenav-section,
+        .sidenav-list {
+            gap: 8px;
+        }
+
+        .sidenav-sectiontitle {
+            padding: 0 8px;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .sidenav-link {
+            gap: 8px;
+            min-height: 36px;
+            border: 0;
+            border-left:
+                var(--rule-content-strong)
+                solid
+                transparent;
+            padding: 8px 12px;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-muted);
+            background-color: transparent;
+            border-radius: 0;
+        }
+
+        .sidenav-link:hover,
+        .sidenav-link:focus-visible {
+            color: var(--text);
+            background-color: var(--surface-mid);
+        }
+
+        .sidenav-link.is-active {
+            color: var(--text);
+            background-color: var(--surface-mid);
+            border-color: var(--accent);
+        }
+
+        .sidenav-link.is-active .sidenav-icon {
+            color: var(--accent);
+        }
+
+        .workspace {
+            grid-template-columns:
+                minmax(0, var(--measure))
+                var(--toc);
+            gap: 32px;
+            width: min(100%, var(--content-max));
+            max-width: 100%;
+            padding: 32px;
+        }
+
+        .workspace.is-toc-collapsed {
+            grid-template-columns: minmax(0, 1fr) max-content;
+            gap: 16px;
+        }
+
+        .doc {
+            min-width: 0;
+            max-width: 100%;
+        }
+
+        :root[data-theme="light"] .doc {
+            --doc-text: #1c1f1c;
+            --doc-text-muted: #4b504b;
+            --doc-text-subtle: #686e67;
+            --doc-border: #d9ddd6;
+            --doc-border-strong: #a7aea4;
+            --doc-surface: #fffefa;
+            --doc-surface-muted: #f5f5f1;
+            --doc-note: #f1f2ee;
+            --doc-rule-note: #dfeadd;
+            --doc-mark: #d8e8d3;
+            --doc-mark-text: #171a17;
+            --doc-table-title: #1a1d1a;
+            --doc-table-title-text: #fffefa;
+            --doc-table-heading: #fffefa;
+            --doc-table-heading-text: #1c1f1c;
+            --doc-table-row: #fffefa;
+            --doc-table-stripe: #e7efe4;
+            --doc-table-split: #a7aea4;
+        }
+
+        :root[data-theme="dark"] .doc {
+            --doc-mark: #405441;
+            --doc-mark-text: #f5f6f2;
+        }
+
+        .doc-kicker {
+            color: var(--accent);
+        }
+
+        .doc-body p,
+        .doc-body li,
+        .reference-table,
+        .reference-table td,
+        .markdown-table td,
+        .tablefooter {
+            color: var(--doc-text);
+        }
+
+        .reference-table th,
+        .markdown-table th {
+            color: var(--doc-table-heading-text);
+        }
+
+        .markdown-table-wrap {
+            background-color: transparent;
+            border: 0;
+            border-radius: 0;
+        }
+
+
+        :root[data-theme="light"] .doc-description {
+            color: var(--doc-text);
+        }
+
+        :root[data-theme="light"] .pagetoc-title,
+        :root[data-theme="light"] .pagetoc-toggle,
+        :root[data-theme="light"] .pagetoc-link {
+            color: var(--text);
+        }
+
+        .pagetoc {
+            position: sticky;
+            top: calc(var(--header-height) + 24px);
+            align-self: start;
+            display: grid;
+            grid-template-rows: auto minmax(0, 1fr);
+            gap: 16px;
+            max-height:
+                calc(100vh - var(--header-height) - 48px);
+            max-height:
+                calc(100dvh - var(--header-height) - 48px);
+            border-top: var(--rule-content-strong) solid var(--toc-rule);
+            padding-top: 16px;
+            font-family: var(--font-heading);
+        }
+
+        .pagetoc-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        .pagetoc.is-collapsed .pagetoc-header {
+            justify-content: flex-end;
+        }
+
+        .pagetoc-title {
+            margin: 0;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--text-subtle);
+        }
+
+        .pagetoc.is-collapsed .pagetoc-title {
+            display: none;
+        }
+
+        .pagetoc-toggle {
+            margin: 0;
+            border: 0;
+            padding: 4px 0;
+            font-family: var(--font-body);
+            font-size: 12px;
+            font-weight: 500;
+            line-height: 1.25;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            text-underline-offset: 2px;
+            color: var(--text-muted);
+            background-color: transparent;
+            cursor: pointer;
+        }
+
+        .pagetoc-toggle:hover,
+        .pagetoc-toggle:focus-visible {
+            color: var(--text);
+            text-decoration-color: currentcolor;
+            outline: 0;
+        }
+
+        .pagetoc-list {
+            display: grid;
+            gap: 8px;
+            min-height: 0;
+            margin: 0;
+            padding: 0 8px 0 0;
+            overflow-y: auto;
+            overscroll-behavior: contain;
+            scrollbar-gutter: stable;
+            list-style: none;
+        }
+
+        .pagetoc-list[hidden] {
+            display: none;
+        }
+
+        .pagetoc-link {
+            display: block;
+            padding: 4px 0;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration-color: transparent;
+            text-underline-offset: 4px;
+            color: var(--text-muted);
+        }
+
+        .pagetoc-link:hover,
+        .pagetoc-link:focus-visible {
+            color: var(--text);
+            text-decoration-color: currentcolor;
+            outline: 0;
+        }
+
+        .controlpanel {
+            background-color: var(--surface);
+            border-right: 1px solid var(--border-strong);
+        }
+
+        .controlpanel-header {
+            gap: 16px;
+            padding: 24px;
+            background-color: var(--surface);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .controlpanel-title {
+            font-size: 24px;
+            line-height: 1.2;
+        }
+
+        .controlpanel-copy {
+            margin-top: 8px;
+            color: var(--text-muted);
+        }
+
+        .controlpanel-body {
+            gap: 24px;
+            padding: 24px;
+        }
+
+        .controlpanel-section {
+            gap: 16px;
+        }
+
+        .controlpanel-sectiontitle {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: var(--text-subtle);
+        }
+
+        .field {
+            gap: 8px;
+        }
+
+        .field-input,
+        .field-select {
+            min-height: 40px;
+            border: 1px solid var(--border-strong);
+            padding: 8px 12px;
+            color: var(--text);
+            background-color: var(--surface-low);
+            border-radius: 2px;
+        }
+
+        .accentpreset {
+            border-radius: 2px;
+        }
+
+        .accentpreset.is-active {
+            border-color: var(--accent);
+            box-shadow: inset 3px 0 0 var(--accent);
+        }
+
+        .sitefooter {
+            padding: 16px 24px;
+            font-family: var(--font-heading);
+            font-size: 12px;
+            color: var(--text-muted);
+            background-color: var(--surface-low);
+            border-top: 2px solid var(--border);
+        }
+
+        .mobile-database {
+            display: none;
+        }
+
+        @media (min-width: 1041px) {
+            .workspace.is-toc-collapsed {
+                grid-template-columns: minmax(0, 1fr) max-content;
+                gap: 16px;
+            }
+
+            .pagetoc.is-collapsed {
+                gap: 0;
+                border-top: 0;
+                padding-top: 0;
+            }
+        }
+
+        @media (max-width: 1040px) {
+            .workspace,
+            .workspace.is-toc-collapsed {
+                grid-template-columns: minmax(0, var(--measure));
+                justify-content: center;
+            }
+
+            .pagetoc {
+                display: none;
+            }
+        }
+
+        @media (max-width: 760px) {
+            .siteheader {
+                grid-template-areas:
+                    "brand actions"
+                    "search search";
+                grid-template-columns: minmax(0, 1fr) auto;
+                gap: 8px;
+                padding: 8px;
+            }
+
+            .siteheader-main {
+                min-height: 40px;
+                padding: 0;
+            }
+
+            .siteheader-actions {
+                min-height: 40px;
+                margin-right: 0;
+            }
+
+            .sitesearch {
+                width: 100%;
+                padding: 0;
+            }
+
+            .appbody {
+                display: block;
+            }
+
+            .sidenav {
+                display: none;
+            }
+
+            .mobile-database {
+                display: block;
+                margin: 16px 16px 0;
+                border-top: 3px solid var(--accent);
+                background-color: var(--surface-low);
+            }
+
+            .mobile-database-toggle {
+                padding: 12px 16px;
+                font-family: var(--font-heading);
+                font-size: 12px;
+                font-weight: 700;
+                letter-spacing: 0.08em;
+                color: var(--text);
+                text-transform: uppercase;
+                cursor: pointer;
+            }
+
+            .mobile-database-toggle:focus-visible {
+                outline: 2px solid var(--accent);
+                outline-offset: 2px;
+            }
+
+            .mobile-database-nav {
+                border-top: 1px solid var(--border);
+                padding: 16px;
+            }
+
+            .mobile-database-nav .sidenav-sections {
+                margin: 0;
+                padding: 0;
+            }
+
+            .workspace,
+            .workspace.is-toc-collapsed {
+                padding: 24px 16px;
+            }
+
+            .controlpanel {
+                width: min(100%, 360px);
+            }
+        }
+
     </style>
+    <link rel="stylesheet" href="assets/action-cards.css">
+    <link rel="stylesheet" href="assets/action-card-builder.css">
 </head>
 <body>
     <a class="skiplink" href="#content">Skip to content</a>
@@ -1577,8 +3052,30 @@
             </div>
 
             <div class="siteheader-actions">
-                <button class="btn btn-outline js-theme-toggle" type="button">
-                    <span class="js-theme-label">Light mode</span>
+                <button
+                    aria-label="Switch to light mode"
+                    class="themebutton js-theme-toggle"
+                    title="Switch to light mode"
+                    type="button"
+                >
+                    <svg
+                        aria-hidden="true"
+                        class="themebutton-icon js-theme-icon"
+                        height="18"
+                        viewBox="0 0 18 18"
+                        width="18"
+                    >
+                        <path
+                            d="M13.5 11.75A6 6 0 0 1 6.25 4.5 6.25 6.25 0 1 0 13.5 11.75Z"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-linejoin="round"
+                            stroke-width="1.5"
+                        />
+                    </svg>
+                    <span class="themebutton-label js-theme-label">
+                        Dark theme
+                    </span>
                 </button>
             </div>
         </header>
@@ -1593,7 +3090,7 @@
                 <div>
                     <h2 class="controlpanel-title">Options</h2>
                     <p class="controlpanel-copy">
-                        Adjust the highlight colour and view bookmarked chapters.
+                        Choose document typography, contrast, and highlight colour.
                     </p>
                 </div>
                 <button
@@ -1614,12 +3111,67 @@
             </div>
 
             <div class="controlpanel-body">
-                <section class="controlpanel-section" aria-labelledby="drawer-nav-title">
-                    <h2 class="controlpanel-sectiontitle" id="drawer-nav-title">
-                        Sections
+                <section
+                    aria-labelledby="typography-title"
+                    class="controlpanel-section"
+                >
+                    <h2
+                        class="controlpanel-sectiontitle"
+                        id="typography-title"
+                    >
+                        Typography
                     </h2>
-                    <ul class="sidenav-sections js-drawer-nav-list"></ul>
+                    <label class="field" for="heading-font">
+                        <span class="field-label">Heading font</span>
+                        <select
+                            class="field-input field-select js-heading-font"
+                            id="heading-font"
+                        >
+                            <option value="montserrat">Montserrat</option>
+                            <option value="roboto-condensed">
+                                Roboto Condensed
+                            </option>
+                            <option value="arial-narrow">Arial Narrow</option>
+                            <option value="inter">Inter</option>
+                        </select>
+                    </label>
+                    <label class="field" for="body-font">
+                        <span class="field-label">Body font</span>
+                        <select
+                            class="field-input field-select js-body-font"
+                            id="body-font"
+                        >
+                            <option value="inter">Inter</option>
+                            <option value="source-serif">Source Serif 4</option>
+                            <option value="charter">Charter</option>
+                            <option value="georgia">Georgia</option>
+                            <option value="system-sans">System sans</option>
+                        </select>
+                    </label>
+                    <label class="checkfield" for="high-contrast">
+                        <input
+                            class="checkfield-input js-high-contrast"
+                            id="high-contrast"
+                            type="checkbox"
+                        >
+                        <span class="checkfield-copy">
+                            <span class="checkfield-label">
+                                High contrast
+                            </span>
+                            <span class="checkfield-help">
+                                Use pure black or white for text.
+                            </span>
+                        </span>
+                    </label>
+                    <button
+                        class="btn btn-outline js-reset-typography"
+                        type="button"
+                    >
+                        Reset typography
+                    </button>
                 </section>
+
+
 
                 <section class="controlpanel-section" aria-labelledby="highlight-title">
                     <h2 class="controlpanel-sectiontitle" id="highlight-title">
@@ -1715,20 +3267,47 @@
             <div class="scrim js-scrim"></div>
 
             <main class="main" id="content">
-                <div class="workspace">
-                    <article class="doc" aria-live="polite">
-                        <div class="sourcebadge js-source-badge">Loading manifest.json</div>
-                        <div class="doc-shell js-document"></div>
-                    </article>
-
-                    <aside class="toc" aria-label="Page tools">
-                        <section class="panel">
-                            <h2 class="toc-title">On this page</h2>
-                            <ul class="toc-list js-toc-list"></ul>
-                        </section>
-
+                <details class="mobile-database js-mobile-database">
+                    <summary class="mobile-database-toggle">
+                        Database
+                    </summary>
+                    <nav
+                        class="mobile-database-nav"
+                        aria-label="Document database"
+                    >
+                        <ul
+                            class="sidenav-sections js-drawer-nav-list"
+                        ></ul>
+                    </nav>
+                </details>
+				<div class="workspace js-workspace">
+					<article class="doc" aria-live="polite">
+						<div class="sourcebadge js-source-badge">Loading manifest.json</div>
+						<div class="doc-shell js-document"></div>
+					</article>
+                    <aside
+                        class="pagetoc js-pagetoc"
+                        aria-label="On this page"
+                    >
+                        <div class="pagetoc-header">
+                            <h2 class="pagetoc-title">
+                                On this page
+                            </h2>
+                            <button
+                                class="pagetoc-toggle js-pagetoc-toggle"
+                                type="button"
+                                aria-controls="page-contents-list"
+                                aria-expanded="true"
+                            >
+                                Hide
+                            </button>
+                        </div>
+                        <ul
+                            class="pagetoc-list js-pagetoc-list"
+                            id="page-contents-list"
+                        ></ul>
                     </aside>
-                </div>
+				</div>
             </main>
         </div>
 
@@ -1758,8 +3337,35 @@
         </footer>
     </div>
 
+	<div
+		class="keyword-popover js-keyword-popover"
+		id="keyword-popover"
+		role="tooltip"
+		hidden
+	>
+		<p class="keyword-popover-title js-keyword-popover-title"></p>
+		<p class="keyword-popover-copy js-keyword-popover-copy"></p>
+	</div>
+
+    <script src="scripts/action-cards.js"></script>
+    <script src="scripts/action-card-builder.js"></script>
     <script>
+	
         const manifestPath = "manifest.json";
+
+		const keywordsPath = "keywords.json";
+
+        const actionCardsPath = "content/cards.json";
+
+        const actionCardBuilderPath = "cards.html";
+
+        const actionCardBuilderDocument = {
+            id: "action-card-builder",
+            icon: "bolt",
+            label: "Action Card Builder",
+            section: "Tools",
+            title: "Action Card Builder"
+        };
 
         const accentPresets = [
             {
@@ -1782,19 +3388,67 @@
 
         const defaultAccent = accentPresets[0].value;
 
-        const state = {
-            manifest: {
-                defaultDoc: "",
-                sections: [],
-                documents: []
-            },
-            activeDoc: "",
-            searchIndex: [],
-            searchReady: false
+        const storageKeys = {
+            theme: "nakama-theme",
+            accent: "nakama-accent",
+            headingFont: "nakama-heading-font",
+            bodyFont: "nakama-body-font",
+            highContrast: "nakama-high-contrast",
+            pageToc: "nakama-toc-collapsed"
         };
 
+        const defaultAppearance = {
+            headingFont: "montserrat",
+            bodyFont: "inter"
+        };
+
+        const fontFamilies = {
+            heading: {
+                "montserrat":
+                    "\"Montserrat\", arial, sans-serif",
+                "roboto-condensed":
+                    "\"Roboto Condensed\", \"Arial Narrow\", arial, sans-serif",
+                "arial-narrow":
+                    "\"Arial Narrow\", \"Liberation Sans Narrow\", arial, sans-serif",
+                "inter":
+                    "\"Inter\", arial, sans-serif"
+            },
+            body: {
+                "inter":
+                    "\"Inter\", arial, sans-serif",
+                "source-serif":
+                    "\"Source Serif 4\", georgia, serif",
+                "charter":
+                    "charter, \"Bitstream Charter\", georgia, serif",
+                "georgia":
+                    "georgia, \"Times New Roman\", serif",
+                "system-sans":
+                    "system-ui, -apple-system, BlinkMacSystemFont, \"Segoe UI\", sans-serif"
+            }
+        };
+
+		const state = {
+			manifest: {
+				defaultDoc: "",
+				sections: [],
+				documents: []
+			},
+			activeDoc: "",
+			footnotes: new Map(),
+			keywordDefinitions: new Map(),
+			searchIndex: [],
+			searchReady: false
+		};
+
         const selectors = {
+            root: document.documentElement,
             accentInput: document.querySelector(".js-accent-input"),
+            headingFont: document.querySelector(".js-heading-font"),
+            bodyFont: document.querySelector(".js-body-font"),
+            highContrast:
+                document.querySelector(".js-high-contrast"),
+            resetTypography:
+                document.querySelector(".js-reset-typography"),
             accentPresetButtons: document.querySelectorAll(".js-accent-preset"),
             controlPanel: document.querySelector(".js-controlpanel"),
             controlPanelClose: document.querySelector(".js-controlpanel-close"),
@@ -1810,12 +3464,27 @@
             scrim: document.querySelector(".js-scrim"),
             sourceBadge: document.querySelector(".js-source-badge"),
             status: document.querySelector(".js-status"),
-            themeLabel: document.querySelector(".js-theme-label"),
-            themeToggle: document.querySelector(".js-theme-toggle"),
-            tocList: document.querySelector(".js-toc-list")
+			themeIcon: document.querySelector(".js-theme-icon"),
+			themeLabel: document.querySelector(".js-theme-label"),
+			themeToggle: document.querySelector(".js-theme-toggle"),
+            pageToc:
+                document.querySelector(".js-pagetoc"),
+            pageTocList:
+                document.querySelector(".js-pagetoc-list"),
+            pageTocToggle:
+                document.querySelector(".js-pagetoc-toggle"),
+            workspace:
+                document.querySelector(".js-workspace"),
+			keywordPopover: document.querySelector(".js-keyword-popover"),
+			keywordPopoverCopy: document.querySelector(".js-keyword-popover-copy"),
+			keywordPopoverTitle: document.querySelector(".js-keyword-popover-title")
         };
-		
+
 		let sourceBadgeTimer = null;
+        let keywordShowTimer = 0;
+        let keywordHideTimer = 0;
+        let activeKeywordTrigger = null;
+        let keywordPinned = false;
 
 		const iconMap = {
 			book: `<path d="M5 4h8a2 2 0 0 1 2 2v10H7a2 2 0 0 0-2 2V4zM15 6h2v12H7" />`,
@@ -1838,35 +3507,118 @@
 			gm: `<path d="M10 3 4 6v4c0 4 2.5 6.5 6 8 3.5-1.5 6-4 6-8V6l-6-3zM7 10h6M10 7v6" />`
 		};
 
-        async function init() {
-            applyStoredTheme();
-            applyStoredAccent();
-            bindEvents();
+		async function init() {
+			try {
+				applyStoredTheme();
+                applyStoredHighContrast();
+				applyStoredAccent();
+                applyStoredTypography();
+				applyStoredPageToc();
+				bindEvents();
 
-            try {
-                await loadManifest();
-                renderNavigation();
-                void buildSearchIndex();
+				await loadManifest();
+                await loadActionCardLibrary();
+				await loadKeywordDefinitions();
 
-                const requestedDoc = window.location.hash.replace("#", "");
-                const defaultDoc = state.manifest.defaultDoc || state.manifest.documents[0]?.id;
-                const initialDoc = findDocument(requestedDoc) ? requestedDoc : defaultDoc;
+				renderNavigation();
 
-                if (!initialDoc) {
-                    throw new Error("manifest.json does not define any documents.");
-                }
+				const requestedDoc = window.location.hash.replace("#", "");
+				const defaultDoc = state.manifest.defaultDoc ||
+					state.manifest.documents[0]?.id;
+				const initialDoc = findDocument(requestedDoc)
+					? requestedDoc
+					: defaultDoc;
 
-                await loadDocument(initialDoc);
-            } catch (error) {
-                renderLoadError(error, "System reference unavailable");
-            }
-        }
+				if (!initialDoc) {
+					throw new Error(
+						"manifest.json does not define any documents."
+					);
+				}
+
+				await loadDocument(initialDoc);
+
+				buildSearchIndex().catch((error) => {
+					reportApplicationError(
+						error,
+						"Search index could not be built",
+						{
+							fatal: false
+						}
+					);
+				});
+
+
+			} catch (error) {
+				reportApplicationError(
+					error,
+					"System reference unavailable",
+					{
+						fatal: true
+					}
+				);
+			}
+		}
+
+		function getStoredValue(key) {
+			try {
+				return localStorage.getItem(key);
+			} catch (error) {
+				console.warn(
+					`Unable to read local storage key "${key}".`,
+					error
+				);
+
+				return null;
+			}
+		}
+
+		function setStoredValue(key, value) {
+			try {
+				localStorage.setItem(key, value);
+				return true;
+			} catch (error) {
+				console.warn(
+					`Unable to save local storage key "${key}".`,
+					error
+				);
+
+				return false;
+			}
+		}
+
+		function removeStoredValue(key) {
+			try {
+				localStorage.removeItem(key);
+				return true;
+			} catch (error) {
+				console.warn(
+					`Unable to remove local storage key "${key}".`,
+					error
+				);
+
+				return false;
+			}
+		}
 
         function bindEvents() {
-            selectors.themeToggle.addEventListener("click", toggleTheme);
-            selectors.saveAccent.addEventListener("click", saveAccent);
-            selectors.resetAccent.addEventListener("click", resetAccent);
-            selectors.menuToggle.addEventListener("click", toggleMenu);
+			selectors.themeToggle.addEventListener("click", toggleTheme);
+            selectors.headingFont.addEventListener("change", (event) => {
+                updateFont("heading", event.target.value);
+            });
+            selectors.bodyFont.addEventListener("change", (event) => {
+                updateFont("body", event.target.value);
+            });
+            selectors.highContrast.addEventListener("change", (event) => {
+                updateHighContrast(event.target.checked);
+            });
+            selectors.resetTypography.addEventListener(
+                "click",
+                resetTypography
+            );
+			selectors.saveAccent.addEventListener("click", saveAccent);
+			selectors.resetAccent.addEventListener("click", resetAccent);
+			selectors.pageTocToggle.addEventListener("click", togglePageToc);
+			selectors.menuToggle.addEventListener("click", toggleMenu);
             selectors.controlPanelClose.addEventListener("click", closeMenu);
             selectors.scrim.addEventListener("click", closeMenu);
             selectors.searchInput.addEventListener("input", updateSearchResults);
@@ -1878,7 +3630,26 @@
                 if (!event.target.closest(".js-sitesearch")) {
                     closeSearchResults();
                 }
+
+                if (
+                    keywordPinned &&
+                    !event.target.closest(".js-keyword") &&
+                    !event.target.closest(".js-keyword-popover")
+                ) {
+                    hideKeywordPopover(true);
+                }
             });
+
+            selectors.keywordPopover.addEventListener(
+                "mouseenter",
+                () => {
+                    window.clearTimeout(keywordHideTimer);
+                }
+            );
+            selectors.keywordPopover.addEventListener(
+                "mouseleave",
+                scheduleKeywordPopoverHide
+            );
 
             selectors.accentPresetButtons.forEach((button) => {
                 button.addEventListener("click", selectAccentPreset);
@@ -1887,6 +3658,7 @@
             window.addEventListener("keydown", (event) => {
                 if (event.key === "Escape") {
                     closeMenu();
+                    hideKeywordPopover(true);
                 }
             });
 
@@ -1952,12 +3724,30 @@
 
                 window.location.hash = docId;
                 await loadDocument(docId);
+
+                const mobileDatabase =
+                    list.closest(".js-mobile-database");
+
+                if (mobileDatabase) {
+                    mobileDatabase.open = false;
+                }
+
                 closeMenu();
             });
         }
 
         function renderNavigationList() {
-            return getOrganizedSections().map((section) => {
+            const sections = [
+                ...getOrganizedSections(),
+                {
+                    id: "tools",
+                    kicker: "",
+                    label: "Tools",
+                    documents: [actionCardBuilderDocument]
+                }
+            ];
+
+            return sections.map((section) => {
                 return `<li class="sidenav-section">
                     <p class="sidenav-sectiontitle">
                         ${escapeHtml(getSectionHeading(section))}
@@ -2066,6 +3856,178 @@
 			}, 1200);
 		}
 
+		function bindKeywordEvents() {
+			selectors.document
+				.querySelectorAll(".js-popout")
+				.forEach((keyword) => {
+                    keyword.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+                    keyword.addEventListener(
+                        "mouseenter",
+                        () => {
+                            scheduleKeywordPopover(keyword);
+                        }
+                    );
+                    keyword.addEventListener(
+                        "focus",
+                        () => {
+                            showKeywordPopover(keyword, false);
+                        }
+                    );
+                    keyword.addEventListener(
+                        "mouseleave",
+                        scheduleKeywordPopoverHide
+                    );
+                    keyword.addEventListener(
+                        "blur",
+                        scheduleKeywordPopoverHide
+                    );
+                    keyword.addEventListener(
+                        "click",
+                        toggleKeywordPopover
+                    );
+				});
+		}
+
+        function scheduleKeywordPopover(trigger) {
+            window.clearTimeout(keywordHideTimer);
+            window.clearTimeout(keywordShowTimer);
+
+            keywordShowTimer = window.setTimeout(() => {
+                showKeywordPopover(trigger, false);
+            }, 500);
+        }
+
+        function getPopoverContent(trigger) {
+            const inlineCopy = trigger.getAttribute(
+                "data-popout-copy"
+            );
+
+            if (inlineCopy !== null) {
+                return {
+                    title:
+                        trigger.getAttribute("data-popout-title") ||
+                        trigger.textContent,
+                    copy: inlineCopy
+                };
+            }
+
+			const keyword = trigger.getAttribute("data-keyword");
+			const rules = state.keywordDefinitions.get(keyword);
+
+            if (!rules) {
+                return null;
+            }
+
+            return {
+                title: keyword,
+                copy: rules
+            };
+        }
+
+		function showKeywordPopover(trigger, pinned) {
+            const content = getPopoverContent(trigger);
+
+			if (!content) {
+				return;
+			}
+
+            window.clearTimeout(keywordShowTimer);
+            window.clearTimeout(keywordHideTimer);
+
+            if (
+                activeKeywordTrigger &&
+                activeKeywordTrigger !== trigger
+            ) {
+                activeKeywordTrigger.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+
+            activeKeywordTrigger = trigger;
+            keywordPinned = Boolean(pinned);
+			selectors.keywordPopoverTitle.textContent = content.title;
+			selectors.keywordPopoverCopy.textContent = content.copy;
+			selectors.keywordPopover.hidden = false;
+            trigger.setAttribute("aria-expanded", "true");
+
+			positionKeywordPopover(trigger);
+		}
+
+        function toggleKeywordPopover(event) {
+            const trigger = event.currentTarget;
+            const isOpen =
+                activeKeywordTrigger === trigger &&
+                !selectors.keywordPopover.hidden &&
+                keywordPinned;
+
+            event.preventDefault();
+
+            if (isOpen) {
+                hideKeywordPopover(true);
+                return;
+            }
+
+            showKeywordPopover(trigger, true);
+        }
+
+        function scheduleKeywordPopoverHide() {
+            window.clearTimeout(keywordHideTimer);
+
+            keywordHideTimer = window.setTimeout(() => {
+                hideKeywordPopover(false);
+            }, 160);
+        }
+
+		function positionKeywordPopover(trigger) {
+			const triggerRect = trigger.getBoundingClientRect();
+			const popoverRect = selectors.keywordPopover.getBoundingClientRect();
+			const viewportPadding = 16;
+			const preferredLeft = triggerRect.left;
+			const maximumLeft = window.innerWidth -
+				popoverRect.width -
+				viewportPadding;
+			const left = Math.max(
+				viewportPadding,
+				Math.min(preferredLeft, maximumLeft)
+			);
+			const preferredTop = triggerRect.bottom + 8;
+			const fitsBelow = preferredTop + popoverRect.height <=
+				window.innerHeight - viewportPadding;
+			const top = fitsBelow
+				? preferredTop
+				: triggerRect.top - popoverRect.height - 8;
+
+			selectors.keywordPopover.style.left = `${left}px`;
+			selectors.keywordPopover.style.top = `${Math.max(
+				viewportPadding,
+				top
+			)}px`;
+		}
+
+		function hideKeywordPopover(force) {
+            window.clearTimeout(keywordShowTimer);
+            window.clearTimeout(keywordHideTimer);
+
+            if (keywordPinned && !force) {
+                return;
+            }
+
+            if (activeKeywordTrigger) {
+                activeKeywordTrigger.setAttribute(
+                    "aria-expanded",
+                    "false"
+                );
+            }
+
+            activeKeywordTrigger = null;
+            keywordPinned = false;
+			selectors.keywordPopover.hidden = true;
+		}
+
 		async function loadDocument(docId) {
 			const doc = findDocument(docId);
 
@@ -2080,18 +4042,130 @@
 			try {
 				await delay(240);
 
+                if (doc.id === actionCardBuilderDocument.id) {
+                    await loadActionCardBuilder();
+                    return;
+                }
+
+                selectors.workspace.classList.remove(
+                    "is-actioncard-builder"
+                );
+
 				const markdown = await fetchMarkdown(doc.path);
 				const parsed = parseMarkdown(markdown);
 
 				document.title = `NAKAMA SRD — ${parsed.meta.title || doc.title}`;
 				selectors.document.innerHTML = renderDocument(parsed, doc);
+				decorateKeywords(selectors.document);
+				bindKeywordEvents();
 				setSourceBadge(`Loaded from ${doc.path} via ${manifestPath}`, {
 					autoHide: true
 				});
-				selectors.tocList.innerHTML = renderToc(parsed.toc);
+				const pageTocMarkup = renderPageTocLinks(parsed.toc);
+
+                selectors.pageTocList.innerHTML = pageTocMarkup;
+                selectors.pageToc.hidden = !pageTocMarkup;
+                selectors.pageToc.removeAttribute("aria-hidden");
+                selectors.pageTocToggle.disabled = false;
 				setDocumentLoading(false);
 			} catch (error) {
-				renderLoadError(error, doc.title || "Document unavailable");
+				const source = doc.path || actionCardBuilderPath;
+				const wrappedError = new Error(
+					`Unable to render "${source}": ${
+						normaliseError(error).message
+					}`,
+					{
+						cause: error
+					}
+				);
+
+				reportApplicationError(
+					wrappedError,
+					doc.title || "Document unavailable",
+					{
+						fatal: true
+					}
+				);
+			}
+		}
+
+        async function loadActionCardBuilder() {
+            const response = await fetch(actionCardBuilderPath, {
+                cache: "no-store"
+            });
+
+            if (!response.ok) {
+                throw new Error(
+                    `Could not load ${actionCardBuilderPath}.`
+                );
+            }
+
+            selectors.workspace.classList.add(
+                "is-actioncard-builder"
+            );
+            selectors.document.innerHTML = await response.text();
+            selectors.pageTocList.innerHTML = "";
+            selectors.pageToc.hidden = true;
+            selectors.pageToc.setAttribute("aria-hidden", "true");
+            selectors.pageTocToggle.disabled = true;
+            document.title = "NAKAMA SRD — Action Card Builder";
+
+            window.NakamaActionCardBuilder.mount(
+                selectors.document.querySelector(
+                    ".js-actioncard-builder"
+                )
+            );
+            setDocumentLoading(false);
+
+            setSourceBadge(
+                `Loaded ${actionCardBuilderPath} with shared card styles`,
+                {
+                    autoHide: true
+                }
+            );
+        }
+
+        async function loadActionCardLibrary() {
+            if (!window.NakamaActionCards) {
+                throw new Error(
+                    "The shared Action Card runtime did not load."
+                );
+            }
+
+            await window.NakamaActionCards.loadLibrary(
+                actionCardsPath
+            );
+        }
+
+		async function loadKeywordDefinitions() {
+			try {
+				const response = await fetch(keywordsPath, {
+					cache: "no-store"
+				});
+
+				if (!response.ok) {
+					return;
+				}
+
+				const data = await response.json();
+				const definitions = Array.isArray(data.keywords)
+					? data.keywords
+					: [];
+
+				definitions.forEach((definition) => {
+					if (
+						definition.enabled !== false &&
+						typeof definition.keyword === "string" &&
+						typeof definition.rules === "string"
+					) {
+						state.keywordDefinitions.set(
+							definition.keyword,
+							definition.rules
+						);
+					}
+				});
+			} catch (error) {
+				console.warn(`Unable to load ${keywordsPath}.`, error);
 			}
 		}
 
@@ -2105,72 +4179,228 @@
             return await response.text();
         }
 
-        function parseMarkdown(markdown) {
-            const { meta, body } = splitFrontMatter(markdown);
-            const lines = body.split(/\r?\n/);
-            const html = [];
-            const toc = [];
-            let index = 0;
+		function matchListItem(line) {
+			const match = line.match(
+				/^([ \t]*)(?:(\d+)[.)]|([-+*]))[ \t]+(.+)$/
+			);
 
-            while (index < lines.length) {
-                const line = lines[index];
+			if (!match) {
+				return null;
+			}
 
-                if (!line.trim()) {
-                    index += 1;
-                    continue;
-                }
+			return {
+				indent: getIndentWidth(match[1]),
+				marker: match[2] ? "ordered" : "unordered",
+				number: match[2] ? Number(match[2]) : null,
+				text: match[4]
+			};
+		}
 
-                if (line.startsWith(":::")) {
-                    const block = collectBlock(lines, index);
-                    html.push(renderBlock(block.type, block.attrs, block.content));
-                    index = block.nextIndex;
-                    continue;
-                }
+		function getIndentWidth(value) {
+			return Array.from(value).reduce((width, character) => {
+				return width + (character === "\t" ? 4 : 1);
+			}, 0);
+		}
 
-                if (line.startsWith("#")) {
-                    const heading = parseHeading(line);
-                    const id = createSlug(heading.text);
+		function isTableCaption(lines, index) {
+			return /^Table:[ \t]+\S/i.test(lines[index] || "") &&
+				isTableStart(lines, index + 1);
+		}
 
-                    if (heading.level > 1) {
-                        toc.push({
-                            id,
-                            level: heading.level,
-                            text: heading.text
-                        });
-                    }
+		function parseMarkdown(markdown, options = {}) {
+			const isFragment = options.fragment === true;
+			const parsedSource = isFragment
+				? {
+					body: markdown,
+					meta: {}
+				}
+				: splitFrontMatter(markdown);
+			const { meta, body } = parsedSource;
+			const lines = body.split(/\r?\n/);
+			const html = [];
+			const toc = [];
+			let index = 0;
 
-                    html.push(
-                        `<h${heading.level} id="${id}">${renderInline(heading.text)}</h${heading.level}>`
-                    );
-                    index += 1;
-                    continue;
-                }
+			if (!isFragment) {
+				state.footnotes.clear();
+			}
 
-                if (line.startsWith("- ")) {
-                    const list = collectList(lines, index);
-                    html.push(renderList(list.items));
-                    index = list.nextIndex;
-                    continue;
-                }
+			while (index < lines.length) {
+				const line = lines[index];
+				const currentIndex = index;
 
-                if (isTableStart(lines, index)) {
-                    const table = collectTable(lines, index);
-                    html.push(renderTable(table));
-                    index = table.nextIndex;
-                    continue;
-                }
+				if (!line.trim()) {
+					index += 1;
+					continue;
+				}
 
-                const paragraph = collectParagraph(lines, index);
-                html.push(`<p>${renderInline(paragraph.text)}</p>`);
-                index = paragraph.nextIndex;
-            }
+				if (isMarkdownCommentStart(lines, index)) {
+					index = skipMarkdownComment(lines, index);
+					continue;
+				}
 
-            return {
-                html: html.join(""),
-                meta,
-                toc
-            };
-        }
+				if (isFencedCodeStart(line)) {
+					const code = collectFencedCode(
+						lines,
+						index
+					);
+
+					html.push(renderCodeBlock(code));
+					index = code.nextIndex;
+					continue;
+				}
+
+				if (line.startsWith(":::")) {
+					const block = collectBlock(lines, index);
+
+					html.push(
+						renderBlock(
+							block.type,
+							block.attrs,
+							block.content
+						)
+					);
+					index = block.nextIndex;
+					continue;
+				}
+
+				if (/^(#{1,6})[ \t]+/.test(line)) {
+					const heading = parseHeading(line);
+					const id = heading.explicitId ||
+						createSlug(
+							stripMarkdown(heading.text)
+						);
+
+					if (heading.level > 1) {
+						toc.push({
+							id,
+							level: heading.level,
+							text: stripMarkdown(heading.text)
+						});
+					}
+
+					html.push(
+						`<h${heading.level} id="${
+							escapeAttribute(id)
+						}">${
+							renderInline(heading.text)
+						}</h${heading.level}>`
+					);
+					index += 1;
+					continue;
+				}
+
+				if (isFootnoteDefinition(line)) {
+					const footnote = collectFootnoteDefinition(
+						lines,
+						index
+					);
+
+					if (!isFragment) {
+						state.footnotes.set(
+							footnote.id,
+							footnote.content
+						);
+					}
+
+					index = footnote.nextIndex;
+					continue;
+				}
+
+				if (isTableCaption(lines, index)) {
+					const table = collectTable(
+						lines,
+						index + 1
+					);
+
+					table.caption = line
+						.replace(/^Table:[ \t]*/i, "")
+						.trim();
+
+					html.push(renderTable(table));
+					index = table.nextIndex;
+					continue;
+				}
+
+				if (isTableStart(lines, index)) {
+					const table = collectTable(
+						lines,
+						index
+					);
+
+					html.push(renderTable(table));
+					index = table.nextIndex;
+					continue;
+				}
+
+				if (matchListItem(line)) {
+					const list = collectList(lines, index);
+
+					html.push(renderList(list.node));
+					index = list.nextIndex;
+					continue;
+				}
+
+				if (/^ {0,3}>[ \t]?/.test(line)) {
+					const quote = collectBlockquote(
+						lines,
+						index
+					);
+
+					html.push(
+						renderNoteBlock(
+							"note",
+							{
+								title: "Note"
+							},
+							quote.content
+						)
+					);
+					index = quote.nextIndex;
+					continue;
+				}
+
+				if (
+					isIndentedCodeLine(
+						line,
+						lines[index - 1] || ""
+					)
+				) {
+					const code = collectIndentedCode(
+						lines,
+						index
+					);
+
+					html.push(renderCodeBlock(code));
+					index = code.nextIndex;
+					continue;
+				}
+
+				const paragraph = collectParagraph(
+					lines,
+					index
+				);
+
+				if (paragraph.nextIndex === currentIndex) {
+					html.push(
+						`<p>${renderInline(line.trim())}</p>`
+					);
+					index += 1;
+					continue;
+				}
+
+				html.push(
+					`<p>${renderInline(paragraph.text)}</p>`
+				);
+				index = paragraph.nextIndex;
+				}
+
+				return {
+					html: html.join(""),
+					meta,
+					toc
+				};
+				}
 
         function splitFrontMatter(markdown) {
             if (!markdown.startsWith("---")) {
@@ -2208,42 +4438,114 @@
             };
         }
 
-        function collectBlock(lines, startIndex) {
-            const opening = lines[startIndex].trim();
-            const match = opening.match(/^:::(\w+)\s*(.*)$/);
-            const type = match ? match[1] : "note";
-            const attrs = parseAttributes(match ? match[2] : "");
-            const content = [];
-            let index = startIndex + 1;
+		function collectBlock(lines, startIndex) {
+			const opening = lines[startIndex].trim();
+			const match = opening.match(/^:::(\w+)\s*(.*)$/);
+			const type = match ? match[1] : "note";
+			const attrs = parseAttributes(match ? match[2] : "");
+			const content = [];
+			let depth = 1;
+			let index = startIndex + 1;
 
-            while (index < lines.length && lines[index].trim() !== ":::") {
-                content.push(lines[index]);
-                index += 1;
-            }
+			while (index < lines.length) {
+				const line = lines[index];
+				const trimmed = line.trim();
 
-            return {
-                attrs,
-                content: content.join("\n").trim(),
-                nextIndex: index + 1,
-                type
-            };
-        }
+				if (/^:::\w+/.test(trimmed)) {
+					depth += 1;
+					content.push(line);
+					index += 1;
+					continue;
+				}
 
-        function collectParagraph(lines, startIndex) {
+				if (trimmed === ":::") {
+					depth -= 1;
+
+					if (depth === 0) {
+						break;
+					}
+
+					content.push(line);
+					index += 1;
+					continue;
+				}
+
+				content.push(line);
+				index += 1;
+			}
+
+			return {
+				attrs,
+				content: content.join("\n").trim(),
+				nextIndex: index < lines.length ? index + 1 : index,
+				type
+			};
+		}
+
+		function parseMarkdownFragment(markdown) {
+			return parseMarkdown(markdown, {
+				fragment: true
+			}).html;
+		}
+
+		function isMarkdownCommentStart(lines, index) {
+			const line = lines[index].trim();
+
+			return line.startsWith("<!--") ||
+				/^\[\/\/\]:\s*#\s*\(.*\)\s*$/.test(line);
+		}
+
+		function skipMarkdownComment(lines, startIndex) {
+			const line = lines[startIndex];
+
+			if (
+				/^\s*\[\/\/\]:\s*#\s*\(.*\)\s*$/.test(line)
+			) {
+				return startIndex + 1;
+			}
+
+			if (line.includes("-->")) {
+				return startIndex + 1;
+			}
+
+			let index = startIndex + 1;
+
+			while (
+				index < lines.length &&
+				!lines[index].includes("-->")
+			) {
+				index += 1;
+			}
+
+			return index < lines.length
+				? index + 1
+				: index;
+		}
+
+		function collectParagraph(lines, startIndex) {
             const content = [];
             let index = startIndex;
 
-            while (
-                index < lines.length &&
-                lines[index].trim() &&
-                !lines[index].startsWith("#") &&
-                !lines[index].startsWith("- ") &&
-                !lines[index].startsWith(":::") &&
-                !isTableStart(lines, index)
-            ) {
-                content.push(lines[index].trim());
-                index += 1;
-            }
+			while (
+				index < lines.length &&
+				lines[index].trim() &&
+				!/^(#{1,6})[ \t]+/.test(lines[index]) &&
+				!lines[index].startsWith(":::") &&
+				!isFencedCodeStart(lines[index]) &&
+				!isIndentedCodeLine(
+					lines[index],
+					lines[index - 1] || ""
+				) &&
+				!matchListItem(lines[index]) &&
+				!/^ {0,3}>[ \t]?/.test(lines[index]) &&
+				!isFootnoteDefinition(lines[index]) &&
+				!isTableStart(lines, index) &&
+				!isTableCaption(lines, index) &&
+				!isMarkdownCommentStart(lines, index)
+			) {
+				content.push(lines[index].trim());
+				index += 1;
+			}
 
             return {
                 nextIndex: index,
@@ -2251,39 +4553,271 @@
             };
         }
 
-        function collectList(lines, startIndex) {
-            const items = [];
-            let index = startIndex;
+		function isFencedCodeStart(line) {
+			return /^ {0,3}(`{3,}|~{3,})(.*)$/.test(line);
+		}
 
-            while (index < lines.length && lines[index].startsWith("- ")) {
-                items.push(lines[index].slice(2).trim());
-                index += 1;
-            }
+		function collectFencedCode(lines, startIndex) {
+			const opening = lines[startIndex].match(
+				/^ {0,3}(`{3,}|~{3,})(.*)$/
+			);
+			const fence = opening[1];
+			const info = parseFenceInfo(opening[2].trim());
+			const content = [];
+			const closingPattern = new RegExp(
+				`^ {0,3}${escapeRegExp(fence[0])}{${
+					fence.length
+				},}\\s*$`
+			);
+			let index = startIndex + 1;
 
-            return {
-                items,
-                nextIndex: index
-            };
-        }
+			while (
+				index < lines.length &&
+				!closingPattern.test(lines[index])
+			) {
+				content.push(lines[index]);
+				index += 1;
+			}
 
-        function collectTable(lines, startIndex) {
-            const headers = splitTableRow(lines[startIndex]);
-            const alignments = splitTableRow(lines[startIndex + 1]).map(getTableAlignment);
-            const rows = [];
-            let index = startIndex + 2;
+			return {
+				code: content.join("\n"),
+				language: info.language,
+				nextIndex: index < lines.length
+					? index + 1
+					: index,
+				title: info.title
+			};
+		}
 
-            while (index < lines.length && isTableRow(lines[index])) {
-                rows.push(splitTableRow(lines[index]));
-                index += 1;
-            }
+		function parseFenceInfo(value) {
+			const match = value.match(
+				/^([^\s{]+)?(?:\s+\{title="([^"]+)"\})?$/
+			);
 
-            return {
-                alignments,
-                headers,
-                nextIndex: index,
-                rows
-            };
-        }
+			return {
+				language: match?.[1] || "",
+				title: match?.[2] || ""
+			};
+		}
+
+		function isIndentedCodeLine(line, previousLine = "") {
+			const hasCodeIndent = /^(?: {4,}|\t)/.test(line);
+			const followsBlankLine = !previousLine.trim();
+
+			return hasCodeIndent && followsBlankLine;
+		}
+
+		function collectIndentedCode(lines, startIndex) {
+			const content = [];
+			let index = startIndex;
+
+			while (
+				index < lines.length &&
+				(
+					!lines[index].trim() ||
+					isIndentedCodeLine(lines[index])
+				)
+			) {
+				content.push(removeCodeIndent(lines[index]));
+				index += 1;
+			}
+
+			while (
+				content.length &&
+				!content[content.length - 1].trim()
+			) {
+				content.pop();
+			}
+
+			return {
+				code: content.join("\n"),
+				language: "",
+				nextIndex: index,
+				title: ""
+			};
+		}
+
+		function removeCodeIndent(line) {
+			if (line.startsWith("\t")) {
+				return line.slice(1);
+			}
+
+			return line.replace(/^ {4}/, "");
+		}
+
+		function escapeRegExp(value) {
+			return value.replace(
+				/[.*+?^${}()|[\]\\]/g,
+				"\\$&"
+			);
+		}
+
+		function isFootnoteDefinition(line) {
+			return /^\[\^([^\]]+)\]:[ \t]+/.test(line);
+		}
+
+		function collectFootnoteDefinition(lines, startIndex) {
+			const opening = lines[startIndex].match(
+				/^\[\^([^\]]+)\]:[ \t]+(.*)$/
+			);
+			const content = [opening[2]];
+			let index = startIndex + 1;
+
+			while (
+				index < lines.length &&
+				(
+					!lines[index].trim() ||
+					/^(?: {2,}|\t)/.test(lines[index])
+				)
+			) {
+				content.push(
+					lines[index].replace(/^(?: {2,}|\t)/, "")
+				);
+				index += 1;
+			}
+
+			return {
+				content: content.join("\n").trim(),
+				id: opening[1],
+				nextIndex: index
+			};
+		}
+
+		function collectBlockquote(lines, startIndex) {
+			const content = [];
+			let index = startIndex;
+
+			while (
+				index < lines.length &&
+				/^ {0,3}>[ \t]?/.test(lines[index])
+			) {
+				content.push(
+					lines[index].replace(
+						/^ {0,3}>[ \t]?/,
+						""
+					)
+				);
+				index += 1;
+			}
+
+			return {
+				content: content.join("\n"),
+				nextIndex: index
+			};
+		}
+
+		function collectList(lines, startIndex) {
+			const firstMatch = matchListItem(lines[startIndex]);
+			const result = collectListLevel(
+				lines,
+				startIndex,
+				firstMatch.indent,
+				firstMatch.marker
+			);
+
+			return {
+				nextIndex: result.nextIndex,
+				node: result.node
+			};
+		}
+
+		function collectListLevel(lines, startIndex, indent, marker) {
+			const items = [];
+			let index = startIndex;
+			let start = null;
+
+			while (index < lines.length) {
+				const match = matchListItem(lines[index]);
+
+				if (!match || match.indent < indent) {
+					break;
+				}
+
+				if (match.indent > indent) {
+					if (!items.length) {
+						break;
+					}
+
+					const nested = collectListLevel(
+						lines,
+						index,
+						match.indent,
+						match.marker
+					);
+
+					items[items.length - 1].children.push(nested.node);
+					index = nested.nextIndex;
+					continue;
+				}
+
+				if (match.marker !== marker) {
+					break;
+				}
+
+				if (start === null && marker === "ordered") {
+					start = match.number;
+				}
+
+				const item = {
+					children: [],
+					lines: [match.text]
+				};
+
+				index += 1;
+
+				while (index < lines.length) {
+					const nextMatch = matchListItem(lines[index]);
+					const rawLine = lines[index];
+					const rawIndent = getIndentWidth(
+						rawLine.match(/^[ \t]*/)[0]
+					);
+
+					if (nextMatch && nextMatch.indent <= indent) {
+						break;
+					}
+
+					if (nextMatch && nextMatch.indent > indent) {
+						break;
+					}
+
+					if (!rawLine.trim()) {
+						if (
+							index + 1 < lines.length &&
+							getIndentWidth(
+								lines[index + 1].match(/^[ \t]*/)[0]
+							) > indent
+						) {
+							item.lines.push("");
+							index += 1;
+							continue;
+						}
+
+						break;
+					}
+
+					if (rawIndent > indent) {
+						item.lines.push(
+							rawLine.slice(Math.min(rawLine.length, indent + 2))
+						);
+						index += 1;
+						continue;
+					}
+
+					break;
+				}
+
+				items.push(item);
+			}
+
+			return {
+				nextIndex: index,
+				node: {
+					items,
+					marker,
+					start
+				}
+			};
+		}
 
         function isTableStart(lines, index) {
             const header = lines[index] || "";
@@ -2305,71 +4839,322 @@
                 cells.every((cell) => /^:?-{3,}:?$/.test(cell.trim()));
         }
 
-        function splitTableRow(line) {
-            const value = line.trim().replace(/^\|/, "").replace(/\|$/, "");
-            const cells = [];
-            let cell = "";
-            let escaped = false;
-            let inCode = false;
+		function splitTableRow(line) {
+			const value = line.trim().replace(/^\|/, "").replace(/\|$/, "");
+			const cells = [];
+			let cell = "";
+			let escaped = false;
+			let inCode = false;
 
-            Array.from(value).forEach((character, characterIndex) => {
-                if (escaped) {
-                    cell += character;
-                    escaped = false;
-                    return;
-                }
+			Array.from(value).forEach((character, characterIndex) => {
+				if (escaped) {
+					cell += character;
+					escaped = false;
+					return;
+				}
 
-                if (character === "\\" && value[characterIndex + 1] === "|") {
-                    escaped = true;
-                    return;
-                }
+				if (character === "\\" && value[characterIndex + 1] === "|") {
+					escaped = true;
+					return;
+				}
 
-                if (character === "`") {
-                    inCode = !inCode;
-                    cell += character;
-                    return;
-                }
+				if (character === "`") {
+					inCode = !inCode;
+					cell += character;
+					return;
+				}
 
-                if (character === "|" && !inCode) {
-                    cells.push(cell.trim());
-                    cell = "";
-                    return;
-                }
+				if (character === "|" && !inCode) {
+					cells.push(cell.trim());
+					cell = "";
+					return;
+				}
 
-                cell += character;
+				cell += character;
+			});
+
+			cells.push(cell.trim());
+
+			return cells;
+		}
+
+		function collectTable(lines, startIndex) {
+			const headers = splitTableRow(lines[startIndex]);
+			const separators = splitTableRow(lines[startIndex + 1]);
+			const alignments = separators.map(getTableAlignment);
+			const rows = [];
+			let index = startIndex + 2;
+
+			while (
+				index < lines.length &&
+				lines[index].trim() &&
+				isTableRow(lines[index])
+			) {
+				const cells = splitTableRow(lines[index]);
+
+				while (cells.length < headers.length) {
+					cells.push("");
+				}
+
+				rows.push(cells.slice(0, headers.length));
+				index += 1;
+			}
+
+			return {
+				alignments,
+				caption: "",
+				headers,
+				nextIndex: index,
+				rows
+			};
+		}
+
+        function collectAdvancedTable(
+            lines,
+            tableStart,
+            defaultAlignment = "center"
+        ) {
+            let headerStart = tableStart;
+
+            while (
+                headerStart > 0 &&
+                lines[headerStart - 1].trim() &&
+                isTableRow(lines[headerStart - 1])
+            ) {
+                headerStart -= 1;
+            }
+
+            const headers = splitTableRow(lines[tableStart]);
+            const separators = splitTableRow(lines[tableStart + 1]);
+            const alignments = separators.map((separator) => {
+                return getTableAlignment(separator, defaultAlignment);
             });
+            const headerRows = lines
+                .slice(headerStart, tableStart + 1)
+                .map((line) => {
+                    const cells = splitTableRow(line);
 
-            cells.push(cell.trim());
+                    while (cells.length < headers.length) {
+                        cells.push("");
+                    }
 
-            return cells;
+                    return cells.slice(0, headers.length);
+                });
+            const rows = [];
+            let index = tableStart + 2;
+
+            while (
+                index < lines.length &&
+                lines[index].trim() &&
+                isTableRow(lines[index])
+            ) {
+                const cells = splitTableRow(lines[index]);
+
+                while (cells.length < headers.length) {
+                    cells.push("");
+                }
+
+                rows.push(cells.slice(0, headers.length));
+                index += 1;
+            }
+
+            return {
+                alignments,
+                caption: "",
+                headerRows,
+                headers,
+                nextIndex: index,
+                rows
+            };
         }
 
-        function getTableAlignment(separator) {
+        function getTableAlignment(
+            separator,
+            defaultAlignment = "center"
+        ) {
             const value = separator.trim();
 
             if (value.startsWith(":") && value.endsWith(":")) {
                 return "center";
             }
 
+            if (value.startsWith(":")) {
+                return "left";
+            }
+
             if (value.endsWith(":")) {
                 return "right";
             }
 
-            return "left";
+            return normaliseTableAlignment(
+                defaultAlignment,
+                "center"
+            );
         }
 
+        function normaliseTableAlignment(value, fallback = "center") {
+            const alignments = new Set([
+                "center",
+                "left",
+                "right"
+            ]);
+            const alignment = String(value || fallback).toLowerCase();
+
+            return alignments.has(alignment) ? alignment : fallback;
+        }
+
+		function decorateKeywords(root) {
+			if (!state.keywordDefinitions.size) {
+				return;
+			}
+
+			const keywords = [...state.keywordDefinitions.keys()]
+				.sort((first, second) => second.length - first.length);
+			const walker = document.createTreeWalker(
+				root,
+				NodeFilter.SHOW_TEXT,
+				{
+					acceptNode(node) {
+						if (!node.nodeValue.trim()) {
+							return NodeFilter.FILTER_REJECT;
+						}
+
+						if (
+							node.parentElement.closest(
+								"a, button, code, input, pre, script, style, textarea, .keyword"
+							)
+						) {
+							return NodeFilter.FILTER_REJECT;
+						}
+
+						return NodeFilter.FILTER_ACCEPT;
+					}
+				}
+			);
+			const nodes = [];
+
+			while (walker.nextNode()) {
+				nodes.push(walker.currentNode);
+			}
+
+			nodes.forEach((node) => {
+				decorateKeywordTextNode(node, keywords);
+			});
+		}
+
+		function decorateKeywordTextNode(node, keywords) {
+			const value = node.nodeValue;
+			const matches = findKeywordMatches(value, keywords);
+
+			if (!matches.length) {
+				return;
+			}
+
+			const fragment = document.createDocumentFragment();
+			let cursor = 0;
+
+			matches.forEach((match) => {
+				if (match.start > cursor) {
+					fragment.append(
+						document.createTextNode(
+							value.slice(cursor, match.start)
+						)
+					);
+				}
+
+				const keyword = document.createElement("button");
+
+				keyword.className =
+                    "keyword js-keyword js-popout";
+				keyword.type = "button";
+				keyword.textContent = match.keyword;
+				keyword.setAttribute("data-keyword", match.keyword);
+				keyword.setAttribute(
+					"aria-describedby",
+					"keyword-popover"
+				);
+
+				fragment.append(keyword);
+				cursor = match.end;
+			});
+
+			if (cursor < value.length) {
+				fragment.append(
+					document.createTextNode(value.slice(cursor))
+				);
+			}
+
+			node.replaceWith(fragment);
+		}
+
+		function findKeywordMatches(value, keywords) {
+			const matches = [];
+
+			keywords.forEach((keyword) => {
+				let searchIndex = 0;
+
+				while (searchIndex < value.length) {
+					const start = value.indexOf(keyword, searchIndex);
+
+					if (start === -1) {
+						break;
+					}
+
+					const end = start + keyword.length;
+					const previous = start > 0 ? value[start - 1] : "";
+					const next = end < value.length ? value[end] : "";
+					const hasValidStart = !previous ||
+						!/[\p{L}\p{N}_]/u.test(previous);
+					const hasValidEnd = !next ||
+						!/[\p{L}\p{N}_]/u.test(next);
+
+					if (hasValidStart && hasValidEnd) {
+						matches.push({
+							end,
+							keyword,
+							start
+						});
+					}
+
+					searchIndex = end;
+				}
+			});
+
+			return matches
+				.sort((first, second) => {
+					if (first.start !== second.start) {
+						return first.start - second.start;
+					}
+
+					return second.keyword.length - first.keyword.length;
+				})
+				.filter((match, index, allMatches) => {
+					return !allMatches
+						.slice(0, index)
+						.some((accepted) => {
+							return match.start < accepted.end;
+						});
+				});
+		}
+
 		function parseHeading(line) {
-			const match = line.match(/^(#{1,4})\s+(.+)$/);
+			const match = line.match(/^(#{1,6})[ \t]+(.+?)\s*#*\s*$/);
+			const rawText = match ? match[2].trim() : line.trim();
+			const explicitIdMatch = rawText.match(/\s+\{#([a-z][\w:-]*)\}$/i);
+			const text = explicitIdMatch
+				? rawText.slice(0, explicitIdMatch.index).trim()
+				: rawText;
 
 			return {
+				explicitId: explicitIdMatch ? explicitIdMatch[1] : "",
 				level: match ? match[1].length : 2,
-				text: match ? match[2].trim() : line.trim()
+				text
 			};
 		}
 
-        function parseAttributes(raw) {
+function parseAttributes(raw) {
             const attrs = {};
-            const pattern = /(\w+)="([^"]*)"/g;
+            const pattern = /([\w-]+)="([^"]*)"/g;
             let match = pattern.exec(raw);
 
             while (match) {
@@ -2380,194 +5165,1265 @@
             return attrs;
         }
 
-        function renderDocument(parsed, doc) {
-            const title = parsed.meta.title || doc.title;
-            const section = parsed.meta.section || doc.section || "System Reference";
-            const description = parsed.meta.description || "";
+		function renderDocument(parsed, doc) {
+			const title = parsed.meta.title || doc.title;
+			const section = parsed.meta.section ||
+				doc.section ||
+				"System Reference";
+			const description = parsed.meta.description || "";
 
-            return `<header class="doc-header">
-                <p class="doc-kicker">${escapeHtml(section)}</p>
-                <h1 class="doc-title">${escapeHtml(title)}</h1>
-                ${description ? `<p class="doc-description">${escapeHtml(description)}</p>` : ""}
-            </header>
-            <div class="doc-body">${parsed.html}</div>`;
-        }
+			return `<header class="doc-header">
+				<p class="doc-kicker">${
+					escapeHtml(section)
+				}</p>
+				<h1 class="doc-title">${
+					escapeHtml(title)
+				}</h1>
+				${
+					description
+						? `<p class="doc-description">${
+							escapeHtml(description)
+						}</p>`
+						: ""
+				}
+			</header>
+			<div class="doc-body">
+				${parsed.html}
+				${renderFootnotes()}
+			</div>`;
+		}
 
-        function renderBlock(type, attrs, content) {
-            if (type === "power") {
-                return renderPower(attrs, content);
+function renderBlock(type, attrs, content) {
+            if (type === "actioncard") {
+                return renderActionCard(attrs, content);
             }
 
-            const title = attrs.title || type;
-            const className = `highlight highlight-${escapeAttribute(type)}`;
-            const icon = type === "archive" ? "book" : "bolt";
+            if (type === "definitiongrid" || type === "definitions") {
+                return renderDefinitionGrid(attrs, content);
+            }
 
-            return `<section class="${className}">
-                <div class="highlight-header">
-                    <span class="highlight-icon" aria-hidden="true">${renderIcon(icon)}</span>
-                    <h3 class="highlight-title">${escapeHtml(title)}</h3>
-                </div>
-                <p>${renderInline(content.replace(/\s+/g, " "))}</p>
-            </section>`;
+            if (type === "table") {
+                return renderAdvancedTable(attrs, content);
+            }
+
+            if (type === "tablefooter") {
+                return "";
+            }
+
+            return renderNoteBlock(type, attrs, content);
         }
 
-        function renderPower(attrs, content) {
-            const rawTiers = (attrs.tier || "")
-                .split("|")
-                .slice(0, 3);
+        function renderActionCard(attrs, content) {
+            try {
+                const action = window.NakamaActionCards
+                    .resolveDefinition(attrs, content);
 
-            const visibleTiers = rawTiers
-                .map((tier, index) => {
+                return window.NakamaActionCards.renderToString(
+                    action
+                );
+            } catch (error) {
+                return `<p class="actioncard-error">${
+                    escapeHtml(normaliseError(error).message)
+                }</p>`;
+            }
+        }
+
+        function collectDefinitionGridItems(content) {
+            const lines = content.split(/\r?\n/);
+            const items = [];
+            let current = null;
+            let index = 0;
+
+            function flushDefinition() {
+                if (!current) {
+                    return;
+                }
+
+                items.push(current);
+                current = null;
+            }
+
+            while (index < lines.length) {
+                const line = lines[index];
+                const heading = line.match(
+                    /^#{3,4}[ \t]+(.+?)\s*#*\s*$/
+                );
+
+                if (heading) {
+                    flushDefinition();
+                    current = {
+                        body: [],
+                        kind: "definition",
+                        title: heading[1].trim()
+                    };
+                    index += 1;
+                    continue;
+                }
+
+                if (/^:::actioncard(?:\s|$)/.test(line.trim())) {
+                    const block = collectBlock(lines, index);
+
+                    flushDefinition();
+                    items.push({
+                        attrs: block.attrs,
+                        content: block.content,
+                        kind: "actioncard"
+                    });
+                    index = block.nextIndex;
+                    continue;
+                }
+
+                if (current) {
+                    current.body.push(line);
+                }
+
+                index += 1;
+            }
+
+            flushDefinition();
+            return items;
+        }
+
+        function renderDefinitionGrid(attrs, content) {
+            const items = collectDefinitionGridItems(content);
+
+            if (!items.length) {
+                return renderNoteBlock(
+                    "warning",
+                    {
+                        title: "Definition grid needs content"
+                    },
+                    "Add a level-three heading or an Action Card."
+                );
+            }
+
+            const requestedColumns = Number.parseInt(
+                attrs.columns || "2",
+                10
+            );
+            const columns = [1, 2, 3].includes(requestedColumns)
+                ? requestedColumns
+                : 2;
+            const markup = items.map((item) => {
+                if (item.kind === "actioncard") {
+                    return renderActionCard(
+                        item.attrs,
+                        item.content
+                    );
+                }
+
+                return `<section class="definition">
+                    <h3 class="definition-title">${
+                        renderInline(item.title)
+                    }</h3>
+                    <div class="definition-body">${
+                        parseMarkdownFragment(
+                            item.body.join("\n").trim()
+                        )
+                    }</div>
+                </section>`;
+            }).join("");
+
+            return `<div class="definitiongrid definitiongrid-columns-${
+                columns
+            }">${markup}</div>`;
+        }
+
+        function renderAdvancedTable(attrs, content) {
+            const footer = extractNestedDirective(
+                content,
+                "tablefooter"
+            );
+            const sourceLines = footer.content.split(/\r?\n/);
+            const groupLineIndex = sourceLines.findIndex((line) => {
+                return /^@groups[ \t]+/i.test(line.trim());
+            });
+            let groups = [];
+
+            if (groupLineIndex >= 0) {
+                groups = parseTableGroups(
+                    sourceLines[groupLineIndex]
+                        .trim()
+                        .replace(/^@groups[ \t]+/i, "")
+                );
+                sourceLines.splice(groupLineIndex, 1);
+            }
+
+            const tableStart = sourceLines.findIndex((line, index) => {
+                return isTableStart(sourceLines, index);
+            });
+
+            if (tableStart < 0) {
+                return renderNoteBlock(
+                    "danger",
+                    {
+                        title: "Table formatting error"
+                    },
+                    "The table block does not contain a valid Markdown table."
+                );
+            }
+
+            const defaultAlignment = normaliseTableAlignment(
+                attrs.align,
+                "center"
+            );
+            const table = collectAdvancedTable(
+                sourceLines,
+                tableStart,
+                defaultAlignment
+            );
+            const variant = normaliseTableVariant(attrs.variant);
+            const rowHeaderValue = String(
+                attrs["row-header"] || ""
+            ).toLowerCase();
+            const hasBodyMergeToken = table.rows.some((row) => {
+                return row.some((cell) => {
+                    return ["<<", ">>", "^^"].includes(cell.trim());
+                });
+            });
+
+            if (hasBodyMergeToken) {
+                return renderNoteBlock(
+                    "danger",
+                    {
+                        title: "Header merge required"
+                    },
+                    "Merge tokens are only supported in advanced table " +
+                    "header rows. Move << or ^^ above the separator row."
+                );
+            }
+
+            table.allowBodyMerges = false;
+            table.caption = attrs.title || "";
+            table.titleAlignment = normaliseTableAlignment(
+                attrs["title-align"],
+                "left"
+            );
+            table.footerItems = parseTableFooterItems(footer.block);
+            table.footerSplit = parsePositiveInteger(
+                attrs["footer-split"]
+            );
+            table.groupHeaders = groups;
+            table.rowHeader = rowHeaderValue
+                ? rowHeaderValue === "true"
+                : variant === "horizontal" || variant === "vertical";
+            table.splits = parseIntegerList(attrs.splits);
+            table.variant = variant;
+
+            const groupWidth = groups.reduce((total, group) => {
+                return total + group.span;
+            }, 0);
+
+            if (groups.length && groupWidth !== table.headers.length) {
+                table.groupHeaders = [];
+                console.warn(
+                    "[NAKAMA SRD] Ignored @groups because spans do not " +
+                    "match the table column count."
+                );
+            }
+
+            return renderTable(table);
+        }
+
+        function extractNestedDirective(content, type) {
+            const lines = content.split(/\r?\n/);
+            const openingPattern = new RegExp(
+                `^:::${escapeRegExp(type)}(?:\\s|$)`,
+                "i"
+            );
+            const remaining = [];
+            const block = [];
+            let depth = 0;
+            let found = false;
+
+            lines.forEach((line) => {
+                const trimmed = line.trim();
+
+                if (!found && openingPattern.test(trimmed)) {
+                    found = true;
+                    depth = 1;
+                    return;
+                }
+
+                if (found && depth > 0) {
+                    if (/^:::\w+/.test(trimmed)) {
+                        depth += 1;
+                        block.push(line);
+                        return;
+                    }
+
+                    if (trimmed === ":::") {
+                        depth -= 1;
+
+                        if (depth === 0) {
+                            return;
+                        }
+                    }
+
+                    block.push(line);
+                    return;
+                }
+
+                remaining.push(line);
+            });
+
+            return {
+                block: block.join("\n").trim(),
+                content: remaining.join("\n").trim()
+            };
+        }
+
+        function parseTableGroups(value) {
+            return value
+                .split("|")
+                .map((group) => group.trim())
+                .filter(Boolean)
+                .map((group) => {
+                    const separator = group.lastIndexOf("=");
+
+                    if (separator < 1) {
+                        return null;
+                    }
+
+                    const label = group.slice(0, separator).trim();
+                    const span = parsePositiveInteger(
+                        group.slice(separator + 1)
+                    );
+
+                    if (!label || !span) {
+                        return null;
+                    }
+
                     return {
-                        index,
-                        value: tier.trim()
+                        label,
+                        span
                     };
                 })
-                .filter((tier) => tier.value);
-
-            const isBasicTier = visibleTiers.length === 1 &&
-                visibleTiers[0].value.toUpperCase() === "BASIC";
-            const tierClass = isBasicTier
-                ? "power-tiers power-tiers-basic"
-                : "power-tiers";
-            const powerId = createSlug(attrs.title || "power");
-
-            return `<section class="power" id="${escapeAttribute(powerId)}">
-                <div class="power-header">
-                    <div>
-                        <p class="power-meta">${escapeHtml(attrs.key || "Power")}</p>
-                        <h3 class="power-title">${escapeHtml(attrs.title || "Untitled Power")}</h3>
-                    </div>
-                    <div class="power-cost">${escapeHtml(attrs.cost || "—")}</div>
-                </div>
-                <div class="power-body">
-                    <div>${renderInline(content.trim())}</div>
-                    ${visibleTiers.length ? `<div class="${tierClass}">
-                        ${visibleTiers.map((tier) => {
-                            return renderHitTier(tier.value, tier.index, isBasicTier);
-                        }).join("")}
-                    </div>` : ""}
-                </div>
-            </section>`;
+                .filter(Boolean);
         }
 
-        function renderHitTier(tier, index, isBasicTier = false) {
-            const labels = ["Weak Hit", "Hit", "Strong Hit"];
-            const label = isBasicTier ? "Hit" : labels[index] || "Hit Tier";
+        function parseTableFooterItems(value) {
+            if (!value) {
+                return [];
+            }
 
-            return `<div class="tier">
-                <span class="tier-value">${escapeHtml(tier)}</span>
-                <span class="tier-label">${label}</span>
-            </div>`;
+            const items = [];
+            let current = null;
+
+            value.split(/\r?\n/).forEach((line) => {
+                const item = line.match(/^[ \t]*[-+*][ \t]+(.+)$/);
+
+                if (item) {
+                    if (current) {
+                        items.push(current);
+                    }
+
+                    const target = parseTableFooterTarget(item[1]);
+
+                    current = {
+                        columnEnd: target.columnEnd,
+                        columnStart: target.columnStart,
+                        content: target.content,
+                        group: target.group,
+                        side: target.side
+                    };
+                    return;
+                }
+
+                if (current && line.trim()) {
+                    current.content += ` ${line.trim()}`;
+                }
+            });
+
+            if (current) {
+                items.push(current);
+            }
+
+            return items;
         }
 
-        function renderList(items) {
-            return `<ul>${items.map((item) => `<li>${renderInline(item)}</li>`).join("")}</ul>`;
+        function parseTableFooterTarget(value) {
+            const group = value.match(
+                /^\{group="([^"]+)"\}[ \t]*/i
+            );
+            const columns = value.match(
+                /^\{columns="(\d+)(?:-(\d+))?"\}[ \t]*/i
+            );
+            const side = value.match(
+                /^\{(start|end)\}[ \t]*/i
+            );
+            let prefix = "";
+            let columnStart = 0;
+            let columnEnd = 0;
+            let groupName = "";
+            let sideName = "";
+
+            if (group) {
+                prefix = group[0];
+                groupName = group[1].trim();
+            } else if (columns) {
+                prefix = columns[0];
+                columnStart = parsePositiveInteger(columns[1]);
+                columnEnd = parsePositiveInteger(
+                    columns[2] || columns[1]
+                );
+            } else if (side) {
+                prefix = side[0];
+                sideName = side[1].toLowerCase();
+            }
+
+            return {
+                columnEnd,
+                columnStart,
+                content: value.slice(prefix.length).trim(),
+                group: groupName,
+                side: sideName
+            };
         }
+
+        function parseIntegerList(value) {
+            return String(value || "")
+                .split(",")
+                .map((item) => parsePositiveInteger(item))
+                .filter(Boolean);
+        }
+
+        function parsePositiveInteger(value) {
+            const number = Number.parseInt(String(value || ""), 10);
+
+            return Number.isInteger(number) && number > 0
+                ? number
+                : 0;
+        }
+
+        function normaliseTableVariant(value) {
+            const variants = new Set([
+                "chart",
+                "horizontal",
+                "standard",
+                "vertical"
+            ]);
+            const variant = String(value || "standard").toLowerCase();
+
+            return variants.has(variant) ? variant : "standard";
+        }
+
+
+        function renderNoteBlock(type, attrs, content) {
+            const allowedTypes = new Set([
+                "archive",
+                "danger",
+                "note",
+                "rule",
+                "warning"
+            ]);
+            const safeType = allowedTypes.has(type)
+                ? type
+                : "note";
+            const title = attrs.title ||
+                getDefaultNoteTitle(safeType);
+
+            return `<aside class="markdown-note markdown-note-${
+                escapeAttribute(safeType)
+            } notefield notefield-${escapeAttribute(safeType)}">
+                <header class="markdown-note-header">
+                    <h3 class="markdown-note-title notefield-title">${
+                        renderInline(title)
+                    }</h3>
+                </header>
+                <div class="markdown-note-body notefield-body">${
+                    parseMarkdownFragment(content)
+                }</div>
+            </aside>`;
+        }
+
+		function getDefaultNoteTitle(type) {
+			const titles = {
+				archive: "Archive",
+				danger: "Danger",
+				note: "Note",
+				rule: "Rule",
+				warning: "Warning"
+			};
+
+			return titles[type] || "Note";
+		}
+
+		function renderCodeBlock(code) {
+			if (code.language.toLowerCase() === "quoted") {
+				return renderNoteBlock(
+					"note",
+					{
+						title: code.title || "Note"
+					},
+					code.code
+				);
+			}
+
+			const languageLabel = code.language
+				? `<span class="codeblock-language">${
+					escapeHtml(code.language)
+				}</span>`
+				: "";
+			const title = code.title ||
+				code.language ||
+				"Code";
+			const languageClass = code.language
+				? ` class="language-${
+					escapeAttribute(code.language)
+				}"`
+				: "";
+
+			return `<section class="codeblock">
+				<header class="codeblock-header">
+					<p class="codeblock-title">${
+						escapeHtml(title)
+					}</p>
+					${languageLabel}
+				</header>
+				<pre><code${languageClass}>${
+					escapeHtml(code.code)
+				}</code></pre>
+			</section>`;
+		}
+
+		function renderFootnoteReference(id) {
+			const safeId = createSlug(id);
+
+			return `<sup
+				class="footnote-reference"
+				id="footnote-reference-${
+					escapeAttribute(safeId)
+				}"
+			><a
+				href="#footnote-${escapeAttribute(safeId)}"
+				aria-label="Footnote ${escapeAttribute(id)}"
+			>${escapeHtml(id)}</a></sup>`;
+		}
+
+		function renderFootnotes() {
+			if (!state.footnotes.size) {
+				return "";
+			}
+
+			const items = [...state.footnotes.entries()]
+				.map(([id, content]) => {
+					const safeId = createSlug(id);
+
+					return `<li
+						id="footnote-${escapeAttribute(safeId)}"
+					>
+						${parseMarkdownFragment(content)}
+						<a
+							class="footnote-backlink"
+							href="#footnote-reference-${
+								escapeAttribute(safeId)
+							}"
+							aria-label="Return to footnote reference"
+						>↩</a>
+					</li>`;
+				})
+				.join("");
+
+			return `<section
+				class="footnotes"
+				aria-labelledby="footnotes-title"
+			>
+				<h2
+					class="footnotes-title"
+					id="footnotes-title"
+				>Footnotes</h2>
+				<ol class="footnotes-list">${items}</ol>
+			</section>`;
+		}
+
+		function renderList(list) {
+			const tag = list.marker === "ordered" ? "ol" : "ul";
+			const startAttribute = tag === "ol" && list.start !== 1
+				? ` start="${list.start}"`
+				: "";
+
+			const items = list.items.map((item) => {
+				const content = parseMarkdownFragment(
+					item.lines.join("\n")
+				);
+				const children = item.children
+					.map((child) => renderList(child))
+					.join("");
+
+				return `<li>${content}${children}</li>`;
+			}).join("");
+
+			return `<${tag}${startAttribute}>${items}</${tag}>`;
+		}
 
         function renderTable(table) {
-            const headers = table.headers.map((cell, index) => {
-                return renderTableCell("th", cell, table.alignments[index]);
-            }).join("");
-            const rows = table.rows.map((row) => {
-                const cells = table.headers.map((header, index) => {
-                    return renderTableCell("td", row[index] || "", table.alignments[index]);
-                }).join("");
+            const variant = normaliseTableVariant(table.variant);
+            const splits = Array.isArray(table.splits)
+                ? table.splits
+                : [];
+            const headerRows = Array.isArray(table.headerRows)
+                ? table.headerRows
+                : [table.headers];
+            const resolvedHeaders = resolveHeaderTableCells(headerRows);
+
+            if (!resolvedHeaders.valid) {
+                return renderNoteBlock(
+                    "danger",
+                    {
+                        title: "Table header formatting error"
+                    },
+                    resolvedHeaders.message
+                );
+            }
+
+            let groupColumn = 1;
+            const groupHeaders = Array.isArray(table.groupHeaders)
+                ? table.groupHeaders
+                : [];
+            const groupRow = groupHeaders.length
+                ? `<tr class="reference-table-groups">${
+                    groupHeaders.map((group) => {
+                        const cell = renderTableCell(
+                            "th",
+                            {
+                                content: group.label,
+                                colspan: group.span,
+                                rowspan: 1
+                            },
+                            "center",
+                            {
+                                logicalColumn: groupColumn,
+                                scope: "colgroup",
+                                splits
+                            }
+                        );
+
+                        groupColumn += group.span;
+                        return cell;
+                    }).join("")
+                }</tr>`
+                : "";
+            const headers = renderResolvedHeaderRows(
+                resolvedHeaders.rows,
+                table.alignments,
+                splits
+            );
+            const resolvedRows = table.allowBodyMerges === false
+                ? table.rows.map((row) => {
+                    return row.map((content, index) => {
+                        return {
+                            colspan: 1,
+                            content,
+                            hidden: false,
+                            logicalColumn: index + 1,
+                            rowspan: 1
+                        };
+                    });
+                })
+                : resolveMergedTableCells(table.rows);
+            const rows = resolvedRows.map((row) => {
+                const cells = row
+                    .map((cell, index) => {
+                        if (cell.hidden) {
+                            return "";
+                        }
+
+                        const logicalColumn = cell.logicalColumn ||
+                            index + 1;
+                        const isRowHeader = table.rowHeader === true &&
+                            logicalColumn === 1;
+
+                        return renderTableCell(
+                            isRowHeader ? "th" : "td",
+                            cell,
+                            table.alignments[logicalColumn - 1],
+                            {
+                                logicalColumn,
+                                scope: isRowHeader ? "row" : "",
+                                splits
+                            }
+                        );
+                    })
+                    .join("");
 
                 return `<tr>${cells}</tr>`;
             }).join("");
+            const titleAlignment = normaliseTableAlignment(
+                table.titleAlignment,
+                "left"
+            );
+            const titleAlignmentClass = titleAlignment === "left"
+                ? ""
+                : ` reference-table-title-align-${titleAlignment}`;
+            const caption = table.caption
+                ? `<caption class="markdown-table-caption reference-table-title${
+                    titleAlignmentClass
+                }">${
+                    renderInline(table.caption)
+                }</caption>`
+                : "";
+            const verticalClass = variant === "vertical"
+                ? " tableblock-vertical"
+                : "";
+            const tableClass = variant === "standard"
+                ? "reference-table"
+                : `reference-table reference-table-${variant}`;
+            const footer = resolveTableFooter(
+                table.footerItems,
+                groupHeaders,
+                table.headers.length
+            );
 
-            return `<div class="markdown-table-wrap">
-                <table class="markdown-table">
-                    <thead><tr>${headers}</tr></thead>
-                    <tbody>${rows}</tbody>
-                </table>
+            return `<div class="markdown-table-wrap tableblock${
+                verticalClass
+            }">
+                <div class="tableviewport">
+                    <table class="markdown-table ${tableClass}">
+                        ${caption}
+                        <thead>${groupRow}${headers}</thead>
+                        <tbody>${rows}</tbody>
+                        ${footer.table}
+                    </table>
+                </div>
+                ${renderTableFooter(
+                    footer.loose,
+                    table.footerSplit,
+                    table.headers.length
+                )}
             </div>`;
         }
 
-        function renderTableCell(tag, content, alignment) {
-            const className = alignment && alignment !== "left"
-                ? ` class="markdown-table-cell-${alignment}"`
-                : "";
+        function resolveHeaderTableCells(rows) {
+            const grid = rows.map((row, rowIndex) => {
+                return row.map((content, columnIndex) => {
+                    return {
+                        colspan: 1,
+                        content,
+                        hidden: false,
+                        logicalColumn: columnIndex + 1,
+                        merge: "",
+                        rowIndex,
+                        rowspan: 1
+                    };
+                });
+            });
+            let message = "";
 
-            return `<${tag}${className}>${renderInline(content)}</${tag}>`;
+            grid.forEach((row) => {
+                row.forEach((cell, columnIndex) => {
+                    const token = cell.content.trim();
+
+                    if (token !== "<<" && token !== ">>") {
+                        if (token === "^^") {
+                            cell.hidden = true;
+                            cell.merge = "up";
+                        }
+
+                        return;
+                    }
+
+                    const source = findHeaderCellLeft(row, columnIndex);
+
+                    if (!source) {
+                        message =
+                            "A horizontal merge token must follow a visible " +
+                            "header cell in the same row.";
+                        return;
+                    }
+
+                    source.colspan += 1;
+                    cell.hidden = true;
+                    cell.merge = "left";
+                });
+            });
+
+            if (message) {
+                return {
+                    message,
+                    rows: grid,
+                    valid: false
+                };
+            }
+
+            grid.forEach((row, rowIndex) => {
+                if (rowIndex === 0) {
+                    if (row.some((cell) => cell.merge === "up")) {
+                        message =
+                            "The first header row cannot contain ^^ because " +
+                            "there is no header cell above it.";
+                    }
+
+                    return;
+                }
+
+                const extended = new Set();
+
+                row.forEach((cell, columnIndex) => {
+                    if (cell.merge !== "up") {
+                        return;
+                    }
+
+                    const source = findHeaderCellAbove(
+                        grid,
+                        rowIndex,
+                        columnIndex
+                    );
+
+                    if (!source) {
+                        message =
+                            "Each ^^ token must sit directly below a visible " +
+                            "header cell.";
+                        return;
+                    }
+
+                    const sourceKey = `${
+                        source.rowIndex
+                    }:${source.logicalColumn}`;
+
+                    if (!extended.has(sourceKey)) {
+                        source.rowspan += 1;
+                        extended.add(sourceKey);
+                    }
+                });
+
+                extended.forEach((sourceKey) => {
+                    const [sourceRow, sourceColumn] = sourceKey
+                        .split(":")
+                        .map(Number);
+                    const source = grid[sourceRow][sourceColumn - 1];
+                    const start = source.logicalColumn - 1;
+                    const end = start + source.colspan;
+
+                    for (let column = start; column < end; column += 1) {
+                        if (row[column].merge !== "up") {
+                            message =
+                                "A vertically merged header must use ^^ " +
+                                "beneath every column covered by the source " +
+                                "header.";
+                        }
+                    }
+                });
+            });
+
+            return {
+                message,
+                rows: grid,
+                valid: !message
+            };
         }
 
-		function renderToc(toc) {
-			const root = [];
+        function findHeaderCellLeft(row, columnIndex) {
+            for (let index = columnIndex - 1; index >= 0; index -= 1) {
+                const cell = row[index];
 
-			// Keep track of the latest heading at each level.
-			const parents = {
-				1: { children: root }
-			};
+                if (!cell.hidden) {
+                    return cell;
+                }
+            }
 
-			for (const item of toc) {
-				const node = {
-					...item,
-					children: []
-				};
+            return null;
+        }
 
-				// Find the closest existing parent heading.
-				let parent = null;
+        function findHeaderCellAbove(grid, rowIndex, columnIndex) {
+            for (let index = rowIndex - 1; index >= 0; index -= 1) {
+                const source = grid[index].find((cell) => {
+                    const start = cell.logicalColumn - 1;
+                    const end = start + cell.colspan;
+                    const reachesCurrentRow =
+                        cell.rowIndex + cell.rowspan === rowIndex;
 
-				for (let level = item.level - 1; level >= 1; level--) {
-					if (parents[level]) {
-						parent = parents[level];
-						break;
+                    return !cell.hidden &&
+                        reachesCurrentRow &&
+                        columnIndex >= start &&
+                        columnIndex < end;
+                });
+
+                if (source) {
+                    return source;
+                }
+            }
+
+            return null;
+        }
+
+        function renderResolvedHeaderRows(rows, alignments, splits) {
+            return rows.map((row, rowIndex) => {
+                const isLastRow = rowIndex === rows.length - 1;
+                const cells = row
+                    .filter((cell) => !cell.hidden)
+                    .map((cell) => {
+                        const logicalColumn = cell.logicalColumn;
+                        const alignment = isLastRow
+                            ? alignments[logicalColumn - 1]
+                            : "center";
+                        const scope = cell.colspan > 1
+                            ? "colgroup"
+                            : "col";
+
+                        return renderTableCell(
+                            "th",
+                            cell,
+                            alignment,
+                            {
+                                classes: isLastRow
+                                    ? []
+                                    : ["reference-table-header-group"],
+                                logicalColumn,
+                                scope,
+                                splits
+                            }
+                        );
+                    })
+                    .join("");
+
+                return `<tr>${cells}</tr>`;
+            }).join("");
+        }
+
+		function resolveMergedTableCells(rows) {
+			const grid = rows.map((row) => {
+				return row.map((content) => {
+					return {
+						colspan: 1,
+						content,
+						hidden: false,
+						rowspan: 1
+					};
+				});
+			});
+
+			grid.forEach((row, rowIndex) => {
+				row.forEach((cell, columnIndex) => {
+					if (cell.content === "^^" && rowIndex > 0) {
+						const source = findVisibleCellAbove(
+							grid,
+							rowIndex,
+							columnIndex
+						);
+
+						if (source) {
+							source.rowspan += 1;
+							cell.hidden = true;
+						}
 					}
-				}
 
-				// If nothing exists, attach to root.
-				if (!parent) {
-					parent = { children: root };
-				}
+					if (cell.content === ">>" && columnIndex > 0) {
+						const source = findVisibleCellLeft(row, columnIndex);
 
-				parent.children.push(node);
-
-				// Store this heading as the newest heading of its level.
-				parents[item.level] = node;
-
-				// Remove deeper headings because they no longer belong
-				// to subsequent sections.
-				for (const level of Object.keys(parents)) {
-					if (Number(level) > item.level) {
-						delete parents[level];
+						if (source) {
+							source.colspan += 1;
+							cell.hidden = true;
+						}
 					}
+				});
+			});
+
+			return grid;
+		}
+
+		function findVisibleCellAbove(grid, rowIndex, columnIndex) {
+			for (let index = rowIndex - 1; index >= 0; index -= 1) {
+				const cell = grid[index][columnIndex];
+
+				if (cell && !cell.hidden) {
+					return cell;
 				}
 			}
 
-			return `
-				<ul class="toc-list">
-					${renderTocItems(root)}
-				</ul>
-			`;
+			return null;
 		}
 
-		function renderTocItems(items) {
-			return items
-				.map((item) => `
-					<li class="toc-item toc-item-level-${item.level}">
-						<a
-							class="toc-link"
-							href="#${item.id}"
-							data-target="${item.id}"
-						>
-							${escapeHtml(item.text)}
-						</a>
+		function findVisibleCellLeft(row, columnIndex) {
+			for (let index = columnIndex - 1; index >= 0; index -= 1) {
+				if (!row[index].hidden) {
+					return row[index];
+				}
+			}
 
-						${
-							item.children.length
-								? `
-									<ul class="toc-sublist">
-										${renderTocItems(item.children)}
-									</ul>
-								`
-								: ""
-						}
-					</li>
-				`)
-				.join("");
+			return null;
 		}
+
+        function renderTableCell(
+            tag,
+            cell,
+            alignment,
+            options = {}
+        ) {
+            const classes = Array.isArray(options.classes)
+                ? [...options.classes]
+                : [];
+            const logicalColumn = options.logicalColumn || 1;
+            const splits = Array.isArray(options.splits)
+                ? options.splits
+                : [];
+
+            if (alignment && alignment !== "left") {
+                classes.push(`markdown-table-cell-${alignment}`);
+            }
+
+            if (alignment === "left") {
+                classes.push("reference-table-align-left");
+            }
+
+            if (alignment === "right") {
+                classes.push("reference-table-number");
+            }
+
+            if (splits.includes(logicalColumn - 1)) {
+                classes.push("reference-table-cell-split");
+            }
+
+            const className = classes.length
+                ? ` class="${classes.join(" ")}"`
+                : "";
+            const colspan = cell.colspan > 1
+                ? ` colspan="${cell.colspan}"`
+                : "";
+            const rowspan = cell.rowspan > 1
+                ? ` rowspan="${cell.rowspan}"`
+                : "";
+            const scope = options.scope
+                ? ` scope="${escapeAttribute(options.scope)}"`
+                : "";
+
+            return `<${tag}${className}${colspan}${rowspan}${scope}>${
+                renderInline(cell.content)
+            }</${tag}>`;
+        }
+
+        function resolveTableFooter(items, groups, columnCount) {
+            if (!Array.isArray(items) || !items.length) {
+                return {
+                    loose: [],
+                    table: ""
+                };
+            }
+
+            const ranges = getTableGroupRanges(groups);
+            const placed = [];
+            const loose = [];
+
+            items.forEach((item) => {
+                const placement = resolveTableFooterPlacement(
+                    item,
+                    ranges,
+                    columnCount
+                );
+
+                if (placement) {
+                    placed.push({
+                        content: item.content,
+                        end: placement.end,
+                        start: placement.start
+                    });
+                    return;
+                }
+
+                loose.push(item);
+            });
+
+            return {
+                loose,
+                table: renderGroupedTableFooter(placed, columnCount)
+            };
+        }
+
+        function getTableGroupRanges(groups) {
+            let column = 1;
+
+            return (Array.isArray(groups) ? groups : []).map((group) => {
+                const range = {
+                    end: column + group.span - 1,
+                    label: group.label,
+                    start: column
+                };
+
+                column += group.span;
+                return range;
+            });
+        }
+
+        function resolveTableFooterPlacement(item, ranges, columnCount) {
+            if (item.group) {
+                const target = ranges.find((range) => {
+                    return range.label.toLowerCase() ===
+                        item.group.toLowerCase();
+                });
+
+                return target || null;
+            }
+
+            if (item.columnStart && item.columnEnd) {
+                const start = Math.min(item.columnStart, item.columnEnd);
+                const end = Math.max(item.columnStart, item.columnEnd);
+
+                if (start <= columnCount && end <= columnCount) {
+                    return {
+                        end,
+                        start
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        function renderGroupedTableFooter(items, columnCount) {
+            if (!items.length || columnCount < 1) {
+                return "";
+            }
+
+            const combined = new Map();
+
+            items.forEach((item) => {
+                const key = `${item.start}:${item.end}`;
+
+                if (!combined.has(key)) {
+                    combined.set(key, {
+                        contents: [],
+                        end: item.end,
+                        start: item.start
+                    });
+                }
+
+                combined.get(key).contents.push(item.content);
+            });
+
+            const placements = [...combined.values()].sort((first, second) => {
+                return first.start - second.start ||
+                    first.end - second.end;
+            });
+            const rows = [];
+
+            placements.forEach((placement) => {
+                let row = rows.find((candidate) => {
+                    return candidate.every((existing) => {
+                        return placement.end < existing.start ||
+                            placement.start > existing.end;
+                    });
+                });
+
+                if (!row) {
+                    row = [];
+                    rows.push(row);
+                }
+
+                row.push(placement);
+            });
+
+            const html = rows.map((row) => {
+                let cursor = 1;
+                const cells = row
+                    .sort((first, second) => first.start - second.start)
+                    .map((placement) => {
+                        const gap = placement.start - cursor;
+                        const empty = gap > 0
+                            ? `<td
+                                class="reference-table-footer-empty"
+                                colspan="${gap}"
+                                aria-hidden="true"
+                            ></td>`
+                            : "";
+                        const span = placement.end - placement.start + 1;
+                        const content = `<td colspan="${span}">
+                            <ul class="reference-table-footer-list">${
+                                placement.contents.map((item) => {
+                                    return `<li>${
+                                        renderInline(item)
+                                    }</li>`;
+                                }).join("")
+                            }</ul>
+                        </td>`;
+
+                        cursor = placement.end + 1;
+                        return empty + content;
+                    })
+                    .join("");
+                const trailing = cursor <= columnCount
+                    ? `<td
+                        class="reference-table-footer-empty"
+                        colspan="${columnCount - cursor + 1}"
+                        aria-hidden="true"
+                    ></td>`
+                    : "";
+
+                return `<tr>${cells}${trailing}</tr>`;
+            }).join("");
+
+            return `<tfoot class="reference-table-footer">${html}</tfoot>`;
+        }
+
+        function renderTableFooter(items, split, columnCount) {
+            if (!Array.isArray(items) || !items.length) {
+                return "";
+            }
+
+            if (split && columnCount > 0) {
+                const start = items.filter((item) => {
+                    return item.side !== "end";
+                });
+                const end = items.filter((item) => {
+                    return item.side === "end";
+                });
+                const percentage = Math.min(
+                    100,
+                    Math.max(0, (split / columnCount) * 100)
+                );
+
+                return `<footer
+                    class="tablefooter tablefooter-split"
+                    style="--table-footer-start: ${percentage}%"
+                >
+                    ${renderTableFooterColumn(start, "start")}
+                    ${renderTableFooterColumn(end, "end")}
+                </footer>`;
+            }
+
+            return `<footer class="tablefooter">
+                <ul class="tablefooter-list">${
+                    items.map((item) => {
+                        return `<li>${renderInline(item.content)}</li>`;
+                    }).join("")
+                }</ul>
+            </footer>`;
+        }
+
+        function renderTableFooterColumn(items, side) {
+            return `<ul class="tablefooter-column tablefooter-column-${
+                side
+            }">${
+                items.map((item) => {
+                    return `<li>${renderInline(item.content)}</li>`;
+                }).join("")
+            }</ul>`;
+        }
+
+        function renderPageTocLinks(toc) {
+            if (!Array.isArray(toc) || !toc.length) {
+                return "";
+            }
+
+            const levels = toc
+                .map((item) => Number(item.level))
+                .filter(Number.isFinite);
+            const majorLevel = Math.min(...levels);
+
+            return toc
+                .filter((item) => Number(item.level) === majorLevel)
+                .map((item) => `
+                    <li>
+                        <a
+                            class="pagetoc-link"
+                            href="#${item.id}"
+                            data-target="${item.id}"
+                        >
+                            ${escapeHtml(item.text)}
+                        </a>
+                    </li>
+                `)
+                .join("");
+        }
 
 		function renderIcon(name) {
 			if (name === "swords") {
@@ -2584,7 +6440,7 @@
 					aria-hidden="true"
 				>humidity_low</span>`;
 			}
-			
+	
 			if (name === "drives") {
 				return `<span
 					class="material-symbols-outlined icon-material"
@@ -2620,40 +6476,294 @@
 		}
 
 		function renderInline(value) {
-			return escapeHtml(value)
+			const protectedTokens = [];
+			let output = String(value);
 
-				// Markdown links
+			output = output.replace(
+				/<mark>([\s\S]+?)<\/mark>/gi,
+				(match, content) => {
+					return protectInlineToken(
+						`<mark>${escapeHtml(content)}</mark>`,
+						protectedTokens
+					);
+				}
+			);
+
+            output = output.replace(
+                /\[\[([^\]\n]+?)::([^\]\n]+?)\]\]/g,
+                (match, label, copy) => {
+                    const cleanLabel = label.trim();
+                    const cleanCopy = copy.trim();
+
+                    if (!cleanLabel || !cleanCopy) {
+                        return match;
+                    }
+
+                    return protectInlineToken(
+                        `<button
+                            class="keyword js-inline-popout js-popout"
+                            type="button"
+                            data-popout-title="${escapeAttribute(
+                                cleanLabel
+                            )}"
+                            data-popout-copy="${escapeAttribute(
+                                cleanCopy
+                            )}"
+                            aria-describedby="keyword-popover"
+                            aria-expanded="false"
+                        >${escapeHtml(cleanLabel)}</button>`,
+                        protectedTokens
+                    );
+                }
+            );
+
+			output = output.replace(/`([^`\n]+)`/g, (match, code) => {
+				return protectInlineToken(
+					`<code>${escapeHtml(code)}</code>`,
+					protectedTokens
+				);
+			});
+
+			output = escapeHtml(output);
+
+			output = output.replace(
+				/!\[([^\]]*)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
+				(match, alt, source, title) => {
+					const safeSource = sanitiseUrl(source, {
+						allowAnchor: false,
+						allowRelative: true
+					});
+
+					if (!safeSource) {
+						return match;
+					}
+
+					const titleAttribute = title
+						? ` title="${escapeAttribute(title)}"`
+						: "";
+
+					return `<img
+						src="${escapeAttribute(safeSource)}"
+						alt="${escapeAttribute(alt)}"
+						loading="lazy"
+						${titleAttribute}
+					>`;
+				}
+			);
+
+			output = output.replace(
+				/\[([^\]]+)\]\(([^)\s]+)(?:\s+"([^"]*)")?\)/g,
+				(match, label, target, title) => {
+					const safeTarget = sanitiseUrl(target, {
+						allowAnchor: true,
+						allowRelative: true
+					});
+
+					if (!safeTarget) {
+						return match;
+					}
+
+					const isExternal = /^https?:\/\//i.test(safeTarget);
+					const titleAttribute = title
+						? ` title="${escapeAttribute(title)}"`
+						: "";
+					const externalAttributes = isExternal
+						? ' target="_blank" rel="noopener noreferrer"'
+						: "";
+
+					return `<a
+						href="${escapeAttribute(safeTarget)}"
+						${titleAttribute}
+						${externalAttributes}
+					>${label}</a>`;
+				}
+			);
+
+			output = output
 				.replace(
-					/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g,
-					'<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>'
+					/\*\*\*([\s\S]+?)\*\*\*/g,
+					"<strong><em>$1</em></strong>"
 				)
+				.replace(
+					/___([\s\S]+?)___/g,
+					"<strong><em>$1</em></strong>"
+				)
+				.replace(/\*\*([\s\S]+?)\*\*/g, "<strong>$1</strong>")
+				.replace(/__([\s\S]+?)__/g, "<strong>$1</strong>")
+				.replace(/~~([\s\S]+?)~~/g, "<del>$1</del>")
+				.replace(/==([\s\S]+?)==/g, "<mark>$1</mark>")
+				.replace(
+					/(^|[^\w])\*([^*\n]+?)\*(?=$|[^\w])/g,
+					"$1<em>$2</em>"
+				)
+				.replace(
+					/(^|[^\w])_([^_\n]+?)_(?=$|[^\w])/g,
+					"$1<em>$2</em>"
+				)
+				.replace(/\[\^([^\]]+)\]/g, (match, id) => {
+					return renderFootnoteReference(id);
+				});
 
-				// Inline code
-				.replace(/`([^`]+)`/g, "<code>$1</code>")
-
-				// Bold
-				.replace(/\*\*([^*]+)\*\*/g, "<strong>$1</strong>")
-
-				// Italics
-				.replace(/\*([^*]+)\*/g, "<em>$1</em>");
+			return restoreInlineTokens(output, protectedTokens);
 		}
 
-        function renderLoadError(error, title) {
-            document.title = `NAKAMA SRD — ${title}`;
-            selectors.sourceBadge.textContent = `Check ${manifestPath}`;
-            selectors.tocList.innerHTML = "";
-            selectors.document.innerHTML = `<header class="doc-header" role="alert">
-                <p class="doc-kicker">Configuration required</p>
-                <h1 class="doc-title">${escapeHtml(title)}</h1>
-                <p class="doc-description">
-                    The SRD now uses ${escapeHtml(manifestPath)} as the
-                    source of truth. Confirm the manifest exists beside
-                    index.html and that every listed document path is
-                    available.
-                </p>
-                <p class="doc-description">${escapeHtml(error.message || "Unknown loading error.")}</p>
-            </header>`;
-        }
+		function protectInlineToken(html, tokens) {
+			const token = `\u0000INLINE${tokens.length}\u0000`;
+
+			tokens.push(html);
+
+			return token;
+		}
+
+		function restoreInlineTokens(value, tokens) {
+			return value.replace(/\u0000INLINE(\d+)\u0000/g, (match, index) => {
+				return tokens[Number(index)] || "";
+			});
+		}
+
+		function sanitiseUrl(value, options = {}) {
+			const url = String(value).trim();
+			const allowAnchor = options.allowAnchor === true;
+			const allowRelative = options.allowRelative === true;
+
+			if (allowAnchor && /^#[a-z][\w:.-]*$/i.test(url)) {
+				return url;
+			}
+
+			if (
+				allowRelative &&
+				/^(?:\.{0,2}\/|\/)?[a-z0-9][a-z0-9._~!$&'()*+,;=:@%/-]*(?:#[\w:.-]+)?$/i
+					.test(url)
+			) {
+				return url;
+			}
+
+			if (/^https?:\/\/[^\s]+$/i.test(url)) {
+				return url;
+			}
+
+			if (/^mailto:[^\s@]+@[^\s@]+\.[^\s@]+$/i.test(url)) {
+				return url;
+			}
+
+			return "";
+		}
+
+		function reportApplicationError(
+			error,
+			title = "Unexpected application error",
+			options = {}
+		) {
+			const fatal = options.fatal !== false;
+			const normalisedError = normaliseError(error);
+
+			console.groupCollapsed(
+				`[NAKAMA SRD] ${title}: ${normalisedError.message}`
+			);
+			console.error(normalisedError);
+
+			if (normalisedError.stack) {
+				console.error(normalisedError.stack);
+			}
+
+			console.groupEnd();
+
+			if (fatal) {
+				renderLoadError(normalisedError, title);
+				return;
+			}
+
+			if (selectors.status) {
+				selectors.status.textContent =
+					`${title}: ${normalisedError.message}`;
+			}
+		}
+
+		function normaliseError(error) {
+			if (error instanceof Error) {
+				return error;
+			}
+
+			if (typeof error === "string") {
+				return new Error(error);
+			}
+
+			try {
+				return new Error(JSON.stringify(error));
+			} catch {
+				return new Error("An unknown application error occurred.");
+			}
+		}
+
+		function renderLoadError(error, title) {
+			const normalisedError = normaliseError(error);
+			const errorMessage = normalisedError.message ||
+				"Unknown loading error.";
+			const stack = normalisedError.stack || "";
+			const source = getErrorSource(stack);
+
+			document.title = `NAKAMA SRD — ${title}`;
+
+			if (selectors.sourceBadge) {
+				selectors.sourceBadge.hidden = false;
+				selectors.sourceBadge.classList.remove("is-hidden");
+				selectors.sourceBadge.textContent = "Application error";
+			}
+
+			if (selectors.pageTocList) {
+				selectors.pageTocList.innerHTML = "";
+			}
+
+			if (!selectors.document) {
+				return;
+			}
+
+			selectors.document.innerHTML = `<section
+				class="panel"
+				role="alert"
+				aria-live="assertive"
+			>
+				<p class="doc-kicker">Application error</p>
+				<h1 class="doc-title">${escapeHtml(title)}</h1>
+
+				<p class="doc-description">
+					${escapeHtml(errorMessage)}
+				</p>
+
+				${
+					source
+						? `<p class="tools-copy">
+							Source: <code>${escapeHtml(source)}</code>
+						</p>`
+						: ""
+				}
+
+				${
+					stack
+						? `<details>
+							<summary>Technical details</summary>
+							<pre><code>${escapeHtml(stack)}</code></pre>
+						</details>`
+						: ""
+				}
+
+				<p class="tools-copy">
+					Open the browser console for the complete diagnostic.
+				</p>
+			</section>`;
+		}
+
+		function getErrorSource(stack) {
+			const sourceMatch = String(stack).match(
+				/(?:index\.html|\.js):(\d+):(\d+)/
+			);
+
+			if (!sourceMatch) {
+				return "";
+			}
+
+			return `line ${sourceMatch[1]}, column ${sourceMatch[2]}`;
+		}
 
 		function setDocumentLoading(isLoading) {
 			if (!isLoading) {
@@ -2678,36 +6788,210 @@
         }
 
         function findDocument(docId) {
-            return state.manifest.documents.find((doc) => doc.id === docId);
+            if (docId === actionCardBuilderDocument.id) {
+                return actionCardBuilderDocument;
+            }
+
+            return state.manifest.documents.find((doc) => {
+                return doc.id === docId;
+            });
         }
 
-        function toggleTheme() {
-            const root = document.documentElement;
-            const nextTheme = root.dataset.theme === "dark" ? "light" : "dark";
+        function renderPageToc(isExpanded) {
+            selectors.pageTocList.hidden = !isExpanded;
+            selectors.pageTocToggle.textContent =
+                isExpanded ? "Hide" : "Show";
+            selectors.pageTocToggle.setAttribute(
+                "aria-expanded",
+                String(isExpanded)
+            );
+            selectors.pageToc.classList.toggle(
+                "is-collapsed",
+                !isExpanded
+            );
+            selectors.workspace.classList.toggle(
+                "is-toc-collapsed",
+                !isExpanded
+            );
+        }
 
-            root.dataset.theme = nextTheme;
-            localStorage.setItem("nakama-theme", nextTheme);
-            updateThemeLabel();
+        function getStoredPageTocState() {
+            const storedState = getStoredValue(storageKeys.pageToc);
+            const legacyHidden =
+                getStoredValue("nakama-toc-hidden") === "true";
+
+            if (legacyHidden || storedState === "true") {
+                return false;
+            }
+
+            return storedState !== "collapsed";
+        }
+
+        function applyStoredPageToc() {
+            renderPageToc(getStoredPageTocState());
+            removeStoredValue("nakama-toc-hidden");
+        }
+
+        function togglePageToc() {
+            const isExpanded =
+                selectors.pageTocToggle.getAttribute(
+                    "aria-expanded"
+                ) === "true";
+
+            renderPageToc(!isExpanded);
+            setStoredValue(
+                storageKeys.pageToc,
+                isExpanded ? "collapsed" : "expanded"
+            );
+        }
+
+
+        function toggleTheme() {
+            const nextTheme =
+                selectors.root.dataset.theme === "dark"
+                    ? "light"
+                    : "dark";
+
+            renderTheme(nextTheme);
+            setStoredValue(storageKeys.theme, nextTheme);
         }
 
         function applyStoredTheme() {
-            const storedTheme = localStorage.getItem("nakama-theme");
+            const storedTheme = getStoredValue(storageKeys.theme);
+            const theme =
+                storedTheme === "light" || storedTheme === "dark"
+                    ? storedTheme
+                    : selectors.root.dataset.theme || "dark";
 
-            if (storedTheme === "light" || storedTheme === "dark") {
-                document.documentElement.dataset.theme = storedTheme;
-            }
-
-            updateThemeLabel();
+            renderTheme(theme);
         }
 
         function updateThemeLabel() {
-            const isDark = document.documentElement.dataset.theme === "dark";
+            renderTheme(selectors.root.dataset.theme || "dark");
+        }
 
-            selectors.themeLabel.textContent = isDark ? "Dark mode" : "Light mode";
+        function renderTheme(theme) {
+            const isDark = theme === "dark";
+            const currentLabel = isDark ? "Dark theme" : "Light theme";
+            const nextTheme = isDark ? "light" : "dark";
+            const actionLabel = `Switch to ${nextTheme} mode`;
+
+            selectors.root.dataset.theme = theme;
+            selectors.themeLabel.textContent = currentLabel;
+            selectors.themeToggle.setAttribute("aria-label", actionLabel);
+            selectors.themeToggle.setAttribute("title", actionLabel);
+
+            /*
+            The visible icon describes the current theme. The accessible
+            label and tooltip describe the action the button will take.
+            */
+            selectors.themeIcon.innerHTML = isDark
+                ? `
+                    <path
+                        d="M13.5 11.75A6 6 0 0 1 6.25 4.5 6.25 6.25 0 1 0 13.5 11.75Z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linejoin="round"
+                    />
+                `
+                : `
+                    <path
+                        d="M9 2v2M9 14v2M2 9h2M14 9h2M4 4l1.5 1.5M12.5 12.5 14 14M14 4l-1.5 1.5M5.5 12.5 4 14M12 9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.5"
+                        stroke-linecap="square"
+                    />
+                `;
+        }
+
+        function applyStoredHighContrast() {
+            renderHighContrast(
+                getStoredValue(storageKeys.highContrast) === "true"
+            );
+        }
+
+        function updateHighContrast(enabled) {
+            renderHighContrast(enabled);
+
+            if (enabled) {
+                setStoredValue(storageKeys.highContrast, "true");
+            } else {
+                removeStoredValue(storageKeys.highContrast);
+            }
+
+            selectors.status.textContent = enabled
+                ? "High contrast enabled."
+                : "High contrast disabled.";
+        }
+
+        function renderHighContrast(enabled) {
+            selectors.highContrast.checked = enabled;
+
+            if (enabled) {
+                selectors.root.dataset.contrast = "high";
+                return;
+            }
+
+            delete selectors.root.dataset.contrast;
+        }
+
+        function getStoredFont(type, fallback) {
+            const storedFont = getStoredValue(
+                storageKeys[`${type}Font`]
+            );
+
+            return fontFamilies[type][storedFont]
+                ? storedFont
+                : fallback;
+        }
+
+        function renderFont(type, value) {
+            selectors.root.style.setProperty(
+                `--font-${type}`,
+                fontFamilies[type][value]
+            );
+            selectors[`${type}Font`].value = value;
+        }
+
+        function updateFont(type, value) {
+            if (!fontFamilies[type][value]) {
+                return;
+            }
+
+            renderFont(type, value);
+            setStoredValue(storageKeys[`${type}Font`], value);
+            selectors.status.textContent = "Typography updated.";
+        }
+
+        function applyStoredTypography() {
+            renderFont(
+                "heading",
+                getStoredFont(
+                    "heading",
+                    defaultAppearance.headingFont
+                )
+            );
+            renderFont(
+                "body",
+                getStoredFont(
+                    "body",
+                    defaultAppearance.bodyFont
+                )
+            );
+        }
+
+        function resetTypography() {
+            removeStoredValue(storageKeys.headingFont);
+            removeStoredValue(storageKeys.bodyFont);
+            renderFont("heading", defaultAppearance.headingFont);
+            renderFont("body", defaultAppearance.bodyFont);
+            selectors.status.textContent = "Typography reset.";
         }
 
         function applyStoredAccent() {
-            const storedAccent = localStorage.getItem("nakama-accent");
+            const storedAccent = getStoredValue(storageKeys.accent);
 
             setAccent(storedAccent || defaultAccent);
         }
@@ -2740,7 +7024,7 @@
 
         function applyAccent(value) {
             setAccent(value);
-            localStorage.setItem("nakama-accent", value);
+            setStoredValue(storageKeys.accent, value);
         }
 
         function setAccent(value) {
@@ -2748,8 +7032,12 @@
                 return;
             }
 
-            document.documentElement.style.setProperty("--accent", value);
-            document.documentElement.style.setProperty("--accent-hover", darkenHex(value));
+            selectors.root.style.setProperty("--accent", value);
+            selectors.root.style.setProperty("--accent-strong", value);
+            selectors.root.style.setProperty(
+                "--accent-hover",
+                darkenHex(value)
+            );
             selectors.accentInput.value = value;
             updateAccentPresets(value);
         }
@@ -2793,181 +7081,487 @@
             );
         }
 
-        async function buildSearchIndex() {
-            selectors.searchInput.placeholder = "Preparing search...";
+		async function buildSearchIndex() {
+			selectors.searchInput.placeholder = "Preparing search...";
+			state.searchIndex = [];
+			state.searchReady = false;
 
-            try {
-                const indexedDocuments = await Promise.all(
-                    state.manifest.documents.map(async (doc) => {
-                        const markdown = await fetchMarkdown(doc.path);
+			try {
+				for (const doc of state.manifest.documents) {
+					const markdown = await fetchMarkdown(doc.path);
+					const startedAt = performance.now();
+					const entries = indexSearchDocument(markdown, doc);
+					const duration = performance.now() - startedAt;
 
-                        return indexSearchDocument(markdown, doc);
-                    })
-                );
+					if (duration > 100) {
+						console.warn(
+							`Search indexing for "${doc.path}" took ${
+								Math.round(duration)
+							}ms.`
+						);
+					}
 
-                state.searchIndex = indexedDocuments.flat();
-                state.searchReady = true;
-                selectors.searchInput.disabled = false;
-                selectors.searchInput.placeholder = "Search sections, powers, interactions...";
-            } catch (error) {
-                selectors.searchInput.placeholder = "Search unavailable";
-            }
-        }
+					state.searchIndex.push(...entries);
 
-        function indexSearchDocument(markdown, doc) {
-            const { meta, body } = splitFrontMatter(markdown);
-            const lines = body.split(/\r?\n/);
-            const entries = [];
-            const docTitle = meta.title || doc.title || doc.label || "Document";
-            const docSection = meta.section || doc.section || "System Reference";
-            let pageHeader = docTitle;
-            let currentSubheader = docTitle;
-            let currentSection = "";
-            let index = 0;
+					await yieldToBrowser();
+				}
 
-            while (index < lines.length) {
-                const line = lines[index];
+				state.searchReady = true;
+				selectors.searchInput.disabled = false;
+				selectors.searchInput.placeholder =
+					"Search sections, powers, interactions...";
+			} catch (error) {
+				selectors.searchInput.disabled = true;
+				selectors.searchInput.placeholder = "Search unavailable";
 
-                if (!line.trim()) {
-                    index += 1;
-                    continue;
-                }
+				throw new Error(
+					`Search indexing failed: ${
+						normaliseError(error).message
+					}`,
+					{
+						cause: error
+					}
+				);
+			}
+		}
 
-                if (line.startsWith("#")) {
-                    const heading = parseHeading(line);
-                    const anchor = createSlug(heading.text);
+		function yieldToBrowser() {
+			return new Promise((resolve) => {
+				window.setTimeout(resolve, 0);
+			});
+		}
 
-                    if (heading.level === 1) {
-                        pageHeader = heading.text;
-                        currentSubheader = heading.text;
-                        currentSection = "";
-                    }
+		function flattenListText(list) {
+			return list.items
+				.map((item) => {
+					const ownText = item.lines.join(" ");
+					const childText = item.children
+						.map((child) => flattenListText(child))
+						.join(" ");
 
-                    if (heading.level === 2) {
-                        currentSubheader = heading.text;
-                        currentSection = "";
-                    }
+					return `${ownText} ${childText}`.trim();
+				})
+				.join(" ");
+		}
 
-                    if (heading.level === 3) {
-                        currentSection = heading.text;
-                    }
+		function indexSearchDocument(markdown, doc) {
+			const { meta, body } = splitFrontMatter(markdown);
+			const lines = body.split(/\r?\n/);
+			const entries = [];
+			const docTitle = meta.title ||
+				doc.title ||
+				doc.label ||
+				"Document";
+			const docSection = meta.section ||
+				doc.section ||
+				"System Reference";
+			let pageHeader = docTitle;
+			let currentSubheader = docTitle;
+			let currentSection = "";
+			let index = 0;
 
-                    entries.push(createSearchEntry({
-                        anchor,
-                        body: "",
-                        doc,
-                        header: heading.text,
-                        section: formatSearchSection(
-                            docTitle,
-                            docSection,
-                            currentSubheader,
-                            currentSection
-                        ),
-                        subheader: heading.level === 2 ? heading.text : currentSubheader
-                    }));
+			while (index < lines.length) {
+				const line = lines[index];
+				const currentIndex = index;
 
-                    index += 1;
-                    continue;
-                }
+				if (!line.trim()) {
+					index += 1;
+					continue;
+				}
 
-                if (line.startsWith(":::")) {
-                    const block = collectBlock(lines, index);
+				if (isMarkdownCommentStart(lines, index)) {
+					index = skipMarkdownComment(lines, index);
+					continue;
+				}
 
-                    if (block.type === "power") {
-                        const title = block.attrs.title || "Power";
-                        const key = block.attrs.key || "";
-                        const text = stripMarkdown(block.content);
-                        const section = formatSearchSection(
-                            docTitle,
-                            docSection,
-                            currentSubheader,
-                            currentSection,
-                            key
-                        );
+				if (isFencedCodeStart(line)) {
+					const code = collectFencedCode(lines, index);
+					const text = stripMarkdown(code.code);
 
-                        entries.push(createSearchEntry({
-                            anchor: createSlug(title),
-                            body: text,
-                            doc,
-                            header: title,
-                            section,
-                            subheader: currentSubheader
-                        }));
-                    }
+					if (text) {
+						entries.push(
+							createSearchEntry({
+								anchor: createSlug(
+									currentSection ||
+									currentSubheader
+								),
+								body: text,
+								doc,
+								header: currentSection ||
+									currentSubheader ||
+									pageHeader,
+								section: formatSearchSection(
+									docTitle,
+									docSection,
+									currentSubheader,
+									currentSection
+								),
+								subheader: currentSubheader
+							})
+						);
+					}
 
-                    index = block.nextIndex;
-                    continue;
-                }
+					index = code.nextIndex;
+					continue;
+				}
 
-                if (line.startsWith("- ")) {
-                    const list = collectList(lines, index);
-                    const text = stripMarkdown(list.items.join(" "));
+				if (/^(#{1,6})[ \t]+/.test(line)) {
+					const heading = parseHeading(line);
+					const headingText = stripMarkdown(
+						heading.text
+					);
+					const anchor = heading.explicitId ||
+						createSlug(headingText);
 
-                    entries.push(createSearchEntry({
-                        anchor: createSlug(currentSection || currentSubheader),
-                        body: text,
-                        doc,
-                        header: currentSection || currentSubheader || pageHeader,
-                        section: formatSearchSection(
-                            docTitle,
-                            docSection,
-                            currentSubheader,
-                            currentSection
-                        ),
-                        subheader: currentSubheader
-                    }));
+					if (heading.level === 1) {
+						pageHeader = headingText;
+						currentSubheader = headingText;
+						currentSection = "";
+					}
 
-                    index = list.nextIndex;
-                    continue;
-                }
+					if (heading.level === 2) {
+						currentSubheader = headingText;
+						currentSection = "";
+					}
 
-                if (isTableStart(lines, index)) {
-                    const table = collectTable(lines, index);
-                    const text = stripMarkdown([
-                        table.headers.join(" "),
-                        ...table.rows.map((row) => row.join(" "))
-                    ].join(" "));
+					if (heading.level >= 3) {
+						currentSection = headingText;
+					}
 
-                    entries.push(createSearchEntry({
-                        anchor: createSlug(currentSection || currentSubheader),
-                        body: text,
-                        doc,
-                        header: currentSection || currentSubheader || pageHeader,
-                        section: formatSearchSection(
-                            docTitle,
-                            docSection,
-                            currentSubheader,
-                            currentSection
-                        ),
-                        subheader: currentSubheader
-                    }));
+					entries.push(
+						createSearchEntry({
+							anchor,
+							body: "",
+							doc,
+							header: headingText,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: heading.level === 2
+								? headingText
+								: currentSubheader
+						})
+					);
 
-                    index = table.nextIndex;
-                    continue;
-                }
+					index += 1;
+					continue;
+				}
 
-                const paragraph = collectParagraph(lines, index);
-                const text = stripMarkdown(paragraph.text);
+				if (line.startsWith(":::")) {
+					const block = collectBlock(lines, index);
+					const title = block.attrs.title ||
+						block.type;
+					const text = stripMarkdown(
+						block.content
+					);
+					const key = block.attrs.key || "";
 
-                entries.push(createSearchEntry({
-                    anchor: createSlug(currentSection || currentSubheader),
-                    body: text,
-                    doc,
-                    header: currentSection || currentSubheader || pageHeader,
-                    section: formatSearchSection(
-                        docTitle,
-                        docSection,
-                        currentSubheader,
-                        currentSection
-                    ),
-                    subheader: currentSubheader
-                }));
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(title),
+							body: text,
+							doc,
+							header: title,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection,
+								key
+							),
+							subheader: currentSubheader
+						})
+					);
 
-                index = paragraph.nextIndex;
-            }
+					index = block.nextIndex;
+					continue;
+				}
 
-            return entries;
-        }
+				if (isFootnoteDefinition(line)) {
+					const footnote = collectFootnoteDefinition(
+						lines,
+						index
+					);
+					const text = stripMarkdown(
+						footnote.content
+					);
+
+					if (text) {
+						entries.push(
+							createSearchEntry({
+								anchor: createSlug(
+									currentSection ||
+									currentSubheader
+								),
+								body: text,
+								doc,
+								header: currentSection ||
+									currentSubheader ||
+									pageHeader,
+								section: formatSearchSection(
+									docTitle,
+									docSection,
+									currentSubheader,
+									currentSection
+								),
+								subheader: currentSubheader
+							})
+						);
+					}
+
+					index = footnote.nextIndex;
+					continue;
+				}
+
+				if (isTableCaption(lines, index)) {
+					const table = collectTable(
+						lines,
+						index + 1
+					);
+					const caption = line
+						.replace(/^Table:[ \t]*/i, "")
+						.trim();
+					const text = stripMarkdown(
+						[
+							caption,
+							table.headers.join(" "),
+							...table.rows.map((row) => {
+								return row.join(" ");
+							})
+						].join(" ")
+					);
+
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(
+								currentSection ||
+								currentSubheader
+							),
+							body: text,
+							doc,
+							header: caption ||
+								currentSection ||
+								currentSubheader ||
+								pageHeader,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: currentSubheader
+						})
+					);
+
+					index = table.nextIndex;
+					continue;
+				}
+
+				if (isTableStart(lines, index)) {
+					const table = collectTable(lines, index);
+					const text = stripMarkdown(
+						[
+							table.headers.join(" "),
+							...table.rows.map((row) => {
+								return row.join(" ");
+							})
+						].join(" ")
+					);
+
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(
+								currentSection ||
+								currentSubheader
+							),
+							body: text,
+							doc,
+							header: currentSection ||
+								currentSubheader ||
+								pageHeader,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: currentSubheader
+						})
+					);
+
+					index = table.nextIndex;
+					continue;
+				}
+
+				if (matchListItem(line)) {
+					const list = collectList(lines, index);
+					const text = stripMarkdown(
+						flattenListText(list.node)
+					);
+
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(
+								currentSection ||
+								currentSubheader
+							),
+							body: text,
+							doc,
+							header: currentSection ||
+								currentSubheader ||
+								pageHeader,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: currentSubheader
+						})
+					);
+
+					index = list.nextIndex;
+					continue;
+				}
+
+				if (/^ {0,3}>[ \t]?/.test(line)) {
+					const quote = collectBlockquote(
+						lines,
+						index
+					);
+					const text = stripMarkdown(
+						quote.content
+					);
+
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(
+								currentSection ||
+								currentSubheader
+							),
+							body: text,
+							doc,
+							header: currentSection ||
+								currentSubheader ||
+								pageHeader,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: currentSubheader
+						})
+					);
+
+					index = quote.nextIndex;
+					continue;
+				}
+
+				if (isIndentedCodeLine(line)) {
+					const code = collectIndentedCode(
+						lines,
+						index
+					);
+					const text = stripMarkdown(code.code);
+
+					if (text) {
+						entries.push(
+							createSearchEntry({
+								anchor: createSlug(
+									currentSection ||
+									currentSubheader
+								),
+								body: text,
+								doc,
+								header: currentSection ||
+									currentSubheader ||
+									pageHeader,
+								section: formatSearchSection(
+									docTitle,
+									docSection,
+									currentSubheader,
+									currentSection
+								),
+								subheader: currentSubheader
+							})
+						);
+					}
+
+					index = code.nextIndex;
+					continue;
+				}
+
+				const paragraph = collectParagraph(
+					lines,
+					index
+				);
+
+				if (paragraph.nextIndex === currentIndex) {
+					const text = stripMarkdown(line);
+
+					if (text) {
+						entries.push(
+							createSearchEntry({
+								anchor: createSlug(
+									currentSection ||
+									currentSubheader
+								),
+								body: text,
+								doc,
+								header: currentSection ||
+									currentSubheader ||
+									pageHeader,
+								section: formatSearchSection(
+									docTitle,
+									docSection,
+									currentSubheader,
+									currentSection
+								),
+								subheader: currentSubheader
+							})
+						);
+					}
+
+					index += 1;
+					continue;
+				}
+
+				const text = stripMarkdown(
+					paragraph.text
+				);
+
+				if (text) {
+					entries.push(
+						createSearchEntry({
+							anchor: createSlug(
+								currentSection ||
+								currentSubheader
+							),
+							body: text,
+							doc,
+							header: currentSection ||
+								currentSubheader ||
+								pageHeader,
+							section: formatSearchSection(
+								docTitle,
+								docSection,
+								currentSubheader,
+								currentSection
+							),
+							subheader: currentSubheader
+						})
+					);
+				}
+
+				index = paragraph.nextIndex;
+			}
+
+			return entries;
+		}
 
 		function createSearchEntry(entry) {
 			const fields = {
@@ -3240,14 +7834,30 @@
                 .join(" · ");
         }
 
-        function stripMarkdown(value) {
-            return String(value)
-                .replace(/`([^`]+)`/g, "$1")
-                .replace(/\*\*([^*]+)\*\*/g, "$1")
-                .replace(/\*([^*]+)\*/g, "$1")
-                .replace(/#+\s*/g, "")
-                .trim();
-        }
+		function stripMarkdown(value) {
+			return String(value)
+				.replace(/<mark>([\s\S]+?)<\/mark>/gi, "$1")
+				.replace(/<\/?mark>/gi, "")
+				.replace(/<!--[\s\S]*?-->/g, "")
+				.replace(/^\s*\[\/\/\]:\s*#\s*\(.*\)\s*$/gm, "")
+				.replace(/```[\s\S]*?```/g, "")
+				.replace(/~~~[\s\S]*?~~~/g, "")
+				.replace(/`([^`]+)`/g, "$1")
+				.replace(/!\[([^\]]*)\]\([^)]+\)/g, "$1")
+				.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+				.replace(/\[\^([^\]]+)\]/g, "")
+				.replace(/\*\*\*([\s\S]+?)\*\*\*/g, "$1")
+				.replace(/___([\s\S]+?)___/g, "$1")
+				.replace(/\*\*([\s\S]+?)\*\*/g, "$1")
+				.replace(/__([\s\S]+?)__/g, "$1")
+				.replace(/\*([^*]+)\*/g, "$1")
+				.replace(/_([^_]+)_/g, "$1")
+				.replace(/~~([\s\S]+?)~~/g, "$1")
+				.replace(/==([\s\S]+?)==/g, "$1")
+				.replace(/^#{1,6}[ \t]+/gm, "")
+				.replace(/\s+\{#[a-z][\w:-]*\}$/gim, "")
+				.trim();
+		}
 
         function normaliseSearchText(value) {
             return stripMarkdown(value).toLowerCase();
@@ -3288,7 +7898,43 @@
             });
         }
 
-        init();
+		window.addEventListener("error", (event) => {
+			const error = event.error ||
+				new Error(event.message || "Unknown JavaScript error.");
+
+			reportApplicationError(
+				error,
+				"JavaScript runtime error",
+				{
+					fatal: true
+				}
+			);
+		});
+
+		window.addEventListener(
+			"unhandledrejection",
+			(event) => {
+				event.preventDefault();
+
+				reportApplicationError(
+					event.reason,
+					"Unhandled asynchronous error",
+					{
+						fatal: true
+					}
+				);
+			}
+		);
+
+		init().catch((error) => {
+			reportApplicationError(
+				error,
+				"Application failed to initialise",
+				{
+					fatal: true
+				}
+			);
+		});
     </script>
 </body>
 </html>
