@@ -53,18 +53,6 @@
                 "downtime-mode",
                 "social-actions"
             ]
-        },
-        {
-            "id": "test",
-            "label": "Test",
-            "kicker": "",
-            "order": 999,
-            "description": "",
-            "documents": [
-                "prev",
-                "teststyle",
-                "test1"
-            ]
         }
     ],
     "documents": [
@@ -237,36 +225,6 @@
             "order": 2,
             "path": "content/social/social-actions.md",
             "icon": "social"
-        },
-        {
-            "id": "prev",
-            "title": "[title]",
-            "label": "[title]",
-            "section": "Test",
-            "sectionId": "test",
-            "order": 999,
-            "path": "content/test/prev.md",
-            "icon": "[icon]"
-        },
-        {
-            "id": "teststyle",
-            "title": "Battle Prowess",
-            "label": "Battle Prowess",
-            "section": "Test",
-            "sectionId": "test",
-            "order": 999,
-            "path": "content/test/teststyle.md",
-            "icon": "book"
-        },
-        {
-            "id": "test1",
-            "title": "Parser Test",
-            "label": "Parser Test",
-            "section": "Test",
-            "sectionId": "test",
-            "order": 999,
-            "path": "content/test/test1.md",
-            "icon": "book"
         }
     ]
 }
