@@ -38,7 +38,6 @@
             "description": "",
             "documents": [
                 "combat",
-                "reaction-rolls",
                 "damage",
                 "conditions"
             ]
@@ -175,16 +174,6 @@
             "order": 1,
             "path": "content/combat/combat.md",
             "icon": "swords"
-        },
-        {
-            "id": "reaction-rolls",
-            "title": "Reaction Rolls",
-            "label": "Reaction Rolls",
-            "section": "Combat",
-            "sectionId": "combat",
-            "order": 2,
-            "path": "content/combat/reaction-rolls.md",
-            "icon": "reaction"
         },
         {
             "id": "damage",
